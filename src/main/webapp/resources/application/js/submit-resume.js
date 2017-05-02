@@ -469,19 +469,19 @@ function check_submission_form(){
         	add_error("#applicant-nurseExperience-label", curLanguage.nurseExperienceLabel);
 				window.location.hash = "#applicant-nurseExperience-label";
         }
-        if(applicant_studies == "" || isNaN(applicant_studies)){
+        if(applicant_studies == "" ){
         	add_error("#applicant-studies-label", curLanguage.studiesLabel);
 				window.location.hash = "#applicant-studies-label";
         }
-        if(applicant_graduation == "" || isNaN(applicant_graduation)){
+        if(applicant_graduation == "" ){
         	add_error("#applicant-graduation-label", curLanguage.graduationLabel);
 				window.location.hash = "#applicant-graduation-label";
         }
-        if(applicant_weight == "" || isNaN(applicant_weight)){
+        if(applicant_weight == "" ){
         	add_error("#applicant-weight-label", curLanguage.weightLabel);
 				window.location.hash = "#applicant-weight-label";
         }
-        if(applicant_height == "" || isNaN(applicant_height)){
+        if(applicant_height == "" ){
         	add_error("#applicant-height-label", curLanguage.heightLabel);
 				window.location.hash = "#applicant-height-label";
         }
