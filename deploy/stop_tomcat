@@ -1,0 +1,8 @@
+#!/bin/bash
+
+tomcat_path=/usr/local/tomcat
+pid=$(ps ax | grep "${tomcat_path}" | grep -v grep | cut -d ' ' -f 2)
+if [ "${pid}" ]; then
+   echo "shutting down tomcat"
+   ${tomcat_path}/bin/shutdown.sh
+fi

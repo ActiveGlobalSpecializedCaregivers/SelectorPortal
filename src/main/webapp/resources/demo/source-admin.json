@@ -1,0 +1,43 @@
+{
+  "id": -1,
+  "error": "",
+  "fieldErrors": [],
+  "data": [],
+  "aaData": [
+    {
+      "DT_RowId": "row_1",
+      "fullname": "Alicia Koothrapali",
+      "username": "alicia.koothrapali",
+      "email": "alicia.koothrapali@gmail.com",
+      "permission": "Super Admin"
+    },
+    {
+      "DT_RowId": "row_2",
+      "fullname": "Robin Scherbatzky",
+      "username": "robin.admin",
+      "email": "robin.scherbatzky@gmail.com",
+      "permission": "Admin"
+    },
+    {
+      "DT_RowId": "row_3",
+      "fullname": "Geraldine Ang",
+      "username": "geraldine.admin",
+      "email": "geraldine.ang@gmail.com",
+      "permission": "Admin"
+    },
+    {
+      "DT_RowId": "row_4",
+      "fullname": "Jean Grey",
+      "username": "jean.sa",
+      "email": "jean.grey@gmail.com",
+      "permission": "Super Admin"
+    },
+    {
+      "DT_RowId": "row_4",
+      "fullname": "Venkatanarasimharajuvaripeta Koothrappali",
+      "username": "admin01",
+      "email": "venka.koothrapali@gmail.com",
+      "permission": "Super Admin"
+    }
+  ]
+}

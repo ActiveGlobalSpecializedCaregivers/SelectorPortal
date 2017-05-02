@@ -1,0 +1,557 @@
+body {
+	font-family: Arial, Verdana, sans-serif;
+	background-color: #EBF8FF;
+	color: #000;
+	margin: 0 auto;
+}
+
+a img {
+	border: none;
+}
+
+strong {
+	font-weight: bold;
+	font-style: inherit;
+}
+
+h1 {
+	font: bold 26px/30px Arial, Verdana, sans-serif;
+	color: #000;
+	margin-bottom: 15px;
+	text-align: left;
+}
+
+h2 {
+	font: normal 16px/23px Arial, Verdana, sans-serif;
+	text-align: left;
+}
+
+h3 {
+	font: normal 14px/18px Arial, Verdana, sans-serif;
+	text-align: left;
+}
+
+#applicant-job-description, p, li {
+	font: normal 12px/16px Arial, Verdana, sans-serif;
+	margin-bottom: 8px;
+	text-align: left;
+}
+
+ul, ol {
+	list-style-type: disc;
+	margin: 0 0 8px 50px;
+	text-align: left;
+}
+
+li {
+	margin-bottom: 4px;
+	text-align: left;
+}
+
+ol {
+	list-style-type: decimal;
+	text-align: left;
+}
+
+em {
+	font-style: italic !important;
+}
+
+#applicant-site-wrapper {
+	width: 960px;
+	margin: 0 auto;
+}
+
+#applicant-rounded-container {
+	margin-bottom: 25px;
+}
+
+#applicant-site-header {
+	width: 960px;
+	margin: 0 auto;
+	padding: 20px 0 10px 0;
+	border-bottom: 2px solid #EBF8FF;
+	text-align: left;
+}
+
+#applicant-jobboard-logo {
+	width: 660px;
+	margin-left: 25px;
+}
+
+#applicant-company-name {
+	width: 960px;
+	text-align: left;
+}
+
+#applicant-company-name h1 {
+	font: normal 20px/24px Arial, Verdana, sans-serif;
+	color: #929292;
+	margin-left: 30px;
+	text-align: left;
+}
+
+#applicant-company-website {
+	float: right;
+	margin: 5px 30px 0 0;
+}
+
+#applicant-body {
+	width: 960px;
+	margin: 0px auto;
+	border-top: none;
+}
+
+#applicant-body div {
+	text-align: left;
+}
+
+#applicant-content-introduction {
+	margin-top: 20px;
+	margin-right: 30px;
+}
+
+#applicant-content-top-wrapper {
+	margin-top: 20px;
+}
+
+#applicant-content-left-wrapper {
+	margin-left: 30px;
+	padding-bottom: 30px;
+	float: left;
+}
+
+#applicant-content-left {
+	width: 445px;
+	text-align: left;
+}
+
+#applicant-content-right-wrapper {
+	width: 450px;
+	float: right;
+}
+
+#applicant-content-right {
+	text-align: left;
+	margin-bottom: 30px;
+}
+
+.applicant-home-joblist {
+	margin-top: 20px;
+}
+
+#applicant-job-overview {
+	margin-bottom: 20px;
+	padding: 10px 30px;
+	border-top: 2px solid #EBF8FF;
+	border-bottom: 1px solid #EBF8FF;
+	text-align: left;
+}
+
+#applicant-job-overview h2 {
+	font-size: 14px;
+	line-height: 1.6em;
+	float: left;
+	margin-right: 20px;
+}
+
+#applicant-job-overview h2 strong {
+	font-size: 12px;
+	font-style: inherit;
+}
+
+#applicant-job-description {
+	margin-bottom: 20px;
+	text-align: left;
+}
+
+.applicant-job {
+	padding: 4px 0 0 0;
+	/* border-top: 2px solid #E9E9E9; */
+}
+
+.applicant-job-info {
+	margin-bottom: 10px;
+}
+
+.applicant-job-forward-form-buttons {
+	margin-top: 15px;
+	font-size: 16px;
+}
+
+.applicant-job-forward-field {
+	width: 335px;
+	font-size: 16px;
+}
+
+#applicant-footer-wrapper {
+	border-top: 2px solid #EBF8FF;
+	padding: 3px 10px 10px 10px;
+}
+
+#applicant-logo {
+	display: none;
+}
+
+#applicant-job-button-back-top {
+	float: right;
+	margin-right: 30px;
+}
+
+#applicant-job-button-back-bottom {
+	margin-bottom: 40px;
+}
+
+#applicant-resume-upload {
+	background: none;
+	border: none;
+	margin-bottom: 0px;
+	padding-left: 5px;
+	padding-bottom: 5px;
+	width: 440px;
+}
+
+.applicant-label,
+.applicant-field-wrapper {
+	width: 390px;
+}
+
+#applicant-jobs {
+	width: 390px;
+	margin-bottom: 30px;
+}
+
+#applicant-resumes-title,
+#applicant-forward-title,
+#applicant-jobs-title {
+	margin-top: 0px;
+	padding-top: 0px;
+}
+
+#applicant-job-title,
+#applicant-questionnaire-title {
+	margin-left: 30px;
+}
+
+.applicant-job-title {
+	padding: 4px 0 0 0;
+	margin-top: 0px;
+}
+
+.applicant-job-title a, a {
+	color: #376CAD;
+	text-decoration: none;
+}
+
+.applicant-job-title a:hover, a:hover {
+	text-decoration: underline;
+}
+
+#applicant-message-text,
+#applicant-wmyu-value,
+#applicant-eeo-message,
+#applicant-wmyu-label {
+	width: 90%;
+}
+
+/* Content area --------------------------------------------------------- */
+
+#applicant-jobboard-home-content {
+	font: normal 12px/16px Arial, Verdana, sans-serif;
+	word-wrap: break-word;
+}
+
+#applicant-jobboard-home-content h1,
+#applicant-jobboard-home-content h2,
+#applicant-jobboard-home-content h3,
+#applicant-jobboard-home-content h4,
+#applicant-jobboard-home-content h5,
+#applicant-jobboard-home-content h6,
+#applicant-jobboard-home-content p,
+#applicant-jobboard-home-content ol,
+#applicant-jobboard-home-content ul,
+#applicant-jobboard-home-content li {
+	margin-bottom: 8px;
+	text-align: left;
+	color: #000;
+}
+
+#applicant-jobboard-home-content h1 {
+	font: bold 26px/30px Arial, Verdana, sans-serif;
+}
+           
+#applicant-jobboard-home-content h2 {
+	font: bold 20px/24px Arial, Verdana, sans-serif;
+}
+
+#applicant-jobboard-home-content h3 {
+	font: bold 18px/22px Arial, Verdana, sans-serif;
+}
+
+#applicant-jobboard-home-content h4 {
+	font: bold 16px/20px Arial, Verdana, sans-serif;
+}
+
+#applicant-jobboard-home-content h5 {
+	font: bold 14px/18px Arial, Verdana, sans-serif;
+}
+
+#applicant-jobboard-home-content h6 {
+	font: bold 12px/16px Arial, Verdana, sans-serif;
+}
+
+#applicant-jobboard-home-content p, li {
+	font: normal 12px/16px Arial, Verdana, sans-serif;
+}
+
+#applicant-jobboard-home-content ul, 
+#applicant-jobboard-home-content ol {
+	margin: 0 0 8px 50px;
+	text-align: left;
+}
+
+#applicant-jobboard-home-content li {
+	margin-bottom: 4px;
+	text-align: left;
+}
+
+#applicant-jobboard-home-content ul {
+	list-style-type: disc;
+}
+
+#applicant-jobboard-home-content ol {
+	list-style-type: decimal;
+}
+
+.rounded_container{
+	padding: 0px !important;
+}
+
+/* MESSAGES --------------------------------------------------------- */
+
+.dv_message {
+	background-color: #febe14;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+
+.dv_message p {
+	font-weight: bold;
+	margin: 0px;
+	color: #FFF;
+	font-size: 16px;
+}
+
+.msg_error {
+	border: none;
+	background-color: #bf2c4b;
+	padding: 15px;
+}
+
+.msg_error .msg p {
+	color: #FFF;
+}
+
+a.btn_collapse {
+	display: none;
+}
+
+.dv_error {
+	font: bold 12px/15px Arial, Verdana, sans-serif;
+	color: #BD1300;
+}
+
+/* SOCIAL --------------------------------------------------------- */
+
+#applicant-social-links ul {
+	padding: 15px 0;
+	margin: 0px;
+	border-top: 2px solid #EBF8FF;
+	border-bottom: 2px solid #EBF8FF;
+}
+
+#applicant-social-links li {
+	float: left;
+	list-style-type: none;
+	margin: 0 8px 0 0;
+	padding: 0;
+}
+
+#applicant-social-links ul li.applicant-twitter {
+	float: right;
+}
+
+#applicant-social-links ul li.applicant-buzz,
+#applicant-social-links ul li.applicant-facebook,
+#applicant-social-links ul li.applicant-linkedin {
+	float: right;
+}
+
+#applicant-social-links ul li.applicant-buzz {
+	margin-right: 0px;
+}
+
+#applicant-social-links ul li.applicant-email a {
+	font-weight: bold;
+}
+
+#applicant-job-forward-form {
+	border: 1px solid #CCD8DD;
+	padding: 15px 20px 20px 20px;
+	margin-bottom: 20px;
+	background-color: #EBF8FF;
+	text-align: left;
+}
+
+#applicant-job-forward-form #applicant-resumes-title {
+	margin-left: 0px;
+}
+
+#applicant-job-forward-form p {
+	font-weight: bold;
+	margin-top: 6px;
+	margin-bottom: 0px;
+	color: #000;
+	text-align: left;
+}
+
+#applicant-job-forward-form textarea {
+	font: normal 16px/20px Arial, Verdana, sans-serif;
+	padding: 5px;
+}
+
+#applicant-job-forward-form div.applicant-field-wrapper {
+	margin-left: 0px;
+	margin-right: 0px;
+	width: 360px;
+}
+
+#applicant-job-forward-form .applicant-field {
+	width: 100%;
+}
+
+#applicant-job-forward-form {
+	width: 95%;
+}
+
+#applicant-job-forward-form .applicant-label {
+	margin: 0 0 3px 0;
+	width: 350px;
+}
+
+#applicant_forward_message {
+	height: 150px;
+}
+
+#applicant-no-jobs-text {
+	line-height: 22px;
+}
+
+.applicantFullFrame {
+	position: absolute !important;
+	top: 0 !important;
+	left: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	background: #0073B2 !important;
+}
+
+ul.applicant_checkboxes {
+	margin-left: 0;
+	margin-bottom: 0;
+	list-style-type: none;
+}
+
+ul.applicant_checkboxes li {
+	margin-left: 0;
+	margin-bottom: 0;
+}
+
+/**
+ * Warnings for IE11 Linkedin Issues
+ */
+#ie11-warning {
+	display: none;
+	padding: 10px 0;
+}
+
+/*
+*DC: To test Indeed Apply on desktops, comment this out
+*/
+@media only screen and (min-device-width: 480px) {
+	#applicant-apply-with-indeed-wrapper {
+		display: none !important;
+	}
+}
+
+/**
+ * New EEOC fields
+ */
+ #new-eeoc-fields-module p, #new-eeoc-fields-module strong, #new-eeoc-fields-module ul, #new-eeoc-fields-module li, #new-eeoc-fields-module .applicant-label{
+ 	font-size:11pt; /* Apparently this is a government requirement, just go with it */
+ 	line-height:24px;
+ }
+
+ #new-eeoc-fields-module ul{
+ 	margin:10px 0 8px 22px;
+ }
+
+ #new-eeoc-fields-module hr{
+ 	background-color: #EBF8FF;
+ 	height: 2px;
+ 	border: 0;
+ }
+
+ #new-eeoc-fields-module .centered-message{
+ 	text-align: center !important;
+ }
+
+ #new-eeoc-fields-module .box-message{
+ 	border:1px solid #000;
+ 	padding:0px 0 4px 0;
+ 	margin-top:20px;
+ 	margin-bottom:10px;
+ }
+
+ #new-eeoc-fields-module .footnote{
+ 	top: -0.5em;
+ 	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+ }
+
+ #new-eeoc-fields-module #applicant-eeo-new-veteran{
+ 	clear:both;
+ 	margin-bottom:10px;
+ 	font-size:11pt;
+ 	line-height: 24px;
+ }
+
+ #new-eeoc-fields-module #disabilities-list ul{
+ 	margin-left:0px;
+ 	-moz-column-count: 2;
+    -moz-column-gap: 20px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 20px;
+    column-count: 4;
+    column-gap: 20px;
+    list-style-position: inside;
+ }
+
+ #new-eeoc-fields-module #disability-input-area{
+ 	clear:both;
+ 	margin-bottom:10px;
+ 	font-size:11pt;
+ 	line-height: 24px;
+ }
+
+ #new-eeoc-fields-module #disability-signature-area{
+ 	width: 100%;
+	text-align: center;
+	margin-bottom: 20px;
+ }
+
+ #new-eeoc-fields-module #disability-signature-area tr, #new-eeoc-fields-module #disability-signature-area td{
+ 	text-align: center;
+ }

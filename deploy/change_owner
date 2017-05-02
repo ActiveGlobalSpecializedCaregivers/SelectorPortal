@@ -1,0 +1,13 @@
+#!/bin/bash
+
+directory=/usr/local/tomcat/webapps/ROOT
+
+echo $file
+echo $directory
+echo $filename
+echo $build
+
+if [ -d "$directory" ]; then
+    echo "changing onwership of $directory"
+    chown -R tomcat:tomcat $directory      
+fi

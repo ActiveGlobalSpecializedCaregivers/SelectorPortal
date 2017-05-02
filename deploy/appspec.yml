@@ -1,0 +1,29 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/bitnami/agsc-deploy/
+permissions:
+  - object: /usr/local/tomcat/webapps
+    owner: tomcat
+    group: tomcat
+hooks:
+  BeforeInstall:
+    - location: stop_tomcat
+      timeout: 300
+      runas: root    
+    - location: undeploy_oldversion
+      timeout: 300
+      runas: root
+  AfterInstall:
+    - location: rename_warfile
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: start_tomcat
+      timeout: 300
+      runas: root
+  ValidateService:
+    - location: change_owner
+      timeout: 300
+      runas: root

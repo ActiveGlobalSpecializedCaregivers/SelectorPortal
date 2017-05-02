@@ -1,0 +1,16 @@
+#!/bin/bash
+
+TOMCAT_HOME=/usr/local/tomcat
+WAR_FILE=$TOMCAT_HOME/webapps/ROOT.war
+WAR_FOLDER=$TOMCAT_HOME/webapps/ROOT
+
+
+if [ -f "$WAR_FILE" ]; then
+    echo "backing up  $WAR_FILE"
+    rm $WAR_FILE 
+fi
+
+if [ -d "$WAR_FOLDER" ]; then
+    echo "removing  $WAR_FOLDER"
+    rm -r $WAR_FOLDER 
+fi

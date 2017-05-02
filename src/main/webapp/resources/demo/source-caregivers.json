@@ -1,0 +1,68 @@
+{
+  "id": -1,
+  "error": "",
+  "fieldErrors": [],
+  "data": [],
+  "aaData": [
+    {
+      "DT_RowId": "row_1",
+	  "sno": "1",
+      "name": "Maria Christina Moran <a href='#' class='btn btn-brown btn-xs'>New!</a>",
+      "contact": "+6591234567",
+      "age": "32",
+      "level": "Bachelor",
+      "exp": "2.5",
+      "salary-sgd": "SGD 800",
+      "availability": "Available",
+      "resume": "<a href='#' class='btn btn-primary btn-xs'>View Résumé</a> <a href='#' class='btn btn-success btn-xs'>Tag</a>"
+    },
+    {
+      "DT_RowId": "row_2",
+	  "sno": "2",
+      "name": "Criselda Volks <a href='#' class='btn btn-brown btn-xs'>New!</a>",
+      "contact": "+6597654321",
+      "age": "28",
+      "level": "Diploma",
+      "exp": "5",
+      "salary-sgd": "SGD 750",
+      "availability": "Available",
+      "resume": "<a href='#' class='btn btn-primary btn-xs'>View Résumé</a> <a href='#' class='btn btn-success btn-xs'>Tag</a>"
+    },
+    {
+      "DT_RowId": "row_3",
+	  "sno": "3",
+      "name": "Pepsi Paloma",
+      "contact": "+6581234567",
+      "age": "30",
+      "level": "Certificate",
+      "exp": "3",
+      "salary-sgd": "SGD 650",
+      "availability": "Tagged by Eugene for Johnny Lin",
+      "resume": "<a href='#' class='btn btn-primary btn-xs'>View Résumé</a> <a href='#' class='btn btn-default btn-xs'>Untag</a>"
+    },
+    {
+      "DT_RowId": "row_4",
+	  "sno": "4",
+      "name": "Niranjana Raj",
+      "contact": "+6587654321",
+      "age": "30",
+      "level": "Certificate",
+      "exp": "3",
+      "salary-sgd": "SGD 650",
+      "availability": "Tagged by Eugene for Samantha Heng",
+      "resume": "<a href='#' class='btn btn-primary btn-xs'>View Résumé</a> <a href='#' class='btn btn-default btn-xs'>Untag</a>"
+    },
+    {
+      "DT_RowId": "row_5",
+	  "sno": "5",
+      "name": "Rajanigandha Kumar",
+      "contact": "+6590011223",
+      "age": "31",
+      "level": "Bachelor",
+      "exp": "3",
+      "salary-sgd": "SGD 800",
+      "availability": "Available",
+      "resume": "<a href='#' class='btn btn-primary btn-xs'>View Résumé</a> <a href='#' class='btn btn-success btn-xs'>Tag</a>"
+    }
+  ]
+}

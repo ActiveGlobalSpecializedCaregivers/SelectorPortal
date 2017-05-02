@@ -1,0 +1,399 @@
+#applicant-rounded-container {
+	width: 960px;
+	margin: 20px auto 0px auto;
+}
+
+.rounded_container {
+	background: #FFFFFF;
+	color:#000000;
+}
+
+#applicant { display: none !important;	}
+
+.applicant-job-info,
+.applicant-job-description p,
+.MsoNormal,
+.MsoNormal span,
+.message p,
+.applicant-job-description li,
+.applicant-job-description ul,
+.applicant-job-description ol,
+.applicant-job-info-details,
+.applicant-field-wrapper,
+.applicant-label, 
+.applicant-job-placeholder,
+#applicant-credit,
+a.applicant-job-link,
+#applicant-resume-upload div.error {
+	font: normal 12px/1.3em Arial, Verdana, sans-serif;
+	color: #333;
+	padding: 0px;
+	margin: 0 0 1.2em 0;
+	text-align: left;
+	
+}
+
+.MsoNormal, .MsoNormal span, .MsoNormal span { font-size: inherit !important; }
+
+#applicant { margin-bottom: 40px; }
+
+.applicant-job {
+	clear: both;
+}
+
+.applicant-job-description {
+	display: none;
+	padding-bottom: 20px;
+}
+
+.applicant-job-description strong {
+	font-weight: bold;
+	font-style: inherit;
+}
+
+.applicant-job-description em {
+	font-style: italic !important;
+}
+
+.applicant-job-description ul,
+.applicant-job-description ol {
+	margin: 0 0 1.2em 40px;
+	padding: 0px;
+}
+
+.applicant-job-description ul li { list-style-type: disc !important; }
+
+.applicant-job-description ol li { list-style-type: decimal !important; }
+
+.applicant-job-description li {
+	margin-bottom: .25em;
+	padding: 0px;
+}
+
+.applicant-job-description a {
+	color: #3C79A8;
+}
+
+a.applicant-job-link {
+	text-decoration: none;
+	color: #3C79A8;
+}
+
+a.applicant-job-link:hover { text-decoration: underline; }
+
+#applicant-resumes-title,
+#applicant-forward-title,
+#applicant-jobs-title {
+	font: bold 20px/1.3em Arial, Verdana, sans-serif;
+	margin: 10px 0 10px 0;
+	color: #000;
+}
+
+#applicant-resumes-title {
+	margin-left: 25px;
+}
+
+#applicant-jobs-title {
+	margin-left: 0px;
+	margin-top: 0px;
+}
+
+.applicant-job-title {
+	font: bold 16px/1.3em Arial, Verdana, sans-serif;
+	margin: 15px 0 0 0;
+	border-top: 2px dotted #DDD;
+	padding: 3px 0 0 0;
+	color: #000;
+}
+
+.applicant-buttons,
+.applicant-job-title,
+.applicant-jobs-text { text-align: left; }
+
+#applicant-resume-upload {
+	margin: 0;
+	border: 1px solid #DDD;
+	background-color: #FFF;
+	padding: 0;
+	text-align: left;
+}
+		
+#applicant-resume-upload a img { border: none; }
+
+#applicant-resume-upload div.error {
+	color: #BD1300;
+	margin-bottom: 2px;
+}
+
+div.applicant-field-wrapper {
+	margin-left: 25px;
+	text-align: left;
+	margin-bottom: 12px;
+	color: #000;
+}
+
+#applicant-message {
+	color: #000;
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
+
+select#applicant-applied-value { height: auto; }
+
+.applicant-label, #applicant-credit {
+	margin: 8px 0 2px 0;
+	padding: 0;
+	font-weight: bold;
+	color: #000;
+}
+
+#applicant-jobboard #applicant-credit {
+	float: right;
+}
+
+#applicant-resume-upload-wrapper p {
+	margin-bottom: 0;
+}
+
+#applicant-resume-paste-wrapper p {
+	margin-bottom: 3px;
+}
+
+.applicant-field {
+	width: 90%;
+	font: normal 16px/1.2em Arial, Verdana, sans-serif;
+	color: #000;
+	padding: 5px;
+	margin: 0px;
+}
+
+#applicant-message-required {
+	font-size: 12px;
+}
+
+#applicant-coverletter-value,
+#applicant-wmyu-value,
+#applicant-resumetext-value {
+	font-size: 12px;
+	height: 200px;
+}
+
+#applicant-wmyu-value,
+#applicant-references-value {
+	font-size: 12px;
+	height: 80px;
+}
+
+#applicant-felonyexplain-value {
+	font-size: 12px;
+	height: 100px;
+}
+
+#applicant-phone-value,
+#applicant-salary-value,
+#applicant-start-value
+{ width: 50%; }
+
+#applicant-gpa-value,
+#applicant-flighthours-value 
+{ width: 25%; }
+
+#applicant-submit {
+	color: #000;
+	font-size: 16px;
+}
+
+#applicant-submit a { color: #5BB6CF; }
+
+#applicant-submit-resume,
+#applicant-submit-forward,
+#applicant-cancel-forward { font-size: 14px; }
+
+#applicant-submit-forward,
+#applicant-cancel-forward { margin-bottom: 15px; }
+
+#applicant-jobs {
+	border: 0px solid #BBB;
+	border-top-color: #DDD;
+	border-left-color: #DDD;
+	padding: 0;
+}
+
+#applicant-credit-logo { margin-top: 10px; }
+
+.applicant-job-info-details,
+.applicant-job-info {
+	margin: 0 1em .25em 0;
+	line-height: 1.5em;
+	display: block;
+	float: left;
+}
+
+.applicant-job-info-details {
+	display: none;
+}
+
+.applicant-job-view-details {
+	clear: both;
+}
+
+.applicant-department-heading,
+.applicant-type-heading {
+	clear: both;
+	font-size: 22px;
+	margin: 10px 0 8px 0;
+	color: #000;
+}
+
+.applicant-job-heading {
+	font-weight: bold;
+	color: #000;
+}
+
+.applicant-job-department,
+.applicant-job-experience { 
+	margin-left: 10px; 
+}
+
+.applicant-job-placeholder { 
+	padding-bottom: 10px;
+ }
+
+.applicant-form .message {
+	background-color: #a9c442;
+	border: 1px solid #a9c442;
+	font-size: 14px;
+}
+
+.applicant-form .message p {
+	font-weight: bold;
+	font-size: 14px;
+	margin: 0px;
+	color: #FFF;
+	padding: 15px;
+}
+
+.applicant-form .message img { display: none; }
+
+.applicant-form .msg_error_message {
+	background-color: #cb4621;
+	border-color: #cb4621;
+}
+
+.applicant-form .error {
+	font: bold 12px/15px Arial, Verdana, sans-serif;
+	color: #BD1300;
+}
+
+#applicant-message-text,
+.applicant-message-text { width: 90%; }
+
+.applicant-buttons {
+	margin: 15px 0 10px 0;
+}
+
+.applicant-fallback { margin-bottom: 15px; }
+
+.applicant-selected { border: 1px solid #555; }
+
+.applicant-job-description-text {
+	margin-top: 10px;
+}
+
+#applicant-resume-value {
+	margin: 3px 0 0 0;
+}
+
+#applicant-resume-options p {
+	margin-bottom: 0;
+}
+
+#applicant-address-value {
+	margin-bottom: 5px;
+}
+
+#applicant-city-value { 
+	width: 51%; 
+	margin-right: 5px;
+}
+
+#applicant-state-value { 
+	width: 15%;
+	margin-right: 5px; 
+}
+
+#applicant-postal-value { 
+	width: 21%; 
+}
+
+.resumtor-dimmed-text {
+	color: #AAA;
+}
+
+#applicant-eeo-message {
+	margin-top: 20px;
+}
+
+#applicant-eeo-message strong {
+	font-weight: bold;
+	font-style: inherit;
+}
+
+#applicant-eeo_race-value {
+	width: 330px;
+}
+
+#applicant-eeo_disability-value {
+	margin-bottom: 10px;
+}
+
+#applicant-eeo_gender-value,
+#applicant-eeo_disability-value {
+	width: 200px;
+}
+
+#applicant-cancel-resume {
+	display: none;
+}
+
+p.applicant-social-links {
+	float: right;
+}
+
+#applicant-footer-wrapper p,
+#applicant-footer-wrapper a {
+	color: #666;
+}
+
+#applicant-footer-wrapper p {
+	font-size: .75em;
+	padding: 15px 0 0 20px;
+}
+
+.applicant-textfield-tiny {
+	width: 15%
+}
+
+.applicant-textfield-small {
+	width: 25%
+}
+
+.applicant-textfield-medium {
+	width: 50%;
+}
+
+.applicant-textfield-large {
+	width: 90%;
+}
+
+.applicant-textarea-small {
+	height: 100px;
+}
+
+.applicant-textarea-medium {
+	height: 130px;
+}
+
+.applicant-textarea-large {
+	height: 180px;
+}
