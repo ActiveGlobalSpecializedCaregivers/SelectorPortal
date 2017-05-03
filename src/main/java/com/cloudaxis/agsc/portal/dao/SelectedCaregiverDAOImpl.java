@@ -33,6 +33,7 @@ import com.cloudaxis.agsc.portal.model.User;
 
 public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 
+	private static final int TIME_THRESHOLD_FOR_NEW_CANDIDATE = 7 * 24 * 60 * 60 * 1000; // 7 days
 	protected Logger		logger	= Logger.getLogger(SelectedCaregiverDAOImpl.class);
 
 	private JdbcTemplate	jdbcTemplate;
@@ -1335,9 +1336,10 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				candidate.setSalaryTWD((String)result.get("salary_twd"));
 				candidate.setMarkedAsRedayTime((Date)result.get("marked_as_ready_time"));
 				candidate.setNumbersOfPlacement((String) result.get("numbers_of_placement"));
-				if(candidate.getMarkedAsRedayTime() != null){
-					int minutes = new Date().getMinutes() - candidate.getMarkedAsRedayTime().getMinutes();
-					if(minutes <= 10080){
+				candidate.setDateOfReadyForPlacement((Date)result.get("date_ready_for_placement"));
+				if(candidate.getDateOfReadyForPlacement() != null){
+					long diff = System.currentTimeMillis() - candidate.getDateOfReadyForPlacement().getTime();
+					if(diff <= TIME_THRESHOLD_FOR_NEW_CANDIDATE){
 						candidate.setNewCaregiverFlag("new");
 					}
 				}
