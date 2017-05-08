@@ -366,7 +366,13 @@ public class EmailService {
 
 		// Set up TO, FROM, CC, SUBJECT, RECEIPIENT
 		message.setFrom(new InternetAddress(senderEmail));
-		message.setRecipient(RecipientType.TO, new InternetAddress(cv.getSentTo()));
+		String[] sentToArray = cv.getSentTo().split(";");
+		for(String sentTo : sentToArray){
+			if(sentTo.isEmpty()){
+				continue;
+			}
+			message.addRecipient(RecipientType.TO, new InternetAddress(sentTo));
+		}
 		message.setSubject(caregiver.getFullName() + " Candidates CV");
 		message.setSentDate(new Date());
 

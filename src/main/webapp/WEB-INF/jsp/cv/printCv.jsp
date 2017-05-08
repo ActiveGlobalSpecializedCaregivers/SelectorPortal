@@ -91,7 +91,7 @@
     <table class="wrapper" border="0" align="center" cellpadding="0" cellspacing="0" style="width:600px">
         <tr>
             <td>
-                <table class="brandbartable" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="background-color:#ffffff;">
+                <table class="brandbartable" width="100%" border="0" align="center" cellpadding="6" cellspacing="0" style="background-color:#ffffff;">
                     <tr>
                         <td align="left" style="background-color:#ffffff;"><a href="http://www.activeglobalcaregiver.com"><img src="${pageContext.request.contextPath}/resources/images/logo-active-global-caregiver.png" alt="" class="logo" border="0"/></a>
                         </td>

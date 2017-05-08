@@ -901,7 +901,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 
 	@Override
 	public Integer getNewAmount(String querySql) {
-		String sql = "select count(user_id) from candidate_profile where status = 7 and (DATEDIFF(marked_as_ready_time, now()) < 7) " + querySql + ";";
+		String sql = "select count(user_id) from candidate_profile where status = 7 and (DATEDIFF(marked_as_ready_time, now()) < 7 or DATEDIFF(date_ready_for_placement, now()) < 7) " + querySql + ";";
 		try{
 			return jdbcTemplate.queryForObject(sql, Integer.class);
 		}catch(DataAccessException e){
@@ -1339,6 +1339,11 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				candidate.setDateOfReadyForPlacement((Date)result.get("date_ready_for_placement"));
 				if(candidate.getDateOfReadyForPlacement() != null){
 					long diff = System.currentTimeMillis() - candidate.getDateOfReadyForPlacement().getTime();
+					if(diff <= TIME_THRESHOLD_FOR_NEW_CANDIDATE){
+						candidate.setNewCaregiverFlag("new");
+					}
+				}else if(candidate.getMarkedAsRedayTime() != null){
+					long diff = System.currentTimeMillis() - candidate.getMarkedAsRedayTime().getTime();
 					if(diff <= TIME_THRESHOLD_FOR_NEW_CANDIDATE){
 						candidate.setNewCaregiverFlag("new");
 					}
