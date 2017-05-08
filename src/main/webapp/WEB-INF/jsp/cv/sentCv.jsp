@@ -87,18 +87,13 @@
     </style>
 </head>
 
-<body bgcolor="#F2F2F2" style="margin:0px;background-color:#F2F2F2;font-family: Arial, Helvetica, sans-serif;color:#333333;font-size:13px;">
-	<div>
-		<img src="cid:logoactiveglobalcaregiver"/>
-	</div>
+<body bgcolor="#ffffff" style="margin:0px;background-color:#ffffff;font-family: Arial, Helvetica, sans-serif;color:#333333;font-size:13px;">
     <table class="wrapper" border="0" align="center" cellpadding="0" cellspacing="0" style="width:600px">
         <tr>
             <td>
                 <table class="brandbartable" width="100%" border="0" align="center" cellpadding="6" cellspacing="0" style="background-color:#ffffff;">
                     <tr>
-                        <td width="100%" align="left" style="background-color:#ffffff;"><a href="http://www.activeglobalcaregiver.com">
-                       	 	
-                        </a>
+                        <td align="left" style="background-color:#ffffff;"><a href="http://www.activeglobalcaregiver.com"><img src="cid:logoactiveglobalcaregiver" alt="" class="logo" border="0"/></a>
                         </td>
                         <td width="100%" height="21" class="contentheader" style="font-family: Arial, Helvetica, sans-serif;color:#000000;font-size:11px;font-weight:bold;padding-right:15px;" align="right"><a href="http://www.activeglobalcaregiver.com" target="_blank" class="notMobileLink" style="font-family: Arial, Helvetica, sans-serif;color:#000000;font-size:11px;font-weight:bold;text-decoration:none;:hover{color:#000000}">www.activeglobalcaregiver.com</a>
                         </td>
@@ -131,14 +126,14 @@
                                     <td align="left" valign="top">
                                         <table cellspacing="0" cellpadding="0" border="0" width="100%">
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <p style="font:normal 15px/1.5em arial;font-weight: bold;border-bottom: 1px solid #f2f2f2;">
                                                     	${caregiver.fullName}
                                                     </p>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -154,7 +149,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -170,7 +165,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -186,7 +181,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -202,7 +197,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -218,7 +213,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -234,7 +229,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -250,7 +245,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -266,7 +261,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -282,7 +277,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -298,7 +293,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -314,7 +309,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -330,7 +325,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -346,7 +341,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -362,7 +357,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -378,7 +373,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
@@ -394,7 +389,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 5px 10px;">
+                                                <td style="padding: 3px 10px;">
                                                     <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom: 1px solid #f2f2f2;">
                                                         <tr>
                                                             <td style="width: 60%;">
