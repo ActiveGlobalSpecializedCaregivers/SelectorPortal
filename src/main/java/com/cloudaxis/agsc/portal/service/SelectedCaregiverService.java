@@ -443,6 +443,8 @@ public class SelectedCaregiverService {
                 PutObjectRequest req_img_thumbnail = new PutObjectRequest(bucketName, image_thumbnail_name, newFile);
                 s3client.putObject(req_img_thumbnail);
             }
+            // TODO: verify!!!!
+            fileOfImage.delete();
 		}
 		catch (AmazonServiceException ase) {
 			logger.error("Caught an AmazonServiceException, which means your request made it "

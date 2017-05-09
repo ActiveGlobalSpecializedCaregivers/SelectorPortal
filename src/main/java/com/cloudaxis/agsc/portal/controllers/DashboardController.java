@@ -9,30 +9,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.core.env.Environment;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
+import com.cloudaxis.agsc.portal.helpers.DefaultResumeMultipartFile;
 import com.cloudaxis.agsc.portal.helpers.ExportCaregiverlUtils;
 import com.cloudaxis.agsc.portal.helpers.RandomCodeUtils;
 import com.cloudaxis.agsc.portal.helpers.StringUtil;
@@ -64,6 +45,24 @@ import com.cloudaxis.agsc.portal.validator.UserValidator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysql.jdbc.StringUtils;
+import org.apache.log4j.Logger;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.core.env.Environment;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 @RequestMapping("/")
@@ -790,12 +789,26 @@ public class DashboardController extends AbstractController {
 				}
 				
 			}
+			if(caregiver.getResume() == null){
+				uploadDefaultResume(caregiver);
+			}
 			selectedCaregiverService.update(caregiver);
 		}
 		
 		return "redirect:/dashboard/getCandidate?userId=" + caregiver.getUserId() + "&active=" + active;
-	}	
-		
+	}
+
+	/**
+	 * Uploads default resume for caregiver.
+	 * @param caregiver
+	 */
+	private void uploadDefaultResume(Caregiver caregiver) throws IOException
+	{
+		DefaultResumeMultipartFile defaultResumeFile = DefaultResumeMultipartFile.getInstance();
+		selectedCaregiverService.uploadFile(defaultResumeFile, caregiver, "resume");
+		caregiver.setResume(defaultResumeFile.getOriginalFilename());
+	}
+
 	@RequestMapping(value = "/candidate/changeTheStatusOfRegisteredConcorde", method = RequestMethod.POST)
 	public void changeTheStatisOfRegisteredConcorde(@RequestParam("caregiverId") String caregiverId, @RequestParam("status") String status, HttpServletRequest request, HttpServletResponse response){
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
