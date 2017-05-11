@@ -680,11 +680,11 @@
 										 --%>
 										 <c:choose>
 										 	<c:when test="${caregiver.resume != 'null'}">
-												<iframe src="${pageContext.request.contextPath}/resources/testPdf/web/viewer.html?file=${pageContext.request.contextPath}/resources/${caregiver.userId}/resume/${caregiver.resume}"
+												<iframe src="https://docs.google.com/gview?url=${pageContext.request.contextPath}/resources/${caregiver.userId}/resume/${caregiver.resume}&embedded=true"
 												height="800px" width="80%" frameborder="0"></iframe>
 										 	</c:when>
 										 	<c:otherwise>
-										 		<iframe src="${pageContext.request.contextPath}/resources/testPdf/web/viewer.html?file=${pageContext.request.contextPath}/resources/resume/resume.pdf"
+										 		<iframe src="https://docs.google.com/gview?url=${pageContext.request.contextPath}s/resources/resume/resume.pdf&embedded=true"
 												height="800px" width="80%" frameborder="0"></iframe>
 										 	</c:otherwise>
 										 </c:choose>
