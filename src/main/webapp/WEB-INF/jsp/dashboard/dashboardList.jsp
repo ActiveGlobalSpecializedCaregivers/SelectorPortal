@@ -674,18 +674,17 @@
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 								<div class="swiper-slide swiper-no-swiping">		<!-- 0 -->
-
 									<div class="content-slide">
 										<%-- <iframe src="${caregiver.resumeUrl}" height="800px" width="80%" frameborder="0"></iframe>
 										 --%>
 										 <c:choose>
 										 	<c:when test="${caregiver.resume != 'null'}">
-												<iframe src="https://docs.google.com/gview?url=${pageContext.request.contextPath}/resources/${caregiver.userId}/resume/${caregiver.resume}&embedded=true"
-												height="800px" width="80%" frameborder="0"></iframe>
+												<iframe src="https://docs.google.com/gview?url=http://selector.activeglobalcaregiver.com/resources/${caregiver.userId}/resume/${caregiver.resume}&embedded=true"
+												height="800px" width="100%" frameborder="0"></iframe>
 										 	</c:when>
 										 	<c:otherwise>
-										 		<iframe src="https://docs.google.com/gview?url=${pageContext.request.contextPath}s/resources/resume/resume.pdf&embedded=true"
-												height="800px" width="80%" frameborder="0"></iframe>
+										 		<iframe src="https://docs.google.com/gview?url=http://selector.activeglobalcaregiver.com/resources/resume/resume.pdf&embedded=true"
+												height="800px" width="100%" frameborder="0"></iframe>
 										 	</c:otherwise>
 										 </c:choose>
 									</div>
