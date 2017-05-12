@@ -234,7 +234,7 @@
                                         <th width="5%">Years of experience</th>
                                         <th width="10%">Expected salary</th>
                                         <th width="8%">Availability</th>
-                                        <th width="5%">R�sum�</th>
+                                        <th width="5%">R&eacute;sum&eacute;</th>
                                         <th width="8%">Status</th>
                                         <th width="10%">Tagged To</th>
 	                                    <th width="15%">Contracted To</th>
@@ -541,7 +541,7 @@
 							   {
 								   "mData" : "resume",
 								   "mRender" : function(data, type, full) {
-									   return "<a href='${pageContext.request.contextPath}/admin/users/view_cv?userId=" + full['user_id'] + "' class='btn btn-primary btn-xs'  target='_blank'>View R�sum�</a>";
+									   return "<a href='${pageContext.request.contextPath}/admin/users/view_cv?userId=" + full['user_id'] + "' class='btn btn-primary btn-xs'  target='_blank'>View R&eacute;sum&eacute;</a>";
 								   }
 							   },
 							   {
