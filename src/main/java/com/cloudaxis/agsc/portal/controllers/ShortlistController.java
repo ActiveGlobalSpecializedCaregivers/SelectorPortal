@@ -54,12 +54,16 @@ public class ShortlistController extends AbstractController{
 		ObjectMapper mapper = new ObjectMapper();
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try{
-			List<Caregiver> candidateList = null;
+			List<Caregiver> candidateList;
 			if(StringUtils.isNotEmpty(queryParam)){
 				SearchParamOfCandidate searchParam = new ObjectMapper().readValue(queryParam, SearchParamOfCandidate.class);
-				candidateList = selectedCaregiverService.getCandidatesByParams(searchParam, status, user.getAuthorities().toString());
+				candidateList = selectedCaregiverService.processTaggedStatus(
+						selectedCaregiverService.getCandidatesByParams(searchParam, status,
+																	   user.getAuthorities().toString()), false, user);
 			}else{
-				candidateList = selectedCaregiverService.getCandidatesByStatus(status, user.getAuthorities().toString());
+				candidateList = selectedCaregiverService.processTaggedStatus(
+						selectedCaregiverService.getCandidatesByStatus(status, user.getAuthorities().toString()), true,
+						user);
 			}
 			jsonString = mapper.writeValueAsString(candidateList);
 		}catch(IOException e){

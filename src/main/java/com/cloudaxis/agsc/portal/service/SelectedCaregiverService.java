@@ -5,7 +5,10 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -1030,5 +1033,44 @@ public class SelectedCaregiverService {
 		}
 		return isIdentity;
 	}
-	
+
+	/**
+	 * Processes list of candidates, looking for Tagged candidates and resetting them back to ReadyForPlacement status
+	 * if they are tagged for more then 7 days.
+	 * @param candidateList the candidates to process
+	 * @param includeUpdatedCaregiver true to exclude candidates from the resulting list, false just to update them
+	 * @param user the user initiated this request
+	 * @return the list of caregivers
+	 */
+	public List<Caregiver> processTaggedStatus(List<Caregiver> candidateList,
+											   boolean includeUpdatedCaregiver,
+											   User user)
+	{
+		ArrayList<Caregiver> resultList = new ArrayList<>(candidateList.size());
+		for(Caregiver caregiver : candidateList){
+			if(caregiver.getStatus() == 8){// Tagged
+				if(daysAfter(caregiver.getTaggedDate(), 7)){
+					// update status to ReadyForPlacement (7)
+					editStatus(caregiver, user, "7");
+					if(includeUpdatedCaregiver){
+						resultList.add(caregiver);
+					}
+					continue;
+				}
+			}
+			resultList.add(caregiver);
+		}
+		return resultList;
+	}
+
+	/**
+	 * Determines if passed specified number of days since that date.
+	 * @param date the base date
+	 * @param days the number of days
+	 * @return true if now date > date + days
+	 */
+	private boolean daysAfter(Date date, int days)
+	{
+		return date.toInstant().plus(days, ChronoUnit.DAYS).isAfter(Instant.now());
+	}
 }
