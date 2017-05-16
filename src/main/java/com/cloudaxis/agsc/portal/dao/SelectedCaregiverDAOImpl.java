@@ -669,7 +669,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 					expression = "='" + searchText + "'";
 					break;
 				case "contain":
-					expression = "like " + "'%" + searchText + "%'";
+					expression = "like " + "'%" + searchText.replace(' ', '%') + "%'";
 					break;
 				case "notcontain":
 					expression = "not like " + "'%" + searchText + "%'";
