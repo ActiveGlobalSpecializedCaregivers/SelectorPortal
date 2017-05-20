@@ -35,8 +35,8 @@
 	        		<div id="page-head1">
 	        			<div id="page-head1-left" style="margin-left: 100px;width: 493px; margin-top:5px;">
 							<div>
-								<label
-									style="color: #4a5ad3; font-weight: bold; font-size: x-large;">${caregiver.fullName}</label>
+								<label style="color: #4a5ad3; font-weight: bold; font-size: x-large;">${caregiver.fullName}</label>
+								<a style="margin-left: 95px; margin-bottom:15px" href="/admin/users/view_cv?userId=${caregiver.userId}" class="btn btn-primary btn-s" id="view_cv">View Bio-Data</a>
 							</div>
 							<div style="margin-top: -13px">
 								<div class="row">
