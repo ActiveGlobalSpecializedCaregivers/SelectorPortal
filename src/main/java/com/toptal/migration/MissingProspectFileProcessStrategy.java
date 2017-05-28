@@ -54,7 +54,7 @@ public class MissingProspectFileProcessStrategy{
 
     private boolean validateResume(CandidateDocument candidateDocument) {
         if(candidateDocument != null){
-                File file = migrationContext.getAttachmentResolver().resolveProspectResume(
+                File file = migrationContext.getAttachmentResolver().resolveProspectResume(candidateDocument.getProspectId(),
                         candidateDocument.getFileName());
                 if(!file.exists()) {
                     logger.info("File "+file+" doesn't exist!");

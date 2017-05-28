@@ -2,6 +2,7 @@ package com.toptal.migration;
 
 import com.cloudaxis.agsc.portal.model.Caregiver;
 import com.toptal.migration.model.CandidateDocument;
+import com.toptal.migration.model.CandidateDocumentMapping;
 import com.toptal.migration.model.CandidateEmail;
 import com.toptal.migration.model.CandidateEvaluation;
 import com.toptal.migration.model.CandidateFeedback;
@@ -36,6 +37,7 @@ public class CsvCandidateStorage implements CandidateStorage {
     private HashMap<String, ArrayList<CandidateEmail>> candidateEmails;
     private HashMap<String, Caregiver> candidates;
     private HashMap<String, CandidateDocument> candidateResumes;
+    private HashMap<String, Map<String, CandidateDocumentMapping>> candidateDocumentMappings;
     private HashMap<Class, Integer> errors;
 
     public CsvCandidateStorage(DataFileProcessorFactory dataFileProcessorFactory){
@@ -85,6 +87,18 @@ public class CsvCandidateStorage implements CandidateStorage {
         while(dataFileProcessor.hasNextLine()){
             String line = dataFileProcessor.nextLine();
             String[] fields = line.split(",");
+            if(!fields[0].trim().isEmpty()) {
+                T entry = creator.create(fields);
+                map.put(fields[0].trim(), entry);
+            }
+        }
+    }
+
+    private <T> void documentMapperParse(DataFileProcessor dataFileProcessor, Creator<T> creator, Map<String, T> map)
+            throws IOException {
+        while(dataFileProcessor.hasNextLine()){
+            String line = dataFileProcessor.nextLine();
+            String[] fields = line.split(";");
             if(!fields[0].trim().isEmpty()) {
                 T entry = creator.create(fields);
                 map.put(fields[0].trim(), entry);
@@ -496,6 +510,21 @@ public class CsvCandidateStorage implements CandidateStorage {
         return candidateResumes.get(prospectId);
     }
 
+    @Override
+    public Map<String, CandidateDocumentMapping> loadCandidateDocumentMappings(String prospectId)
+    {
+        if(candidateDocumentMappings == null){
+            loadCandidateMappings();
+        }
+        return candidateDocumentMappings.get(prospectId);
+    }
+
+    private void loadCandidateMappings()
+    {
+        candidateDocumentMappings = new HashMap<>();
+        loadFile("candidates.mappings.filename", candidateDocumentMappings, this::documentMapperParse, this::createCandidateDocumentMapping);
+    }
+
     private void loadCandidateResumes() {
         candidateResumes = new HashMap<>();
         loadFile("candidates.filename", candidateResumes, this::defaultInputParse, this::createCandidateResume);
@@ -503,6 +532,15 @@ public class CsvCandidateStorage implements CandidateStorage {
 
     private CandidateDocument createCandidateResume(String[] fields) {
         return new CandidateDocument(new String[]{fields[0], fields[23]});
+    }
+
+    private Map<String, CandidateDocumentMapping> createCandidateDocumentMapping(String[] fields) {
+        Map<String, CandidateDocumentMapping> candidateMappings = candidateDocumentMappings.get(fields[0]);
+        if(candidateMappings == null){
+            candidateMappings = new HashMap<>(10);
+        }
+        candidateMappings.put(fields[4], new CandidateDocumentMapping(fields));
+        return candidateMappings;
     }
 
     private void loadCandidateEmails() {

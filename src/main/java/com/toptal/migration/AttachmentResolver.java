@@ -11,5 +11,5 @@ import java.io.File;
 public interface AttachmentResolver {
 
     File resolveProspectFile(String prospectId, String fileName);
-    File resolveProspectResume(String resumeName);
+    File resolveProspectResume(String prospectId, String resumeName);
 }

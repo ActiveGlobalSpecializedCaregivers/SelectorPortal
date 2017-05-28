@@ -59,18 +59,7 @@ public abstract class AbstractStrategy implements CandidateMigrationStrategy{
             logger.info("No feedback records for candidate found");
         }
 
-        CandidateNote[] notes = migrationContext.getCandidateStorage().loadCandidateNotes(prospectId);
-        if (notes != null) {
-            logger.info("Creating comments for candidate using notes.");
-            for(CandidateNote note : notes){
-                service.createNewComment(note.getComment(),
-                                         migrationContext.getUser(),
-                                         candidate.getUserId());
-            }
-        }
-        else{
-            logger.info("No notes found for candidate");
-        }
+        logger.debug("Skipping notes migration");
     }
 
     protected void migrateEvaluations() {
@@ -148,7 +137,7 @@ public abstract class AbstractStrategy implements CandidateMigrationStrategy{
 
         if(resumeDocument != null){
             logger.info("Found candidate resume.");
-            File file = migrationContext.getAttachmentResolver().resolveProspectResume(
+            File file = migrationContext.getAttachmentResolver().resolveProspectResume(resumeDocument.getProspectId(),
                     resumeDocument.getFileName());
             if(file.exists()) {
                 MultipartFile multipartFile = new MigrationMultipartFile(file,

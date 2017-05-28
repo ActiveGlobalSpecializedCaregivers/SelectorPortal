@@ -57,7 +57,7 @@ public class MigrationController {
 
         candidateStorage = new CsvCandidateStorage(new PropertiesDataFileProcessorFactory(System.getProperty(
                 "config.file")));
-        attachmentResolver = new DefaultAttachmentResolver();
+        attachmentResolver = new DefaultAttachmentResolver(candidateStorage);
     }
 
 

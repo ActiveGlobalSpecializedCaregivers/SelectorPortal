@@ -1,9 +1,12 @@
 package com.toptal.migration;
 
+import java.util.Map;
+
 import com.cloudaxis.agsc.portal.model.Caregiver;
 import com.cloudaxis.agsc.portal.model.EmailHistory;
 import com.toptal.migration.model.Candidate;
 import com.toptal.migration.model.CandidateDocument;
+import com.toptal.migration.model.CandidateDocumentMapping;
 import com.toptal.migration.model.CandidateEmail;
 import com.toptal.migration.model.CandidateEvaluation;
 import com.toptal.migration.model.CandidateFeedback;
@@ -27,4 +30,5 @@ public interface CandidateStorage {
     CandidateQuestionnaire[] loadCandidateQuestionnaires(String prospectId);
     CandidateEmail[] loadCandidateEmails(String prospectId);
     CandidateDocument loadCandidateResume(String prospectId);
+    Map<String, CandidateDocumentMapping> loadCandidateDocumentMappings(String prospectId);
 }
