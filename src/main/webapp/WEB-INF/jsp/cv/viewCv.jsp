@@ -287,11 +287,11 @@
 									</div>
 								</div>
 								<div class="col-md-6">
-                                	<p style="text-align:right;">                                		                                    	
+                                	<p style="text-align:right;">
+										<a href="/dashboard/getCandidate?active=6&userId=${caregiver.userId}" class='btn btn-primary btn-s' id="view_files">View Files</a>
                                     	<a href='#' onclick="printCV()" class='btn btn-primary btn-s' id="print_cv">Print CV</a>
                                     	<a href='#' onclick="showDialog('${caregiver.userId}')" class='btn btn-primary btn-s' id="email_cv">Email CV</a>
                                     	<sec:authorize access="!hasAnyRole('ROLE_PH_RECRUITING_PARTNER','ROLE_HOSPITAL')">
-	                                    	<a href="/dashboard/getCandidate?active=6&userId=${caregiver.userId}" class='btn btn-primary btn-s' id="view_files">View Files</a>
 	                                    	<a href='#' onclick="editCV()" class='btn btn-primary btn-s' id="update_cv">Update CV</a>
 	                                    	<a href='#' onclick="saveCV()" class='btn btn-primary btn-s' id="save_cv" style="display:none;">Save Changes</a>
 	                                    	<a href='#' onclick="cancelCV()" class='btn btn-primary btn-s' id="cancel_cv" style="display:none;">Cancel</a>                                    	
@@ -756,7 +756,6 @@ function cancelCV(){
 	// }
 }
 
-function viewFiles
 function saveCV(){
 	var checkEmail = $("#checkEmail").html();
 	var tag = $('select[name="tag"]').val();

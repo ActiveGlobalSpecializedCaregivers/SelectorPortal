@@ -1049,8 +1049,10 @@ public class SelectedCaregiverService {
 		ArrayList<Caregiver> resultList = new ArrayList<>(candidateList.size());
 		for(Caregiver caregiver : candidateList){
 			if(caregiver.getStatus() == 8){// Tagged
-				if(daysAfter(caregiver.getTaggedDate(), 7)){
+				logger.info("processing tagged caregiver, tag_date="+caregiver.getTaggedDate());
+				if(caregiver.getTaggedDate() != null && daysAfter(caregiver.getTaggedDate(), 7)){
 					// update status to ReadyForPlacement (7)
+					logger.info("setting status to 7");
 					editStatus(caregiver, user, "7");
 					if(includeUpdatedCaregiver){
 						resultList.add(caregiver);
@@ -1071,6 +1073,8 @@ public class SelectedCaregiverService {
 	 */
 	private boolean daysAfter(Date date, int days)
 	{
-		return date.toInstant().plus(days, ChronoUnit.DAYS).isAfter(Instant.now());
+		boolean before = date.toInstant().plus(days, ChronoUnit.DAYS).isBefore(Instant.now());
+		logger.info("daysAfter: date = "+date+" after?"+before);
+		return before;
 	}
 }

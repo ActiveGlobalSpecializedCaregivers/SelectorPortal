@@ -1314,6 +1314,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				candidate.setStatus((Integer)result.get("status"));
 				candidate.setTag((int) result.get("tag"));
 				candidate.setTagOrigin(candidate.getTag());
+				candidate.setTaggedDate((Date) result.get("tagged_date"));
 				candidate.setTaggedTo((String)result.get("tagged_to"));
 				candidate.setTagStatus((String) result.get("tag_status"));
 				candidate.setContractedTo((String)result.get("contracted_to"));

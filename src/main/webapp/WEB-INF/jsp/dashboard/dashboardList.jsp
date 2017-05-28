@@ -36,7 +36,6 @@
 	        			<div id="page-head1-left" style="margin-left: 100px;width: 493px; margin-top:5px;">
 							<div>
 								<label style="color: #4a5ad3; font-weight: bold; font-size: x-large;">${caregiver.fullName}</label>
-								<a style="margin-left: 95px; margin-bottom:15px" href="/admin/users/view_cv?userId=${caregiver.userId}" class="btn btn-primary btn-s" id="view_cv">View Bio-Data</a>
 							</div>
 							<div style="margin-top: -13px">
 								<div class="row">
@@ -44,6 +43,15 @@
 										<label style="color: #d2d3d6; font-size: small; color: gray; font-style: italic;">
 											Applied on <fmt:formatDate value="${caregiver.dateApplied}" type="both" pattern="dd/MM/yyyy" />
 										</label>
+									</div>
+									<div class="col-md-6">
+										<a href="/admin/users/view_cv?userId=${caregiver.userId}" class="btn btn-primary btn-s" id="view_cv">View Bio-Data</a>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<label><strong><i class="fa fa-phone header-color"></i>&nbsp; &nbsp;</strong>${caregiver.mobile}</label>
 									</div>
 									<div class="col-md-6">
 										<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_RECRUITER', 'ROLE_PH_RECRUITING_PARTNER')">
@@ -55,13 +63,13 @@
 											<label class="header-color"><strong>Registered with Concorde</strong></label>
 										</sec:authorize>
 									</div>
+
 								</div>
-
-								<div class="row">
-									<div class="col-md-6">
-										<label><strong><i class="fa fa-phone header-color"></i>&nbsp; &nbsp;</strong>${caregiver.mobile}</label>
-									</div>
-
+								
+	        				    <div class="row">
+	        				    	<div class="col-md-6">
+	        				    		<label><strong><i class="fa fa-envelope header-color"></i>&nbsp; &nbsp;</strong>${caregiver.email}</label>
+	        				    	</div>
 									<div class="col-md-6">
 										<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_RECRUITER')">
 											<input id="schemaStatus" style="height:13px;width:13px;" type="checkbox" onclick="changeSchemaStatus();"/>
@@ -69,30 +77,27 @@
 										</sec:authorize>
 										<sec:authorize access="hasRole('ROLE_PH_RECRUITING_PARTNER')">
 											<input id="verfiedStatus" style="height:13px;width:13px;" type="checkbox" onclick="changeVerifiedStatus();" />
-	        				    			<label class="header-color" id="medicalCertValidator"><strong>Medical Cert Verified</strong></label>
+											<label class="header-color" id="medicalCertValidator"><strong>Medical Cert Verified</strong></label>
 										</sec:authorize>
 										<sec:authorize access="hasAnyRole('ROLE_SALES', 'ROLE_SALES_SG', 'ROLE_SALES_HK', 'ROLE_SALES_TW')">
 											<input id="schemaStatus" style="height:13px;width:13px;" type="checkbox" disabled />
-	        				    			<label class="header-color" id="medicalCertValidator"><strong>Medical Cert Verified</strong></label>
+											<label class="header-color" id="medicalCertValidator"><strong>Medical Cert Verified</strong></label>
+										</sec:authorize>
+									</div>
+	        					</div>
+								<div class="row">
+									<div class="col-md-6">&nbsp;</div>
+									<div class="col-md-6">
+										<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_RECRUITER')">
+											<input id="verfiedStatus" style="height:13px;width:13px;" type="checkbox" onclick="changeVerifiedStatus();" />
+											<label class="header-color" id="medicalCertValidator"><strong>Medical Cert Verified</strong></label>
+										</sec:authorize>
+										<sec:authorize access="hasAnyRole('ROLE_SALES', 'ROLE_SALES_SG', 'ROLE_SALES_HK', 'ROLE_SALES_TW')">
+											<input id="verfiedStatus" style="height:13px;width:13px;" type="checkbox" disabled />
+											<label class="header-color" id="medicalCertValidator"><strong>Medical Cert Verified</strong></label>
 										</sec:authorize>
 									</div>
 								</div>
-								
-	        				    <div class="row">
-	        				    	<div class="col-md-6">
-	        				    		<label><strong><i class="fa fa-envelope header-color"></i>&nbsp; &nbsp;</strong>${caregiver.email}</label>
-	        				    	</div>
-	        				    	<div class="col-md-6">
-	        				    		<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_RECRUITER')">
-	        					    		<input id="verfiedStatus" style="height:13px;width:13px;" type="checkbox" onclick="changeVerifiedStatus();" />
-	        				    			<label class="header-color" id="medicalCertValidator"><strong>Medical Cert Verified</strong></label>
-	        				    		</sec:authorize>
-	        				    		<sec:authorize access="hasAnyRole('ROLE_SALES', 'ROLE_SALES_SG', 'ROLE_SALES_HK', 'ROLE_SALES_TW')">
-	        					    		<input id="verfiedStatus" style="height:13px;width:13px;" type="checkbox" disabled />
-	        				    			<label class="header-color" id="medicalCertValidator"><strong>Medical Cert Verified</strong></label>
-	        				    		</sec:authorize>
-	        				    	</div>
-	        					</div>
 							</div>       					        		
 	        			</div>
 	        		
