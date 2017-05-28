@@ -362,7 +362,7 @@ public class EmailService {
 		
 		MimeMessage message = mailSender.createMimeMessage();
 		Properties mailProperties = mailSender.getJavaMailProperties();
-		String senderEmail = mailProperties.getProperty("mail.sender");
+		String senderEmail = user.getEmail() == null ? mailProperties.getProperty("mail.sender") : user.getEmail();
 
 		// Set up TO, FROM, CC, SUBJECT, RECEIPIENT
 		message.setFrom(new InternetAddress(senderEmail));
