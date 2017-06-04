@@ -378,7 +378,7 @@ public class EmailService {
 
 		//get the html content to the email content 
 		String path = request.getSession().getServletContext().getRealPath(charPath);	
-		String filePath = path + "WEB-INF" +charPath+ "jsp" +charPath+ "cv" +charPath+ "sentCv.jsp";
+		String filePath = path + "WEB-INF" +charPath+ "jsp" +charPath+ "cv" +charPath+ "sentCvNew.jsp";
 		String str = "";
 		try {
 			String tempStr = "";
@@ -425,6 +425,7 @@ public class EmailService {
 		}
 		
 		//insert data to the html page
+		str = str.replace("${email.message}", cv.getEmailMsg());
 		str = str.replace("${caregiver.fullName}",caregiver.getFullName());
 		str = str.replace("${caregiver.gender}",caregiver.getGender());
 		str = str.replace("${caregiver.educationalLevel}",caregiver.getEducationalLevel());
@@ -508,7 +509,7 @@ public class EmailService {
 		map.put("header-hobbies", heardPath.concat("header-hobbies.jpg"));
 		map.put("photo", photoPath);
 		
-		MimeBodyPart content = createContent(cv.getEmailMsg()+str, map); 		//insert the picture into the content
+		MimeBodyPart content = createContent(str, map); 		//insert the picture into the content
 	    MimeMultipart allPart = new MimeMultipart("mixed"); 
 	    allPart.addBodyPart(content); 
 	    message.setContent(allPart);
