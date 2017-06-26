@@ -539,7 +539,7 @@ public class CsvCandidateStorage implements CandidateStorage {
         if(candidateMappings == null){
             candidateMappings = new HashMap<>(10);
         }
-        candidateMappings.put(fields[4], new CandidateDocumentMapping(fields));
+        candidateMappings.put(fields[1], new CandidateDocumentMapping(fields));
         return candidateMappings;
     }
 

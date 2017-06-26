@@ -102,7 +102,7 @@ public class MigrationController {
             }
             catch (Throwable e) {
                 logger.error("Error processing line:" + line);
-                logger.error("Error = " + e);
+                logger.error("Error = " + e, e);
                 totalError++;
             }
         }

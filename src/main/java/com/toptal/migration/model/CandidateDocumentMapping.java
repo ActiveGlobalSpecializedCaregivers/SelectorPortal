@@ -18,9 +18,9 @@ public class CandidateDocumentMapping
     {
 
         this.prospectId = fields[0];
-        this.oldFileName = fields[4];
-        this.newFileName = fields[6];
-        this.directory = fields[5];
+        this.oldFileName = fields[1];
+        this.newFileName = fields[3];
+        this.directory = fields[2];
     }
 
     public String getProspectId()

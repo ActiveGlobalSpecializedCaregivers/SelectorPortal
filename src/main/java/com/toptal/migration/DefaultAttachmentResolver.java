@@ -28,17 +28,13 @@ public class DefaultAttachmentResolver implements AttachmentResolver {
     @Override
     public File resolveProspectFile(String prospectId, String fileName) {
         Map<String, CandidateDocumentMapping> candidateMappings = candidateStorage.loadCandidateDocumentMappings(prospectId);
+        logger.info("For prospect "+prospectId+" found mappings:" +candidateMappings);
 
         File file;
         if(candidateMappings != null && candidateMappings.containsKey(fileName)){
             CandidateDocumentMapping candidateDocumentMapping = candidateMappings.get(fileName);
-            if(candidateDocumentMapping.getDirectory().startsWith("15309"))
-            {
-                file = resolveUpdated(candidateDocumentMapping);
-            }
-            else{
-                file = resolveOriginal(prospectId, fileName);
-            }
+
+            file = resolveUpdated(candidateDocumentMapping);
         }
         else{
             file = resolveOriginal(prospectId, fileName);
@@ -71,13 +67,7 @@ public class DefaultAttachmentResolver implements AttachmentResolver {
         File file;
         if(candidateMappings != null && candidateMappings.containsKey(resumeName)){
             CandidateDocumentMapping candidateDocumentMapping = candidateMappings.get(resumeName);
-            if(candidateDocumentMapping.getDirectory().startsWith("15309"))
-            {
-                file = resolveUpdated(candidateDocumentMapping);
-            }
-            else{
-                file = resolveResumeOriginal(resumeName);
-            }
+            file = resolveUpdated(candidateDocumentMapping);
         }
         else{
             file = resolveResumeOriginal(resumeName);
