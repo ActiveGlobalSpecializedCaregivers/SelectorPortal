@@ -27,6 +27,16 @@ public class MigrationDao {
         return jdbcTemplate.queryForObject(sql, new Object[]{email}, Integer.class);
     }
 
+    public Integer findCandidate(String fullName, Date dob) {
+        String sql = "SELECT user_id FROM candidate_profile WHERE full_name = ? and dob = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{fullName, dob}, Integer.class);
+    }
+
+    public Integer findCandidate(String fullName) {
+        String sql = "SELECT user_id FROM candidate_profile WHERE full_name = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{fullName}, Integer.class);
+    }
+
     public void updateAppliedDate(Integer userId, Date appliedDate){
         String sql = "UPDATE candidate_profile SET date_applied=? "
                      + "WHERE user_id=?;";

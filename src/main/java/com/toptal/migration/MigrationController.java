@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
@@ -88,6 +89,33 @@ public class MigrationController {
         logger.info("Total error:"+totalError);
     }
 
+    public void validateEmailForUpdate(String fileName) throws IOException {
+        try(PrintWriter printWriter = new PrintWriter(new FileWriter(fileName))) {
+            scanner.nextLine();// skip header row
+            while (scanner.hasNextLine()) {
+                final String line = scanner.nextLine();
+                if (line.isEmpty()) {
+                    continue;
+                }
+
+                try {
+                    validateEmail(line, printWriter);
+                    totalProcessed++;
+                }
+                catch (Throwable e) {
+                    logger.error("Error processing line:" + line);
+                    logger.error("Error = " + e);
+                    totalError++;
+                }
+            }
+        }
+
+        logger.info("Missing file processing is complete.");
+        logger.info("Total processed records:"+totalProcessed);
+        logger.info("Total skipped:"+totalSkipped);
+        logger.info("Total error:"+totalError);
+    }
+
     public void migrateData() {
         scanner.nextLine();// skip header row
         while(scanner.hasNextLine()){
@@ -114,18 +142,9 @@ public class MigrationController {
         logger.info("Total error:"+totalError);
     }
 
-    private void process(String line) throws IOException, EmptyResultDataAccessException {
-        String[] fields = line.split(";");
-        User user = setupMigrationUser();
-        BaseServices baseServices = new BaseServicesImpl(selectedCaregiverService, assessmentService,
-                                                         emailTemplatesDAO, userProfileDAO);
-        CandidateMigrationContext migrationContext =
-                new CandidateMigrationContext(fields,
-                                              user,baseServices,
-                                              attachmentResolver,
-                                              candidateStorage);
-        logger.info("processing prospect: " + migrationContext.getProspectId() +
-                    " decision: " + migrationContext.getDecision());
+    private void process(String line) throws IOException, EmptyResultDataAccessException, ParseException
+    {
+        CandidateMigrationContext migrationContext = getCandidateMigrationContext(line);
         String decision = migrationContext.getDecision();
         if("create".equals(decision)){
             CreateStrategy strategy = new CreateStrategy(migrationContext, migrationDao);
@@ -144,6 +163,33 @@ public class MigrationController {
     }
 
     private void processForMissing(String line, PrintWriter printWriter) throws IOException, EmptyResultDataAccessException {
+        CandidateMigrationContext migrationContext = getCandidateMigrationContext(line);
+        String decision = migrationContext.getDecision();
+        if("name but not file on selector".equals(decision)){
+            MissingProspectFileProcessStrategy strategy = new MissingProspectFileProcessStrategy(migrationContext);
+            strategy.processCandidate(printWriter);
+        }
+        else{
+            logger.info("Skipping candidate...");
+            totalSkipped++;
+        }
+    }
+
+    private void validateEmail(String line, PrintWriter printWriter) throws IOException, EmptyResultDataAccessException {
+        CandidateMigrationContext migrationContext = getCandidateMigrationContext(line);
+        String decision = migrationContext.getDecision();
+        if("create".equals(decision) || "name but not file on selector".equals(decision)){
+            EmailValidationStrategy strategy = new EmailValidationStrategy(migrationContext, migrationDao);
+            strategy.processCandidate(printWriter);
+        }
+        else{
+            logger.info("Skipping candidate...");
+            totalSkipped++;
+        }
+    }
+
+    private CandidateMigrationContext getCandidateMigrationContext(String line)
+    {
         String[] fields = line.split(";");
         User user = setupMigrationUser();
         BaseServices baseServices = new BaseServicesImpl(selectedCaregiverService, assessmentService,
@@ -155,15 +201,7 @@ public class MigrationController {
                                               candidateStorage);
         logger.info("processing prospect: " + migrationContext.getProspectId() +
                     " decision: " + migrationContext.getDecision());
-        String decision = migrationContext.getDecision();
-        if("create".equals(decision) || "name but not file on selector".equals(decision)){
-            MissingProspectFileProcessStrategy strategy = new MissingProspectFileProcessStrategy(migrationContext);
-            strategy.processCandidate(printWriter);
-        }
-        else{
-            logger.info("Skipping candidate...");
-            totalSkipped++;
-        }
+        return migrationContext;
     }
 
     private User setupMigrationUser() {
@@ -228,5 +266,33 @@ public class MigrationController {
 
     public void setUserProfileDAO(UserProfileDAO userProfileDAO) {
         this.userProfileDAO = userProfileDAO;
+    }
+
+    public void updateStatusToHold()
+    {
+        scanner.nextLine();// skip header row
+        while(scanner.hasNextLine()){
+            final String line = scanner.nextLine();
+            if(line.isEmpty()){
+                continue;
+            }
+
+            try
+            {
+                CandidateMigrationContext migrationContext = getCandidateMigrationContext(line);
+                String decision = migrationContext.getDecision();
+                if ("create".equals(decision))
+                {
+                    CreateStrategy strategy = new CreateStrategy(migrationContext, migrationDao);
+                    strategy.updateStatusToHold();
+                }
+            }
+            catch (Throwable e) {
+                logger.error("Error processing line:" + line);
+                logger.error("Error = " + e, e);
+                totalError++;
+            }
+        }
+
     }
 }

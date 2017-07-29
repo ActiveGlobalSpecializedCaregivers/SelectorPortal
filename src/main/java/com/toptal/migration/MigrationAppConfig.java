@@ -125,7 +125,13 @@ public class MigrationAppConfig {
     public MigrationMain migrationMain() { return new MigrationMain();}
 
     @Bean
+    public StatusUpdaterMain statusUpdaterMain() { return new StatusUpdaterMain();}
+
+    @Bean
     public MissingFilesProcessorMain missingFilesProcessorMain() { return new MissingFilesProcessorMain();}
+
+    @Bean
+    public EmailValidationProcessorMain emailValidationProcessorMain() { return new EmailValidationProcessorMain();}
 
     @Bean
     public MigrationController migrationController() throws IOException { return new MigrationController();}

@@ -1,6 +1,7 @@
 package com.toptal.migration;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 /**
  * <code>CandidateMigrationStrategy</code>
@@ -9,5 +10,5 @@ import java.io.IOException;
  * @version 1.0
  */
 public interface CandidateMigrationStrategy {
-    void migrateCandidate() throws IOException;
+    void migrateCandidate() throws IOException, ParseException;
 }

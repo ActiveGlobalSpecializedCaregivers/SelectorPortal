@@ -1,13 +1,5 @@
 package com.toptal.migration;
 
-import com.cloudaxis.agsc.portal.model.Caregiver;
-import com.cloudaxis.agsc.portal.model.EmailHistory;
-import com.toptal.migration.dao.MigrationDao;
-import com.toptal.migration.model.CandidateDocument;
-import com.toptal.migration.model.CandidateEmail;
-import com.toptal.migration.model.CandidateEvaluation;
-import com.toptal.migration.model.CandidateFeedback;
-import com.toptal.migration.model.CandidateNote;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +7,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.cloudaxis.agsc.portal.helpers.StringUtil;
+import com.cloudaxis.agsc.portal.model.Caregiver;
+import com.toptal.migration.dao.MigrationDao;
+import com.toptal.migration.model.CandidateDocument;
+import com.toptal.migration.model.CandidateEvaluation;
+import com.toptal.migration.model.CandidateFeedback;
+import com.toptal.migration.model.CandidateQuestionnaire;
 import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,23 +29,38 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public abstract class AbstractStrategy implements CandidateMigrationStrategy{
     private static final Logger logger = Logger.getLogger(AbstractStrategy.class);
-    protected final CandidateMigrationContext migrationContext;
-    protected final MigrationDao migrationDao;
+    private static Date DEFAULT_APPLIED_DATE;
+    final CandidateMigrationContext migrationContext;
+    final MigrationDao migrationDao;
     protected Caregiver candidate;
     protected String prospectId;
-    public static final String[] EVALUATION_QUESTION_IDS = new String[]{"0", "1", "2", "3", "4"};
+    private static final String[] EVALUATION_QUESTION_IDS = new String[]{"0", "1", "2", "3", "4"};
 
-    protected AbstractStrategy(CandidateMigrationContext migrationContext, MigrationDao migrationDao) {
+
+
+    static{
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy");
+        try
+        {
+            DEFAULT_APPLIED_DATE = simpleDateFormat.parse("09022017");
+        }
+        catch (ParseException e)
+        {
+            // shouldn't happen
+        }
+    }
+
+    AbstractStrategy(CandidateMigrationContext migrationContext, MigrationDao migrationDao) {
         this.migrationContext = migrationContext;
         this.migrationDao = migrationDao;
         this.prospectId = migrationContext.getProspectId();
     }
 
-    protected void migrateEmails() {
+    void migrateEmails() {
         logger.debug("Skipping email migration");
     }
 
-    protected void migrateComments() {
+    void migrateComments() {
         CandidateFeedback[] feedback = migrationContext.getCandidateStorage().loadCandidateFeedback(prospectId);
 
         BaseServices service = migrationContext.getBaseServices();
@@ -62,7 +80,7 @@ public abstract class AbstractStrategy implements CandidateMigrationStrategy{
         logger.debug("Skipping notes migration");
     }
 
-    protected void migrateEvaluations() {
+    void migrateEvaluations() {
         final BaseServices baseServices = migrationContext.getBaseServices();
 
         String summary = "";
@@ -122,7 +140,7 @@ public abstract class AbstractStrategy implements CandidateMigrationStrategy{
                                                 comments, summary);
     }
 
-    protected void migrateAttachments() throws IOException {
+    void migrateAttachments() {
         BaseServices baseServices = migrationContext.getBaseServices();
         CandidateDocument[] candidateDocuments = migrationContext.getCandidateStorage()
                 .loadCandidateDocuments(prospectId);
@@ -139,10 +157,17 @@ public abstract class AbstractStrategy implements CandidateMigrationStrategy{
             logger.info("Found candidate resume.");
             File file = migrationContext.getAttachmentResolver().resolveProspectResume(resumeDocument.getProspectId(),
                     resumeDocument.getFileName());
-            if(file.exists()) {
+            if(file.exists() && !file.isDirectory()) {
                 MultipartFile multipartFile = new MigrationMultipartFile(file,
                                                                          resumeDocument.getFileName());
-                baseServices.uploadFile(multipartFile, candidate, "resume");
+                try
+                {
+                    baseServices.uploadFile(multipartFile, candidate, "resume");
+                }
+                catch (IOException e)
+                {
+                    logger.error("Failed to upload resume: "+file, e);
+                }
 
                 candidate.setResume(resumeDocument.getFileName());
                 migrationDao.updateCandidateResume(candidate.getUserId(),
@@ -157,20 +182,26 @@ public abstract class AbstractStrategy implements CandidateMigrationStrategy{
         }
     }
 
-    private void uploadDocuments(BaseServices baseServices, CandidateDocument[] candidateDocuments)
-            throws IOException {
+    private void uploadDocuments(BaseServices baseServices, CandidateDocument[] candidateDocuments) {
         if (candidateDocuments != null) {
             logger.info("Uploading candidate documents.");
             for(CandidateDocument document : candidateDocuments) {
                 String fileName = document.getFileName();
                 File file = migrationContext.getAttachmentResolver().resolveProspectFile(
                         migrationContext.getProspectId(), fileName);
-                if(file.exists()) {
+                if(file.exists() && !file.isDirectory()) {
                     MultipartFile multipartFile = new MigrationMultipartFile(file, fileName);
-                    baseServices.uploadFile(multipartFile, candidate, "other_file");
+                    try
+                    {
+                        baseServices.uploadFile(multipartFile, candidate, "other_file");
+                    }
+                    catch (IOException e)
+                    {
+                        logger.error("Failed to upload document:"+file, e);
+                    }
                 }
                 else{
-                    logger.info("File "+file+" doesn't exist!");
+                    logger.info("File '"+file+"' doesn't exist!");
                 }
             }
         }
@@ -183,11 +214,42 @@ public abstract class AbstractStrategy implements CandidateMigrationStrategy{
         this.candidate = candidate;
     }
 
+    Date getDateApplied(Caregiver caregiver)
+    {
+        Date date = caregiver.getDateApplied();
+        if(date == null){
+            date = DEFAULT_APPLIED_DATE;
+        }
+        return date;
+    }
+
+    Date findDob() throws ParseException
+    {
+        final CandidateQuestionnaire[] candidateQuestionnaire = migrationContext.getCandidateStorage().loadCandidateQuestionnaires(
+                migrationContext.getProspectId());
+        logger.info("Found questionnaires for candidate:" +
+                    (candidateQuestionnaire == null ? "NULL" : candidateQuestionnaire.length));
+        if (candidateQuestionnaire != null)
+        {
+            for(CandidateQuestionnaire questionnaire : candidateQuestionnaire){
+                String question = questionnaire.getQuestion();
+                String answer = questionnaire.getAnswer();
+                if(question.startsWith("what is your date of birth")){
+                    if (!StringUtil.isBlank(answer)) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        return sdf.parse(answer);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private class MigrationMultipartFile implements MultipartFile {
         private final String fileName;
         private final File file;
 
-        public MigrationMultipartFile(File file, String fileName) {
+        MigrationMultipartFile(File file, String fileName) {
             this.file = file;
             this.fileName = fileName;
         }

@@ -1,6 +1,7 @@
 package com.toptal.migration;
 
 import com.cloudaxis.agsc.portal.helpers.StringUtil;
+import com.cloudaxis.agsc.portal.model.Caregiver;
 import com.cloudaxis.agsc.portal.model.Profile;
 import com.toptal.migration.dao.MigrationDao;
 import com.toptal.migration.model.CandidateQuestionnaire;
@@ -51,6 +52,14 @@ public class CreateStrategy extends AbstractStrategy{
         profile.setRegistered_concorde("No");
         profile.setPre_deployment("No");
         profile.setExp("0");
+        profile.setLanguages("English;");
+        profile.setReligion("");
+        profile.setFood_choice("No restrictions");
+        profile.setGender("");
+        profile.setNationality("");
+        profile.setEducational_level("");
+        profile.setCertified_cpr("No");
+        profile.setMarital_status("");
 
         if(candidateQuestionnaire == null){
             logger.info("questionnaire is not found - returning empty profile");
@@ -234,12 +243,33 @@ public class CreateStrategy extends AbstractStrategy{
         candidateProfile.setFirst_name(candidate.getFirstName());
         candidateProfile.setLast_name(candidate.getLastName());
         candidateProfile.setMobile(candidate.getMobile());
-        candidateProfile.setDate_applied(candidate.getDateApplied());
+        candidateProfile.setDate_applied(getDateApplied(candidate));
 
         final BaseServices baseServices = migrationContext.getBaseServices();
         int userId = baseServices.createProfile(candidateProfile);
         logger.info("Saved candidate profile to DB, got userId=" + userId);
 
         candidate.setUserId(String.valueOf(userId));
+    }
+
+    public void updateStatusToHold() throws ParseException
+    {
+        // 1st - find caregiver for update
+        Date dob = findDob();
+        Integer caregiverId;
+        if(dob != null)
+        {
+            caregiverId = migrationDao.findCandidate(migrationContext.getSelectorName(), dob);
+        }
+        else
+        {
+            caregiverId = migrationDao.findCandidate(migrationContext.getSelectorName());
+        }
+        logger.info("updating candidate, found candidate ID=" + caregiverId);
+        candidate = migrationContext.getBaseServices().getCaregiver(String.valueOf(caregiverId));
+
+        // update status
+        logger.info("updating candidate status to 5");
+        migrationContext.getBaseServices().updateCandidateStatus(candidate, migrationContext.getUser(), "5");
     }
 }
