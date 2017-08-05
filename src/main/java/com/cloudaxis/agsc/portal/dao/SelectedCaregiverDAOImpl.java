@@ -901,7 +901,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 
 	@Override
 	public Integer getNewAmount(String querySql) {
-		String sql = "select count(user_id) from candidate_profile where status = 7 and (DATEDIFF(marked_as_ready_time, now()) < 7 or DATEDIFF(date_ready_for_placement, now()) < 7) " + querySql + ";";
+		String sql = "select count(user_id) from candidate_profile where status = 7 and DATEDIFF(now(), marked_as_ready_time) < 7  " + querySql + ";";
 		try{
 			return jdbcTemplate.queryForObject(sql, Integer.class);
 		}catch(DataAccessException e){
@@ -1343,7 +1343,8 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 					if(diff <= TIME_THRESHOLD_FOR_NEW_CANDIDATE){
 						candidate.setNewCaregiverFlag("new");
 					}
-				}else if(candidate.getMarkedAsRedayTime() != null){
+				}
+				if(candidate.getMarkedAsRedayTime() != null){
 					long diff = System.currentTimeMillis() - candidate.getMarkedAsRedayTime().getTime();
 					if(diff <= TIME_THRESHOLD_FOR_NEW_CANDIDATE){
 						candidate.setNewCaregiverFlag("new");
@@ -1467,84 +1468,130 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 
 	@Override
 	public void editCaregiverOfDashboard(Caregiver candidate) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String sql = "update candidate_profile set "
-				+ "tag = ?, contracted_to = ?, tagged_to = ? , date_applied = ?, full_name = ?, "
-				+ "email = ?, mobile = ?, video_url = ?, work_in_sg = ?, work_in_hk = ?, "
-				+ "work_in_tw = ?, skype = ?, gender = ?, dob = ?, age = ?, "
-				+ "country_of_birth = ?, nearest_airport = ?, nationality = ?, height = ?, weight = ?, "
-				+ "marital_status = ?, has_children = ?, children_names = ?, siblings = ?, languages = ?, "
-				+ "religion = ?, food_choice = ?, educational_level = ?, exp = ?, certified_cpr = ?, "
-				+ "specialties = ?, availability = ?, motivation = ?, worked_in_sg= ?, current_address = ?, "
-				+ "allergies = ?, diagnosed_conditions = ?, last_modified = ?, first_name = ?, last_name = ?, "
-				+ "app_id = ?, status = ?, marked_as_ready_time = ?, tag_status = ?, "
-				+ "tag_id = ?, salary_hkd = ?, salary_sgd = ?, salary_twd = ?, date_of_placement = ?, "
-				+ "numbers_of_placement = ? "
-				+ "where user_id = ?";
+					 + "tag = ?, contracted_to = ?, tagged_to = ? , date_applied = ?, full_name = ?, "
+					 + "email = ?, mobile = ?, video_url = ?, work_in_sg = ?, work_in_hk = ?, "
+					 + "work_in_tw = ?, skype = ?, gender = ?, dob = ?, age = ?, "
+					 + "country_of_birth = ?, nearest_airport = ?, nationality = ?, height = ?, weight = ?, "
+					 + "marital_status = ?, has_children = ?, children_names = ?, siblings = ?, languages = ?, "
+					 + "religion = ?, food_choice = ?, educational_level = ?, exp = ?, certified_cpr = ?, "
+					 + "specialties = ?, availability = ?, motivation = ?, worked_in_sg= ?, current_address = ?, "
+					 + "allergies = ?, diagnosed_conditions = ?, last_modified = ?, first_name = ?, last_name = ?, "
+					 + "app_id = ?, status = ?, marked_as_ready_time = ?, tag_status = ?, "
+					 + "tag_id = ?, "
+					 + createUpdateSalaryStatement(user)
+					 + "date_of_placement = ?, "
+					 + "numbers_of_placement = ? "
+					 + "where user_id = ?";
 		try{
-			jdbcTemplate.update(sql, new Object[]{
-					candidate.getTag(),
-					candidate.getContractedTo(),
-					candidate.getTaggedTo(),
-					candidate.getDateApplied(),
-					candidate.getFullName(),
-					candidate.getEmail(),
-					candidate.getMobile(),
-					candidate.getVideoURL(),
-					candidate.getWorkInSG(),
-					candidate.getWorkInHK(),
-					candidate.getWorkInTW(),
-					candidate.getSkype(),
-					candidate.getGender(),
-					candidate.getDateOfBirth(),
-					candidate.getAge(),
-					candidate.getCountryOfBirth(),
-					candidate.getNearestAirport(),
-					candidate.getNationality(),
-					candidate.getHeight(),
-					candidate.getWeight(),
-					candidate.getMaritalStatus(),
-					candidate.getHasChildren(),
-					candidate.getChildrenNames(),
-					candidate.getSiblings(),
-					candidate.getLanguages(),
-					candidate.getReligion(),
-					candidate.getFoodChoice(),
-					candidate.getEducationalLevel(),
-					candidate.getExp(),
-					candidate.getCertifiedCpr(),
-					candidate.getSpecialities(),
-					candidate.getAvailability(),
-					candidate.getMotivation(),
-					candidate.getWorkedInSG(),
-					candidate.getCurrentAddress(),
-					candidate.getAllergies(),
-					candidate.getDiagnosedConditions(),
-					candidate.getLastModified(),
-					candidate.getFirstName(),
-					candidate.getLastName(),
-					candidate.getAppId(),
-					candidate.getStatus(),
-					candidate.getMarkedAsRedayTime(),
-					candidate.getTagStatus(),
-					candidate.getTagId(),
-					candidate.getSalaryHKD(),
-					candidate.getSalarySGD(),
-					candidate.getSalaryTWD(),
-					candidate.getDateOfPlacement(),
-					candidate.getNumbersOfPlacement(),
-					candidate.getUserId()
-			});
+			ArrayList values = new ArrayList();
+			values.add(candidate.getTag());
+			values.add(candidate.getContractedTo());
+			values.add(candidate.getTaggedTo());
+			values.add(candidate.getDateApplied());
+			values.add(candidate.getFullName());
+			values.add(candidate.getEmail());
+			values.add(candidate.getMobile());
+			values.add(candidate.getVideoURL());
+			values.add(candidate.getWorkInSG());
+			values.add(candidate.getWorkInHK());
+			values.add(candidate.getWorkInTW());
+			values.add(candidate.getSkype());
+			values.add(candidate.getGender());
+			values.add(candidate.getDateOfBirth());
+			values.add(candidate.getAge());
+			values.add(candidate.getCountryOfBirth());
+
+			values.add(candidate.getNearestAirport());
+			values.add(candidate.getNationality());
+			values.add(candidate.getHeight());
+			values.add(candidate.getWeight());
+			values.add(candidate.getMaritalStatus());
+			values.add(candidate.getHasChildren());
+			values.add(candidate.getChildrenNames());
+			values.add(candidate.getSiblings());
+			values.add(candidate.getLanguages());
+			values.add(candidate.getReligion());
+			values.add(candidate.getFoodChoice());
+			values.add(candidate.getEducationalLevel());
+			values.add(candidate.getExp());
+			values.add(candidate.getCertifiedCpr());
+			values.add(candidate.getSpecialities());
+			values.add(candidate.getAvailability());
+			values.add(candidate.getMotivation());
+			values.add(candidate.getWorkedInSG());
+			values.add(candidate.getCurrentAddress());
+			values.add(candidate.getAllergies());
+			values.add(candidate.getDiagnosedConditions());
+			values.add(candidate.getLastModified());
+			values.add(candidate.getFirstName());
+			values.add(candidate.getLastName());
+			values.add(candidate.getAppId());
+			values.add(candidate.getStatus());
+			values.add(candidate.getMarkedAsRedayTime());
+			values.add(candidate.getTagStatus());
+			values.add(candidate.getTagId());
+
+			addSalaryParameters(user, values, candidate.getSalaryHKD(), candidate.getSalarySGD(),
+								candidate.getSalaryTWD());
+
+			values.add(candidate.getDateOfPlacement());
+			values.add(candidate.getNumbersOfPlacement());
+			values.add(candidate.getUserId());
+
+			logger.info("editCaregiverOfDashboard sql:"+sql);
+			logger.info("values:"+values);
+			logger.info("user:"+user+" auth:"+user.getAuthorities());
+
+			jdbcTemplate.update(sql, values.toArray() );
 		}catch(DataAccessException e ){
 			logger.error("Data Access Exception editing candidate_profile", e);
 		}
 	}
 
+	private void addSalaryParameters(User user,
+									 ArrayList values,
+									 String salaryHKD,
+									 String salarySGD,
+									 String salaryTWD)
+	{
+		if(userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SALES_HK"))
+        {
+            values.add(salaryHKD);
+        }
+
+		if(userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SALES_SG"))
+        {
+            values.add(salarySGD);
+        }
+
+		if(userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SALES_TW"))
+        {
+            values.add(salaryTWD);
+        }
+	}
+
+	private String createUpdateSalaryStatement(User user)
+	{
+		return (userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SALES_HK") ? "salary_hkd = ?, " : "")
+			   + (userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SALES_SG") ? "salary_sgd = ?, " : "")
+			   + (userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SALES_TW") ? "salary_twd = ?, " : "");
+	}
+
+	private boolean userHasRole(User user, String role)
+	{
+		return user.getAuthorities().toString().contains(role);
+	}
+
 	@Override
 	public void editCaregiverCv(Caregiver candidate) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String sql = "update candidate_profile set "
 				+ "full_name = ?, tag = ?, tagged_to = ?, contracted_to = ?, gender = ?, "
-				+ "educational_level = ?, exp = ?, availability = ?, languages = ?, salary_twd=?, "
-				+ "salary_sgd=?, salary_hkd=?, marital_status=?, age = ?, dob=?, "
+				+ "educational_level = ?, exp = ?, availability = ?, languages = ?,"
+				+ createUpdateSalaryStatement(user)
+				+ "marital_status=?, age = ?, dob=?, "
 				+ "siblings=?, religion=?, food_choice=?, nationality=?, country_of_birth=?, "
 				+ "has_children=?, height=?, weight=?, motivation = ?, mobile = ?, "
 				+ "skype = ?, remarks=?, last_modified = ?, first_name = ?, last_name = ?, "
@@ -1553,53 +1600,57 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				+ "numbers_of_placement=?, marked_as_ready_time=?, email = ?, video_url=? "				//44
 				+ "where user_id = ?";
 		try{
-			jdbcTemplate.update(sql, new Object[]{
-					candidate.getFullName(),
-					candidate.getTag(),
-					candidate.getTaggedTo(),
-					candidate.getContractedTo(),
-					candidate.getGender(),			//5
-					candidate.getEducationalLevel(),
-					candidate.getExp(),
-					candidate.getAvailability(),
-					candidate.getLanguages(),
-					candidate.getSalaryTWD(),		//10
-					candidate.getSalarySGD(),
-					candidate.getSalaryHKD(),
-					candidate.getMaritalStatus(),
-					candidate.getAge(),
-					candidate.getDateOfBirth(),		//15
-					candidate.getSiblings(),
-					candidate.getReligion(),
-					candidate.getFoodChoice(),
-					candidate.getNationality(),
-					candidate.getCountryOfBirth(),	//20
-					candidate.getHasChildren(),
-					candidate.getHeight(),
-					candidate.getWeight(),
-					candidate.getMotivation(),
-					candidate.getMobile(),			//25
-					candidate.getSkype(),
-					candidate.getRemarks(),
-					candidate.getLastModified(),
-					candidate.getFirstName(),
-					candidate.getLastName(),		//30
-					candidate.getTagStatus(),		
-					candidate.getTaggedDate(),		
-					candidate.getTagId(),			
-					candidate.getAbout(),
-					candidate.getExp(),				//35
-					candidate.getSpecialities(),
-					candidate.getCertifiedCpr(),
-					candidate.getHobbies(),			
-					candidate.getStatus(),		
-					candidate.getDateOfPlacement(),  //40
-					candidate.getNumbersOfPlacement(),
-					candidate.getMarkedAsRedayTime(),
-					candidate.getEmail(),
-					candidate.getVideoURL(),		//44
-					candidate.getUserId()
-			});
+			ArrayList values = new ArrayList();
+			values.add(candidate.getFullName());
+			values.add(candidate.getTag());
+			values.add(candidate.getTaggedTo());
+			values.add(candidate.getContractedTo());
+			values.add(candidate.getGender());		//5
+			values.add(candidate.getEducationalLevel());
+			values.add(candidate.getExp());
+			values.add(candidate.getAvailability());
+			values.add(candidate.getLanguages());
+			addSalaryParameters(user, values,
+								candidate.getSalaryHKD(), candidate.getSalarySGD(), candidate.getSalaryTWD());
+			values.add(candidate.getMaritalStatus());
+			values.add(candidate.getAge());
+			values.add(candidate.getDateOfBirth());	//15
+			values.add(candidate.getSiblings());
+			values.add(candidate.getReligion());
+			values.add(candidate.getFoodChoice());
+			values.add(candidate.getNationality());
+			values.add(candidate.getCountryOfBirth());	//20
+			values.add(candidate.getHasChildren());
+			values.add(candidate.getHeight());
+			values.add(candidate.getWeight());
+			values.add(candidate.getMotivation());
+			values.add(candidate.getMobile());		//25
+			values.add(candidate.getSkype());
+			values.add(candidate.getRemarks());
+			values.add(candidate.getLastModified());
+			values.add(candidate.getFirstName());
+			values.add(candidate.getLastName());		//30
+			values.add(candidate.getTagStatus());
+			values.add(candidate.getTaggedDate());
+			values.add(candidate.getTagId());
+			values.add(candidate.getAbout());
+			values.add(candidate.getExp());			//35
+			values.add(candidate.getSpecialities());
+			values.add(candidate.getCertifiedCpr());
+			values.add(candidate.getHobbies());
+			values.add(candidate.getStatus());
+			values.add(candidate.getDateOfPlacement());  //40
+			values.add(candidate.getNumbersOfPlacement());
+			values.add(candidate.getMarkedAsRedayTime());
+			values.add(candidate.getEmail());
+			values.add(candidate.getVideoURL());	//44
+			values.add(candidate.getUserId());
+
+			logger.info("editCaregiverCv sql:"+sql);
+			logger.info("values:"+values);
+			logger.info("user:"+user+" auth:"+user.getAuthorities());
+
+			jdbcTemplate.update(sql, values.toArray());
 		}catch(DataAccessException e ){
 			logger.error("Data Access Exception editing candidate_profile", e);
 		}
@@ -1618,18 +1669,25 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 
 	@Override
 	public void editCaregiverInfo(Bio bio) {
-		String sql = "update candidate_profile set work_in_sg = ?, work_in_hk = ?, work_in_tw = ?, salary_sgd = ?, salary_hkd = ?, salary_twd = ?, numbers_of_placement = ? where user_id = ? ;";
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String sql = "update candidate_profile set work_in_sg = ?, work_in_hk = ?, work_in_tw = ?, " +
+					 createUpdateSalaryStatement(user) +
+					 "numbers_of_placement = ? where user_id = ? ;";
 		try{
-			jdbcTemplate.update(sql, new Object[]{
-				bio.getWorkInSG(),
-				bio.getWorkInHK(),
-				bio.getWorkInTW(),
-				bio.getSalaryInSGD(),
-				bio.getSalaryInHKD(),
-				bio.getSalaryInTWD(),
-				bio.getNumberOfPlacements(),
-				bio.getCaregiverId()
-			});
+			ArrayList values = new ArrayList();
+
+			values.add(bio.getWorkInSG());
+			values.add(bio.getWorkInHK());
+			values.add(bio.getWorkInTW());
+			addSalaryParameters(user, values, bio.getSalaryInHKD(), bio.getSalaryInSGD(), bio.getSalaryInTWD());
+			values.add(bio.getNumberOfPlacements());
+			values.add(bio.getCaregiverId());
+
+			logger.info("editCaregiverInfo sql:"+sql);
+			logger.info("values:"+values);
+			logger.info("user:"+user+" auth:"+user.getAuthorities());
+
+			jdbcTemplate.update(sql, values.toArray());
 		}catch(DataAccessException e){
 			logger.error("Data Access Exception updating candidate's work location of candidate_profile", e);
 		}

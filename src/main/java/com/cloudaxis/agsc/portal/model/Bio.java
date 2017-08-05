@@ -194,5 +194,30 @@ public class Bio {
 	public void setNumberOfPlacements(String numberOfPlacements) {
 		this.numberOfPlacements = numberOfPlacements;
 	}
-	
+
+	@Override
+	public String toString()
+	{
+		return "Bio{" +
+			   "caregiverId=" + caregiverId +
+			   ", validatorId=" + validatorId +
+			   ", validator='" + validator + '\'' +
+			   ", candidateBasicInformation='" + candidateBasicInformation + '\'' +
+			   ", educationAndExperience='" + educationAndExperience + '\'' +
+			   ", trainedToCprOrFA='" + trainedToCprOrFA + '\'' +
+			   ", nursingExperience='" + nursingExperience + '\'' +
+			   ", hobby='" + hobby + '\'' +
+			   ", experienceTitle='" + experienceTitle + '\'' +
+			   ", experienceDetails='" + experienceDetails + '\'' +
+			   ", experienceList=" + experienceList +
+			   ", lastModifyTime=" + lastModifyTime +
+			   ", workInSG='" + workInSG + '\'' +
+			   ", workInHK='" + workInHK + '\'' +
+			   ", workInTW='" + workInTW + '\'' +
+			   ", salaryInSGD='" + salaryInSGD + '\'' +
+			   ", salaryInHKD='" + salaryInHKD + '\'' +
+			   ", salaryInTWD='" + salaryInTWD + '\'' +
+			   ", numberOfPlacements='" + numberOfPlacements + '\'' +
+			   '}';
+	}
 }

@@ -10,7 +10,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cloudaxis.agsc.portal.dao.SelectedCaregiverDAOImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,6 +38,8 @@ public class ShortlistController extends AbstractController{
 	public ShortlistController() {
 		super(ShortlistController.class);
 	}
+
+	protected Logger logger	= Logger.getLogger(ShortlistController.class);
 
 	@Autowired
 	SelectedCaregiverService selectedCaregiverService;
@@ -182,7 +186,10 @@ public class ShortlistController extends AbstractController{
 		bio.setEducationAndExperience(request.getParameter("data[education]"));
 		bio.setHobby(request.getParameter("data[hobbies]"));
 		bio.setLastModifyTime(new Date());
+		logger.info("editCaregiverInfo candidate:"+candidate);
 		Integer id = selectedCaregiverService.saveCandidateOfDashboard(candidate);
+		logger.info("resulting ID:"+id);
+		logger.info("Saving bio:"+bio);
 		selectedCaregiverService.saveBioInfoByCaregiverIdOfDashboard(bio, candidate.getGender(), id);
 		JSONObject jsonObj = new JSONObject();
 		response.getWriter().print(jsonObj.toString());

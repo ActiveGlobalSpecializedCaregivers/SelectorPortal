@@ -771,6 +771,7 @@ public class SelectedCaregiverService {
 	}
 
 	public List<Caregiver> getCandidatesByStatus(String status, String role) {
+		logger.info("getCandidateByStatus status="+status+" role="+role);
 		String queryInfo = "where 1 = 1 " + getCandidateStatusSql(status) + getRoleSql(role);
 		return selectedCaregiverDAO.getCandidatesByParams(queryInfo);
 	}
@@ -847,7 +848,7 @@ public class SelectedCaregiverService {
 	private String getCandidateStatusSql(String status){
 		String sql = "";
 		if("-1".equals(status)){
-			sql = "and status = 7 and (DATEDIFF(marked_as_ready_time, now()) < 7  or DATEDIFF(date_ready_for_placement, now()) < 7)";
+			sql = "and status = 7 and DATEDIFF(now(), marked_as_ready_time) < 7 ";
 		}else if(!"0".equals(status)){
 			sql = "and status = " + status;
 		}else if("0".equals(status)){

@@ -163,8 +163,6 @@
 															<form:input name="salary_twd" id="salary_twd_edit" path="salaryTWD" style="display:none;"/>
 														</td>
 													</tr>
-													<input type="hidden" name="salary_hkd" value="${caregiver.salaryHKD}">
-													<input type="hidden" name="salary_sgd" value="${caregiver.salarySGD}">
 												</sec:authorize>
 												<sec:authorize access="!hasAnyRole('ROLE_SALES_TW','ROLE_SALES_HK')">
 													<tr>
@@ -174,8 +172,6 @@
 															<form:input name="salary_sgd" id="salary_sgd_edit" path="salarySGD" style="display:none;"/>
 														</td>
 													</tr>
-													<input type="hidden" name="salary_hkd" value="${caregiver.salaryHKD}">
-													<input type="hidden" name="salary_twd" value="${caregiver.salaryTWD}">
 												</sec:authorize>
 												<sec:authorize access="hasAnyRole('ROLE_SALES_HK')">
 													<tr>
@@ -185,8 +181,6 @@
 															<form:input name="salary_hkd" id="salary_hkd_edit" path="salaryHKD" style="display:none;"/>
 														</td>
 													</tr>
-													<input type="hidden" name="salary_sgd" value="${caregiver.salarySGD}">
-													<input type="hidden" name="salary_twd" value="${caregiver.salaryTWD}">
 												</sec:authorize>
                                                 <tr>
 													<td>Marital status</td>
