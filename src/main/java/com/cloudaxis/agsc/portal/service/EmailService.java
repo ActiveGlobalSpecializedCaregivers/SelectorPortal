@@ -1,10 +1,13 @@
 package com.cloudaxis.agsc.portal.service;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,9 +32,27 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
+import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorker;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
+import com.itextpdf.tool.xml.html.Tags;
+import com.itextpdf.tool.xml.parser.XMLParser;
+import com.itextpdf.tool.xml.pipeline.css.CSSResolver;
+import com.itextpdf.tool.xml.pipeline.css.CssResolverPipeline;
+import com.itextpdf.tool.xml.pipeline.end.PdfWriterPipeline;
+import com.itextpdf.tool.xml.pipeline.html.AbstractImageProvider;
+import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
+import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -51,6 +72,8 @@ import com.cloudaxis.agsc.portal.model.UsersChangePassword;
 
 @Service
 public class EmailService {
+
+	private final static Logger logger	= Logger.getLogger(EmailService.class);
 
 	@Autowired
 	private JavaMailSenderImpl	mailSender;
@@ -357,9 +380,10 @@ public class EmailService {
 	 * @throws Exception 
 	 */
 	public SendCV sendCV(User user, SendCV cv, String sData, Caregiver caregiver, HttpServletRequest request) throws Exception {
-		
-		Map<String, String> map = new HashMap<String, String>();		//key:filename, value:filePath
-		
+
+		logger.info("sendCv candidate:"+caregiver);
+		logger.info("user:"+user);
+
 		MimeMessage message = mailSender.createMimeMessage();
 		Properties mailProperties = mailSender.getJavaMailProperties();
 		String senderEmail = user.getEmail() == null ? mailProperties.getProperty("mail.sender") : user.getEmail();
@@ -378,20 +402,9 @@ public class EmailService {
 
 		//get the html content to the email content 
 		String path = request.getSession().getServletContext().getRealPath(charPath);	
-		String filePath = path + "WEB-INF" +charPath+ "jsp" +charPath+ "cv" +charPath+ "sentCvNew.jsp";
-		String str = "";
-		try {
-			String tempStr = "";
-			FileInputStream is = new FileInputStream(filePath);
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-	        while ((tempStr = br.readLine()) != null){
-	        	str = str + tempStr ;
-	        }
-	        is.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		String filePath = path + "WEB-INF" +charPath+ "jsp" +charPath+ "cv" +charPath+ "sentCvToPdf.html";
+		String str = readFully(filePath);
+
 		//get photo path        
 		String keyPath = path + "resources" +charPath;
 		String photoPath="";
@@ -425,7 +438,6 @@ public class EmailService {
 		}
 		
 		//insert data to the html page
-		str = str.replace("${email.message}", cv.getEmailMsg());
 		str = str.replace("${caregiver.fullName}",caregiver.getFullName());
 		str = str.replace("${caregiver.gender}",caregiver.getGender());
 		str = str.replace("${caregiver.educationalLevel}",caregiver.getEducationalLevel());
@@ -498,20 +510,14 @@ public class EmailService {
 		
 		str = str.replace("${caregiver.dateOfBirth}",new SimpleDateFormat("dd/MM/yyyy").format(caregiver.getDateOfBirth()));
 		
-		//replace picture
-		String heardPath = path + "resources" +charPath+ "img" +charPath+ "assets-edm" +charPath;
-		map.put("logoactiveglobalcaregiver", heardPath.concat("logo-active-global-caregiver.jpg"));
-		map.put("blockquote", heardPath.concat("blockquote.jpg"));
-		map.put("header-about", heardPath.concat("header-about.jpg"));
-		map.put("header-education", heardPath.concat("header-education.jpg"));
-		map.put("header-certified", heardPath.concat("header-certified.jpg"));
-		map.put("header-nursing-exp", heardPath.concat("header-nursing-exp.jpg"));
-		map.put("header-hobbies", heardPath.concat("header-hobbies.jpg"));
-		map.put("photo", photoPath);
-		
-		MimeBodyPart content = createContent(str, map); 		//insert the picture into the content
-	    MimeMultipart allPart = new MimeMultipart("mixed"); 
-	    allPart.addBodyPart(content); 
+
+		BodyPart content = new MimeBodyPart();
+		content.setText(cv.getEmailMsg());
+
+		MimeBodyPart attachment = createAttachment(str, path, photoPath);
+	    MimeMultipart allPart = new MimeMultipart();
+	    allPart.addBodyPart(content);
+	    allPart.addBodyPart(attachment);
 	    message.setContent(allPart);
 		
 	    message.saveChanges();
@@ -528,38 +534,122 @@ public class EmailService {
 		return cv;
 		
 	}
-	
-	
-	  /**
+
+	private static String readFully(String filePath)
+	{
+		String str = "";
+		try {
+			String tempStr = "";
+			FileInputStream is = new FileInputStream(filePath);
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+	        while ((tempStr = br.readLine()) != null){
+	        	str = str + tempStr ;
+	        }
+	        is.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return str;
+	}
+
+
+	/**
 	   * create the email content and contain picture
 	   * 
-	   * @param body
-	   * @param map		key:file name, value:file path
+	   *
+	   * @param str
+	   * @param html
+	   * @param path
+	   * @param photoPath
 	   * @return
+	 *
 	   * @throws Exception
 	   */
-	  public MimeBodyPart createContent(String body, Map<String, String> map) 
-	      throws Exception { 
-	    MimeBodyPart contentBody = new MimeBodyPart(); 
-	    // content contain picture,the type is "related"
-	    MimeMultipart contentMulti = new MimeMultipart("related"); 
-	  
-	    // content 
-	    MimeBodyPart content = new MimeBodyPart(); 
-	    content.setContent(body, "text/html"); 
-	    contentMulti.addBodyPart(content); 
-	  
-	    // the content picture
-	    for(Map.Entry<String, String> m : map.entrySet()){
-	    	MimeBodyPart jpgBody = new MimeBodyPart(); 
-	    	FileDataSource fds = new FileDataSource(m.getValue()); 
-	    	jpgBody.setDataHandler(new DataHandler(fds)); 
-	    	jpgBody.setHeader("Content-ID", "<"+m.getKey()+">");
-	    	//jpgBody.setContentID(m.getKey()); 
-	    	contentMulti.addBodyPart(jpgBody); 
-	    }
-	  
-	    contentBody.setContent(contentMulti); 
-	    return contentBody; 
-	  } 
+	  private MimeBodyPart createAttachment(String html, String path, String photoPath)
+	      throws Exception {
+
+	  	byte[] pdf = convertToPdf(html, path, photoPath);
+
+	    MimeBodyPart attachment = new MimeBodyPart();
+	    DataSource dataSource = new ByteArrayDataSource(pdf, "application/pdf");
+	    attachment.setDataHandler(new DataHandler(dataSource));
+	    attachment.setFileName("Resume.pdf");
+
+	    return attachment;
+	  }
+
+	private static  byte[] convertToPdf(String html, String imageRootPath, String photoPath) throws DocumentException, IOException
+	{
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		Document document = new Document(PageSize.LETTER);
+		PdfWriter writer = PdfWriter.getInstance(document, outputStream);
+		document.open();
+		document.addAuthor("Active Global Specialised Caregivers");
+		document.addSubject("Resume");
+		document.addCreationDate();
+		document.addTitle("Resume");
+
+		CSSResolver cssResolver =XMLWorkerHelper.getInstance().getDefaultCssResolver(true);
+
+		// HTML
+		HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
+		htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
+		htmlContext.autoBookmark(false);
+
+		AbstractImageProvider imageProvider = setupImages(imageRootPath, photoPath);
+		htmlContext.setImageProvider(imageProvider);
+
+		// Pipelines
+		PdfWriterPipeline pdf = new PdfWriterPipeline(document, writer);
+		HtmlPipeline htmlPipeline = new HtmlPipeline(htmlContext, pdf);
+		CssResolverPipeline css = new CssResolverPipeline(cssResolver, htmlPipeline);
+
+		// XML Worker
+		XMLWorker worker = new XMLWorker(css, true);
+		XMLParser p = new XMLParser(worker);
+		p.parse(new StringReader(html));
+
+		// step 5
+		document.close();
+
+		return outputStream.toByteArray();
+	}
+
+	private static AbstractImageProvider setupImages(String imageRootPath, String photoPath) throws BadElementException, IOException
+	{
+		AbstractImageProvider imageProvider = new AbstractImageProvider()
+		{
+			public String getImageRootPath()
+			{
+				return imageRootPath;
+			}
+		};
+		//replace pictures
+		String heardPath = imageRootPath + "resources" +charPath+ "img" +charPath+ "assets-edm" +charPath;
+
+		imageProvider.store("${logoactiveglobalcaregiver}", Image.getInstance(heardPath.concat("logo-active-global-caregiver.jpg")));
+		imageProvider.store("${blockquote}", Image.getInstance(heardPath.concat("blockquote.jpg")));
+		imageProvider.store("${header-about}", Image.getInstance(heardPath.concat("header-about.jpg")));
+		imageProvider.store("${header-education}", Image.getInstance(heardPath.concat("header-education.jpg")));
+		imageProvider.store("${header-certified}", Image.getInstance(heardPath.concat("header-certified.jpg")));
+		imageProvider.store("${header-nursing-exp}", Image.getInstance(heardPath.concat("header-nursing-exp.jpg")));
+		imageProvider.store("${header-hobbies}", Image.getInstance(heardPath.concat("header-hobbies.jpg")));
+
+		if(photoPath != null)
+		{
+			imageProvider.store("${photo}", Image.getInstance(photoPath));
+		}
+
+		return imageProvider;
+	}
+
+	public static void main(String[] args) throws IOException, DocumentException
+	{
+		String file = "D:\\projects\\toptal\\agsc\\SelectorPortal\\src\\main\\webapp\\WEB-INF\\jsp\\cv\\sentCvToPdf.html";
+		String str = readFully(file);
+		byte[] pdf = convertToPdf(str, "D:\\projects\\toptal\\agsc\\SelectorPortal\\src\\main\\webapp\\", null);
+		FileOutputStream fos = new FileOutputStream("test.pdf");
+		fos.write(pdf);
+		fos.close();
+	}
 }

@@ -5,11 +5,19 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cloudaxis.agsc.portal.helpers.StringUtil;
+import com.cloudaxis.agsc.portal.model.Bio;
+import com.cloudaxis.agsc.portal.model.Caregiver;
+import com.cloudaxis.agsc.portal.model.SendCV;
+import com.cloudaxis.agsc.portal.model.User;
+import com.cloudaxis.agsc.portal.service.EmailService;
+import com.cloudaxis.agsc.portal.service.FileService;
+import com.cloudaxis.agsc.portal.service.SelectedCaregiverService;
+import com.cloudaxis.agsc.portal.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -25,16 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import com.cloudaxis.agsc.portal.helpers.StringUtil;
-import com.cloudaxis.agsc.portal.model.Bio;
-import com.cloudaxis.agsc.portal.model.Caregiver;
-import com.cloudaxis.agsc.portal.model.SendCV;
-import com.cloudaxis.agsc.portal.model.User;
-import com.cloudaxis.agsc.portal.service.EmailService;
-import com.cloudaxis.agsc.portal.service.FileService;
-import com.cloudaxis.agsc.portal.service.SelectedCaregiverService;
-import com.cloudaxis.agsc.portal.service.UserService;
 
 @Controller
 @RequestMapping("/")
