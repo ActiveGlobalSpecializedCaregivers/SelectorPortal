@@ -155,7 +155,7 @@
 														</div>														
 													</td>
 												</tr>
-												<sec:authorize access="hasAnyRole('ROLE_SALES_TW')">
+												<sec:authorize access="hasAnyRole('ROLE_SALES_TW', 'ROLE_ADMIN')">
 													<tr>
 														<td>Expected salary in TWD</td>
 														<td>
@@ -164,7 +164,7 @@
 														</td>
 													</tr>
 												</sec:authorize>
-												<sec:authorize access="!hasAnyRole('ROLE_SALES_TW','ROLE_SALES_HK')">
+												<sec:authorize access="hasAnyRole('ROLE_SALES_SG', 'ROLE_ADMIN')">
 													<tr>
 														<td>Expected salary in SGD</td>
 														<td>
@@ -173,7 +173,7 @@
 														</td>
 													</tr>
 												</sec:authorize>
-												<sec:authorize access="hasAnyRole('ROLE_SALES_HK')">
+												<sec:authorize access="hasAnyRole('ROLE_SALES_HK', 'ROLE_ADMIN')">
 													<tr>
 														<td>Expected salary in HKD</td>
 														<td>

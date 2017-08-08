@@ -514,7 +514,7 @@ public class EmailService {
 		BodyPart content = new MimeBodyPart();
 		content.setText(cv.getEmailMsg());
 
-		MimeBodyPart attachment = createAttachment(str, path, photoPath);
+		MimeBodyPart attachment = createAttachment(caregiver, str, path, photoPath);
 	    MimeMultipart allPart = new MimeMultipart();
 	    allPart.addBodyPart(content);
 	    allPart.addBodyPart(attachment);
@@ -558,14 +558,17 @@ public class EmailService {
 	   * 
 	   *
 	   * @param str
-	   * @param html
-	   * @param path
-	   * @param photoPath
-	   * @return
+	   * @param caregiver
+	 *@param html
+	 * @param path
+	 * @param photoPath    @return
 	 *
 	   * @throws Exception
 	   */
-	  private MimeBodyPart createAttachment(String html, String path, String photoPath)
+	  private MimeBodyPart createAttachment(Caregiver caregiver,
+											String html,
+											String path,
+											String photoPath)
 	      throws Exception {
 
 	  	byte[] pdf = convertToPdf(html, path, photoPath);
@@ -573,7 +576,7 @@ public class EmailService {
 	    MimeBodyPart attachment = new MimeBodyPart();
 	    DataSource dataSource = new ByteArrayDataSource(pdf, "application/pdf");
 	    attachment.setDataHandler(new DataHandler(dataSource));
-	    attachment.setFileName("Resume.pdf");
+	    attachment.setFileName(caregiver.getFullName() + "_Resume.pdf");
 
 	    return attachment;
 	  }
