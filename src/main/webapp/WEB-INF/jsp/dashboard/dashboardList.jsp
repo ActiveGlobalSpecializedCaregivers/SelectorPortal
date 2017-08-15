@@ -592,9 +592,9 @@
 									        				<button type="button" class="btn btn-primary" title="Delete template" onclick="deleteTemplate(this,'${templates.id}')">
 																<span class="fa fa-trash-o"></span>
 															</button>
-															<%-- <button type="button" class="btn btn-primary" title="Edit template" onclick="showTemplate('${templates.id}')">
+ 															<button type="button" class="btn btn-primary" title="Edit template" onclick="showTemplate('${templates.id}')">
 																<span class="fa fa fa-edit"></span>
-															</button> --%>
+															</button>
 									        			</td>
 									        		</tr>
 									        	</c:forEach>
@@ -1374,6 +1374,7 @@ function replySend(){
 			data: {id:id,userId:${caregiver.userId}},
 			dataType: "json",
 			success: function(data){
+			    console.log('showTemplate id:'+id+' data:'+JSON.stringify(data));
 				$("#e-t-id").val(data.id);
 				$("#e-t-subject").val(data.subject);
 				$("#e-t-name").val(data.name);
@@ -1412,41 +1413,45 @@ function replySend(){
 
 	//submit edit template
 	function editTemplate(){
+	    console.log("editTemplate called")
 		var subject = $("#e-t-subject").val();
-		
+
+
 		//get the content
 		var content = CKEDITOR.instances.ETcontent.getData();
 		var tcontent = $.trim(content.replace(/<[^>]+>/g,"").replace(/&nbsp;/ig,""));
-		var content = encodeURIComponent(content);	
-		
+		var content = encodeURIComponent(content);
+
+		console.log("subject:"+subject+" content:"+content);
+
 		//get attachment
-		var originalAttachment = $("#originalAttachment").val();
-		var attachment = "";
-		$("#e-t-attachment .l-name").each(function(){
-			attachment = attachment + $(this).text() + ",";
-		});
-		if(attachment.length > 0){
-			attachment = attachment.substr(0, attachment.length-1);
-		}
-		
-		var name = $("#e-t-name").val();
-		var id = $("#e-t-id").val();
-		if(subject=='' || subject==null){
-			alertMsg("The subject cannot be left blank.");
-		}else if(content==null || content==''){
-			alertMsg("The content cannot be left blank.");
-		}else if(name==null || name==''){
-			alertMsg("The Template name cannot be left blank.");
-		}else if(id==null || id==''){
-			alertMsg("The Template did not exists.");
-		}else{
-			var href = "${pageContext.request.contextPath}/emailTemplates/editTemplate?id="+id +"&attachment="+attachment+"&originalAttachment="+originalAttachment
-					+"&subject="+subject +"&content="+content +"&name="+name +"&active=5" +"&userId="+'${caregiver.userId}';
-			
-			location.href = href;
-			
-			$(".loading").show();
-		}
+        var originalAttachment = $("#originalAttachment").val();
+        var attachment = "";
+        $("#e-t-attachment .l-name").each(function(){
+            attachment = attachment + $(this).text() + ",";
+        });
+        if(attachment.length > 0){
+            attachment = attachment.substr(0, attachment.length-1);
+        }
+
+        var name = $("#e-t-name").val();
+        var id = $("#e-t-id").val();
+        if(subject=='' || subject==null){
+            alertMsg("The subject cannot be left blank.");
+        }else if(content==null || content==''){
+            alertMsg("The content cannot be left blank.");
+        }else if(name==null || name==''){
+            alertMsg("The Template name cannot be left blank.");
+        }else if(id==null || id==''){
+            alertMsg("The Template did not exists.");
+        }else{
+            var href = "${pageContext.request.contextPath}/emailTemplates/editTemplate?id="+id +"&attachment="+attachment+"&originalAttachment="+originalAttachment
+                +"&subject="+subject +"&content="+content +"&name="+name +"&active=5" +"&userId="+'${caregiver.userId}';
+
+            location.href = href;
+
+            $(".loading").show();
+        }
 	}
 	
 </script>

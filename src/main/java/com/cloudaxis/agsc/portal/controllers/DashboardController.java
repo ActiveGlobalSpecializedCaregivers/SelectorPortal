@@ -860,6 +860,7 @@ public class DashboardController extends AbstractController {
 		Date today = new Date();
 		int age = today.getYear() - dateOfBirth.getYear();
 		caregiver.setAge(String.valueOf(age));
+		boolean statusChanged = false;
 		
 		if(caregiver.getTag() == 0 && !tagFlag.equals(String.valueOf(caregiver.getTag()))){
 			caregiver.setTaggedTo("");
@@ -867,17 +868,20 @@ public class DashboardController extends AbstractController {
 			caregiver.setTagStatus("<a href='#' class='btn btn-default btn-xs'>Available</a>");
 			caregiver.setStatus(7);
 			caregiver.setMarkedAsRedayTime(new Date());
+			statusChanged = true;
 		}else if(caregiver.getTag() == 1 && !tagged.equals(caregiver.getTaggedTo())){		//[0:Available,1:Tagged,2:Contracted,3:On hold]	[available:7  tagged:8 contracted:9 on hold:5]
 			caregiver.setTagStatus("<a href='#' class='btn btn-success btn-xs'>Tagged by " +loginUserName+ "</a>");
 			caregiver.setTagId(Integer.valueOf(loginUserId));
 			caregiver.setContractedTo("");
 			caregiver.setTaggedDate(new Date());
-			caregiver.setStatus(8);				
+			caregiver.setStatus(8);
+			statusChanged = true;
 		}else if(caregiver.getTag() == 2 && !contracted.equals(caregiver.getContractedTo())){
 			caregiver.setTagStatus("<a href='#' class='btn btn-success btn-xs'>Contracted by " +loginUserName+ "</a>");
 			caregiver.setTaggedTo("");
 			caregiver.setDateOfPlacement(new Date());
 			caregiver.setStatus(9);
+			statusChanged = true;
 			if(!StringUtil.isBlank(caregiver.getNumbersOfPlacement())){
 				caregiver.setNumbersOfPlacement(String.valueOf(Integer.valueOf(caregiver.getNumbersOfPlacement())+1));
 			}else{
@@ -888,6 +892,7 @@ public class DashboardController extends AbstractController {
 			caregiver.setTaggedTo("");
 			caregiver.setContractedTo("");
 			caregiver.setStatus(5);
+			statusChanged = true;
 		}else{
 			Caregiver c2 = selectedCaregiverService.getCaregiver(caregiver.getUserId());
 			caregiver.setTag(c2.getTag());
@@ -952,6 +957,12 @@ public class DashboardController extends AbstractController {
 		
 		//save caregiver
 		selectedCaregiverService.editCaregiverCv(caregiver);
+
+		// update status history
+		if(statusChanged){
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			selectedCaregiverService.addStatusChangeHistory(caregiver, user, String.valueOf(caregiver.getStatus()));
+		}
 		
 		//edit bio
 		selectedCaregiverService.editCvBio(bio, Integer.valueOf(caregiver.getUserId()));

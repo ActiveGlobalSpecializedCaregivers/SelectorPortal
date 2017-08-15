@@ -150,6 +150,11 @@ public class SelectedCaregiverService {
 		}
 		
 		selectedCaregiverDAO.editStatus(caregiver, user, changeStatus);
+		addStatusChangeHistory(caregiver, user, changeStatus);
+	}
+
+	public void addStatusChangeHistory(Caregiver caregiver, User user, String changeStatus)
+	{
 		selectedCaregiverDAO.addHistory(caregiver.getUserId().toString(), user.getUserId().toString(), "status", String.valueOf(caregiver.getStatus()), changeStatus);
 	}
 
