@@ -128,6 +128,7 @@ public class SelectedCaregiverService {
 	public void editStatus(Caregiver caregiver, User user, String changeStatus) {
 		if("7".equals(changeStatus)){
 			caregiver.setTag(0);
+			caregiver.setTaggedTo("");
 			caregiver.setMarkedAsRedayTime(new Date());
 		}else{
 			caregiver.setMarkedAsRedayTime(null);
@@ -138,14 +139,17 @@ public class SelectedCaregiverService {
 			caregiver.setNumbersOfPlacement(String.valueOf(numbersOfPlacment));
 			String tagStatus = "<a href='#' class='btn btn-success btn-xs'>Contracted by " + user.getFirstName() + " " + user.getLastName()  + " </a>";
 			caregiver.setTagStatus(tagStatus);
+			caregiver.setTaggedTo("");
 			caregiver.setTag(2);
 		}else if("8".equals(changeStatus)){
 			String tagStatus = "<a href='#' class='btn btn-success btn-xs'>Tagged by " + user.getFirstName() + " " + user.getLastName()  + " </a>";
 			caregiver.setTagStatus(tagStatus);
 			caregiver.setTag(1);
 		}else if("5".equals(changeStatus)){
+			caregiver.setTaggedTo("");
 			caregiver.setTag(3);
 		}else{
+			caregiver.setTaggedTo("");
 			caregiver.setTagStatus(null);
 		}
 		
@@ -176,6 +180,8 @@ public class SelectedCaregiverService {
 
 	public Profile createNewProfile(MultipartHttpServletRequest request, HttpServletResponse response,
 			Profile profile) {
+
+		logger.info("Create new profile, profile:"+profile);
 
 		try {
 
@@ -213,6 +219,7 @@ public class SelectedCaregiverService {
 			if (StringUtil.isBlank(profile.getResume())) {
 				MultipartFile resume = request.getFile("resume1");
 				String filename = resume.getOriginalFilename();
+				logger.info("resume:"+resume+" filename:"+filename);
 				/*if (!StringUtil.isBlank(filename)) {
 					profile.setResume(filename);
 				}else{
@@ -225,6 +232,7 @@ public class SelectedCaregiverService {
 					profile.setResume(filename);
 				}*/
 				if(resume.isEmpty()){
+					logger.info("resume is empty - using default value");
 					profile.setResume("resume.pdf");
 				}else{
 					profile.setResume(filename);
@@ -233,7 +241,7 @@ public class SelectedCaregiverService {
 				filesToBeUploaded.add(resume);
 			}
 			else {
-
+				logger.info("resume is provided - creating pdf");
 				// create .pdf file
 				String filePath = path + "userfiles\\" + "id" + "\\resume1";
 
@@ -258,8 +266,10 @@ public class SelectedCaregiverService {
 			}
 			/** Passport Photo **/
 			MultipartFile passport_file = request.getFile("passport");
+			logger.info("passport_file:"+passport_file);
 			if (!passport_file.isEmpty()) {
 				String passportFilename = passport_file.getOriginalFilename();
+				logger.info("passport file name:"+passportFilename);
 				if (!StringUtil.isBlank(passportFilename)) {
 					filesToBeUploaded.add(passport_file);
 					profile.setPhoto_passport(passportFilename);
@@ -268,11 +278,13 @@ public class SelectedCaregiverService {
 
 			/** Degree Photos **/
 			List<MultipartFile> degree_files = request.getFiles("degrees");
+			logger.info("degreeFiles.size: "+degree_files.size());
 			if (degree_files.size() > 0) {
 				String str = "";
 				boolean first  = true;
 				for (MultipartFile mfile : degree_files) {
 					String filename = mfile.getOriginalFilename();
+					logger.info("degree filename:"+filename);
 					if (!StringUtil.isBlank(filename)) {
 						filesToBeUploaded.add(mfile);
 						if(first){							
@@ -288,11 +300,13 @@ public class SelectedCaregiverService {
 
 			/** Other Files **/
 			List<MultipartFile> other_files = request.getFiles("other_file");
+			logger.info("other_files.size: "+other_files.size());
 			if (other_files.size() > 0) {
 				String str = "";
 				boolean first  = true;
 				for (MultipartFile mfile : other_files) {
 					String filename = mfile.getOriginalFilename();
+					logger.info("other filename:"+filename);
 					if (!StringUtil.isBlank(filename)) {
 						filesToBeUploaded.add(mfile);
 						if(first){							
@@ -308,8 +322,10 @@ public class SelectedCaregiverService {
 			
 			/** Personal Photo **/
 			MultipartFile photo_file = request.getFile("my_photo");
+			logger.info("photo file:"+photo_file);
 			if (!photo_file.isEmpty()) {
 				String filename = photo_file.getOriginalFilename();
+				logger.info("photo filename:"+filename);
 				if (!StringUtil.isBlank(filename)) {
 					filesToBeUploaded.add(photo_file);
 					

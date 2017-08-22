@@ -409,10 +409,24 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 	@Override
 	public void editStatus(Caregiver caregiver, User user, String changeStatus) {
 		String dateOfChangeStatus = ApplicationDict.getDateOfStatusMap().get(changeStatus);
-		String sql = "update candidate_profile set status=?,last_modified=SYSDATE(), marked_as_ready_time = ?, date_of_placement = ?, numbers_of_placement = ?, tag = ?, tag_status = ?, " + dateOfChangeStatus + " = ?  where user_id="
-				+ caregiver.getUserId() + ";";
+		String sql = "update candidate_profile set status=?," +
+					 " last_modified=SYSDATE()," +
+					 " marked_as_ready_time = ?," +
+					 " date_of_placement = ?," +
+					 " numbers_of_placement = ?," +
+					 " tag = ?," +
+					 " tag_status = ?," +
+					 " tagged_to = ?," +
+					 " " + dateOfChangeStatus + " = ?  " +
+					 "where user_id="+ caregiver.getUserId() + ";";
 		try {
-			jdbcTemplate.update(sql, new Object[] { changeStatus, caregiver.getMarkedAsRedayTime(), caregiver.getDateOfPlacement(), caregiver.getNumbersOfPlacement(), caregiver.getTag(), caregiver.getTagStatus(), new Date() });
+			jdbcTemplate.update(sql, new Object[] { changeStatus, caregiver.getMarkedAsRedayTime(),
+													caregiver.getDateOfPlacement(),
+													caregiver.getNumbersOfPlacement(),
+													caregiver.getTag(),
+													caregiver.getTaggedTo(),
+													caregiver.getTagStatus(),
+													new Date() });
 		}
 		catch (DataAccessException e) {
 			logger.error("Data Access Exception updating status of candidate", e);

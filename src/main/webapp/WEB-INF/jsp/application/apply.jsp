@@ -101,88 +101,8 @@
 								<h1 class="applicant-jobs-text">Singapore / Hong Kong Live-In Caregiver</h1>
 							</div>
 						</div>
-						<div id="applicant-content-left-wrapper" class="applicant-jobs-text clrfix">
-							<div id="applicant-content-left" class="applicant-jobs-text">
-								
-								<div id="applicant-job-description" class="applicant-jobs-text clrfix">
-								<p><strong style="font-size: 12px;">WHO WE ARE</strong></p><p>- Active Global Specialised Caregivers Pte Ltd is a Singapore and Hong Kong -based, high quality and highly ethical Home Care service provider. We will take care of all visa requirements and employment contract for you. Check us out at <a href="#">www.activeglobalcaregiver.sg</a><br />- Our Singapore Employment Agency license number is 13C6324, our Hong &nbsp;Kong Employment Agency license is&nbsp;43220</p><p><strong>MONTHLY SALARY RANGES (you will get <u>free food and accommodation</u> on top of these salaries)</strong></p><p>- BSc in Nursing : S$ 800&nbsp;to 1,000&nbsp;-- HK$ 5,490&nbsp;to 6,520<br />- Diploma in Nursing (GNM) : S$ 750&nbsp;to 900&nbsp;--&nbsp;HK$ 5,150&nbsp;to 6,180<br />- Caregiving / Nursing assistant certificate:&nbsp; S$ 600 to 750 --&nbsp;HK$ 4,110 to 5,150</p><p><span style="line-height: 1.6em;"><b>RECRUITING CRITERIA</b></span></p><p><span style="line-height: 1.6em;">You need to be a Nurse (enrolled or registered), a Nurse Assistant, or a Certified Caregiver, able to produce your degrees and certificates, your past letters of reference, and your high school graduation certificate.</span></p><p>- You need to be older than 23 years old<br />- You need to be service oriented, genuinely interested in caring for an elderly or a sick client<br />- You need to be in good health<br />- You need to speak good English.&nbsp;</p><p><span style="line-height: 1.6em;"><b>HOW IT WORKS</b></span></p><p><span style="line-height: 1.6em;">- You will take care of an elderly or sick client, and live at his or her home in Singapore or Hong Kong.</span></p><p>- We do not charge any fees to our Caregivers as we think this is an un-ethical practice. If you are pre-selected, and when we offer you a job to go to Singapore / Hong Kong, you will only have to pay for:<br />o getting a passport (if you don’t already have one)&nbsp;<br />o getting a one-way flight to Singapore or&nbsp;Hong Kong→ quite cheap with budget airlines<br />o getting a medical certificate certifying that you are negative for Tuberculosis, HIV, Syphilis, and Malaria, and that you are not pregnant<br />- We will screen your application, and if you are successful, we will invite you to a phone or skype interview<br />- If your interview is successful, we will place you in our ‘pre-selected' Talent Pool. We will then call you as soon as we have an employment offer for you (it might take between 1 week and 6 months). Candidate who already have their passport ready will be called in priority<br />- If you agree with the employment offer, you will immediately fly to Singapore or Hong Kong, where you will attend a short induction program, and after 3-4 days, you will start your employment as a Live-In Caregiver<br />- Typical contracts are 2 years, with 1 day off per week, and 2 weeks home leave after one year. Your employer pays for the plane ticket for the home leave and the repatriation cost at the end of your contract.<br />- If your contract is interrupted, and if you wish to continue working as a caregiver, you will be given priority to start with another client.<br />- You cannot become pregnant during your contract, and your work permit will not allow you to bring your family. You will have to live at your client’s home.</p><p><strong>IMPORTANT NOTE ON FEES</strong></p><p>Please be informed that there are no agency fees involved in our whole application process. The only things you will need to pay are the following:<br /><br />1) Your passport (if you don't have one yet)<br />2) Your medical check before you come to Singapore&nbsp;<br />3) Insurance Surakhsa at the Bureau of Foreign Employment (only for Sri Lankan candidates)<br />4) Your one way airway ticket to Singapore / Hong Kong<br /><br /><strong>=&gt; If anyone asks you any money before or during your application other than these things, please do not give any money but immediately notify us, Malaka or Praveena (details see below)</strong></p><p><b>HOW TO FILL THE APPLICATION QUESTIONNAIRE?</b></p><p>- All questions marked with (*) are compulsory</p><p>- You need to either upload your CV/RESUME, or type a few lines in the "Paste Resume" section. If you don't do this, their will be an error message</p><p>- Don't forget to click on the 'SUBMIT' button at the bottom of the application form</p><p>- You can be sure that your application was successfully submitted when 1- you see a 'Thank you' screen after hitting the 'SUBMIT' button ; 2- getting a 'thank you for your application' email. If you don't get these, then there is a problem and you need to fill the application form again. In case of repeated problems, please forward your CV to singapore@activeglobalcaregiver.com and we will help you</p><p><strong>NEED HELP?</strong></p><p>If you need any help in filling the questionnaire, please contact Praveena at Praveena@activeglobalcaregiver.com</p><p><span style="line-height: 1.6em;">For </span><strong style="line-height: 1.6em;">SRI LANKA</strong><span style="line-height: 1.6em;"> you can also&nbsp;call our local contact Malaka at &nbsp;0777 996 525. &nbsp;(local Sri Lanka number)</span></p><p><u>www.activeglobalcaregiver.com</u></p><p>&nbsp;</p>	</div>
-								<div id="google_translate_element"></div>
-								<script type="text/javascript">
-									function googleTranslateElementInit() {
-  										new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL}, 'google_translate_element');
-									}
-								</script>
-								<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-								<div id="applicant-job-button-email" class="applicant-jobs-text clrfix">
-											</div>
-								<div id="applicant-job-forward-form" class="applicant-jobs-text none">
-									<div id="applicant-forward-job" class="applicant-form applicant-resume-text">
-										<div class="applicant-resume-text" id="applicant-forward-title">Forward this Position</div>
-										<form action="<%=request.getContextPath() %>/people/sendMessage" method="POST" id="form_forward_job">
-											<input type="hidden" id="id_form_id" name="form_id" value="forward_job" />
-											
-											<div class="applicant-field-wrapper applicant-resume-text">
-												<div class="applicant-label applicant-resume-text">
-													Recipient email address (one)
-												</div>
-												<div class="applicant-input">
-													<input type="text" name="applicant_forward_email_recipient" id="applicant_forward_email_recipient" maxlength="255" class="applicant-field applicant-message-text" value=""/>			</div>
-											</div>
-											
-											<div class="applicant-field-wrapper applicant-resume-text">
-												<div class="applicant-label applicant-resume-text">
-													Your name
-												</div>
-												<div class="applicant-input">
-													<input type="text" name="applicant_forward_name_sender" id="applicant_forward_name_sender" maxlength="255" class="applicant-field applicant-message-text" value="" />			</div>
-											</div>
-									
-											<div class="applicant-field-wrapper applicant-resume-text">
-												<div class="applicant-label applicant-resume-text">
-													Your email address
-												</div>
-												<div class="applicant-input">
-													<input type="text" name="applicant_forward_email_sender" id="applicant_forward_email_sender" maxlength="255" class="applicant-field applicant-message-text" value="" />			</div>
-											</div>
-											
-											<div class="applicant-field-wrapper applicant-resume-text">
-												<div class="applicant-label applicant-resume-text">
-													Enter a message (optional)
-												</div>
-												<div class="applicant-input">
-													<textarea  name="applicant_forward_message" id="applicant_forward_message" class="applicant-field applicant-message-text"></textarea>			</div>
-											</div>
-									
-											<div class="applicant-field-wrapper applicant-resume-text">
-												<!-- <script type="text/javascript" src="//www.google.com/recaptcha/api/challenge?k=6Ld79tsSAAAAAKu__z2gCV3AcQgUEC1fkygfOrbV"></script> -->
-												<script type="text/javascript" src=""></script>
-									
-												<noscript>
-											  		<!-- <iframe src="//www.google.com/recaptcha/api/noscript?k=6Ld79tsSAAAAAKu__z2gCV3AcQgUEC1fkygfOrbV" height="300" width="500" frameborder="0"></iframe><br/>
-											  		 -->
-											  		 <iframe src="" height="300" width="500" frameborder="0"></iframe><br/>
-											  		
-											  		<textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
-											  		<input type="hidden" name="recaptcha_response_field" value="manual_challenge" value="" />
-												</noscript>
-												<div class="applicant-field-wrapper applicant-resume-text" id="applicant-recaptcha">
-													<div class="applicant-label applicant-resume-text" id="applicant-recaptcha-label">Human Check*</div>
-													<div class="applicant-input" id="applicant-recaptcha-field"></div>
-												</div>
-											</div>
-											
-											<div class="applicant-field-wrapper applicant-resume-text" id="applicant-submit">
-												<input type="submit"  name="applicant-btn-send-forward" id="applicant-btn-send-forward" class="applicant-job-forward-form-buttons" value="Send Message" />			
-												<input type="button"  name="applicant-btn-cancel-forward" id="applicant-btn-cancel-forward" class="applicant-job-forward-form-buttons" value="Cancel" />
-											</div>
-										</form>
-									</div>
-								</div>
-							</div>
-						</div>
-					
-						<div id="applicant-content-right-wrapper" class="applicant-jobs-text">
-			<div id="applicant-content-right" class="applicant-jobs-text">
+						<div id="applicant-content-left-wrapper" class="applicant-jobs-text">
+			<div id="applicant-content-left" class="applicant-jobs-text">
 				<div class="applicant-resume-text" id="applicant-resume-upload">
 			
 					<!-- apply begin -->
@@ -289,9 +209,9 @@
 					<div class="applicant-field-wrapper applicant-resume-text" id="applicant-status">
 						<div class="applicant-label applicant-resume-text" id="applicant-status-label">
 						The job opportunities we are currently offering concern only LIVE AT HOME CAREGIVING - 
-						This means that you will have to live at the home of your client, which is very common, well regulated, and safe in Singapore. <br />
+						This means that you will have to live at the home of your client, which is very common, well regulated, and safe in Singapore and Hong Kong. <br />
 						THIS IS NOT a HOSPITAL JOB ---<br />
-						YOU WILL NOT BE ABLE TO BRING YOUR FAMILY TO SINGAPORE<br />
+						YOU WILL NOT BE ABLE TO BRING YOUR FAMILY TO SINGAPORE OR HONG KONG<br />
 						ARE YOU INTERESTED IN THIS JOB ??<font color="red">**</font></div>
 						<div class="applicant-input" id="applicant-status-field">
 							<input type="hidden" name="applicant-questionnaire[32646]" id="applicant-status-value" maxlength="" class="applicant-questionnaire-checkbox-answer" value="" />
@@ -684,7 +604,7 @@
 					</div>
 					<div class="applicant-field-wrapper applicant-resume-text" id="applicant-workedBeforeSingapore">
 						<div class="applicant-label applicant-resume-text" id="applicant-workedBeforeSingapore-label">
-						Have you worked in Singapore before?<font color="red">**</font></div>
+						Have you worked in Singapore  or Hong Kong before?<font color="red">**</font></div>
 						<div class="applicant-input" id="applicant-workedBeforeSingapore-field">
 							<select id="applicant-workedBeforeSingapore-value" name="worked_in_sg" class="form-control applicant-select-field">
 								<option value="applicant_no_selection">-- No answer --</option>
@@ -695,7 +615,7 @@
 					</div>
 					<div class="applicant-field-wrapper applicant-resume-text" id="applicant-caregiverExperienceForSingapore">
 						<div class="applicant-label applicant-resume-text" id="applicant-caregiverExperienceForSingapore-label">
-						If you worked in Singapore before, kindly provide us more details on when, position, work<br />
+						If you worked in Singapore or Hong Kong before, kindly provide us more details on when, position, work<br />
 						permit or pass that was used and your work permit or FIN number. </div>
 						<div class="applicant-input" id="applicant-caregiverExperienceForSingapore-field">
 							<textarea name="sg_fin" id="applicant-caregiverExperienceForSingapore-value" class="applicant-field"></textarea>				
@@ -899,14 +819,14 @@
 					</div>
 					<div class="applicant-field-wrapper applicant-resume-text" id="applicant-q31982">
 						<div class="applicant-label applicant-resume-text" id="applicant-q31982-label">
-						What is your main motivation to become a Caregiver in Singapore?</div>
+						What is your main motivation to become a Caregiver in Singapore or Hong Kong?</div>
 						<div class="applicant-input" id="applicant-q31982-field">
 							<input type="text" name="motivation" id="applicant-questionnaire-q31982" maxlength="255" class="form-control applicant-field"  />
 						</div>
 					</div>
 					<div class="applicant-field-wrapper applicant-resume-text" id="applicant-q31983">
 						<div class="applicant-label applicant-resume-text" id="applicant-q31983-label">
-						For how long would you like to work as a Caregiver in Singapore?</div>
+						For how long would you like to work as a Caregiver in Singapore or Hong Kong?</div>
 						<div class="applicant-input" id="applicant-q31983-field">
 							<input type="text" name="time_of_sg" id="applicant-questionnaire-q31983" maxlength="255" class="form-control applicant-field"  />
 						</div>
@@ -914,7 +834,7 @@
 					
 					<div class="applicant-field-wrapper applicant-resume-text" id="applicant-q70839">
 						<div class="applicant-label applicant-resume-text" id="applicant-q70839-label">
-						Assuming we offer you a job, and we have already secured a visa/worked Permit for you, how soon can you come to Singapore? Please be truthful and realistic, depending on your current notice for resignation and personal commitments. Please note that most of our clients are in a rush to get a caregiver and are not ready to wait a month for you. <br />
+						Assuming we offer you a job, and we have already secured a visa/worked Permit for you, how soon can you come to Singapore or Hong Kong? Please be truthful and realistic, depending on your current notice for resignation and personal commitments. Please note that most of our clients are in a rush to get a caregiver and are not ready to wait a month for you. <br />
 						At the same time, if you commit to a certain availability it means you are able to come in this timeframe. This is IMPORTANT.</div>
 						<div class="applicant-input" id="applicant-q70839-field">
 							<select id="applicant-questionnaire-q70839" name="availability" class="form-control applicant-select-field">
@@ -1080,7 +1000,7 @@
 						</div>
 					</div>
 					<div class="applicant-field-wrapper applicant-resume-text" id="applicant-q38764">
-						<div class="applicant-label applicant-resume-text" id="applicant-q38764-label">Please upload your passport</div>
+						<div class="applicant-label applicant-resume-text" id="applicant-q38764-label">Please upload your valid passport here</div>
 						<div class="applicant-input" id="applicant-q38764-field">
 							<input type="file" class="applicant-file-field" id="applicant-questionnaire-file-38764" name="passport">
 						</div>
@@ -1133,6 +1053,12 @@
 						<div class="applicant-label applicant-resume-text" id="applicant-q38768-label">Other relevant file upload (4)</div>
 						<div class="applicant-input" id="applicant-q38768-field">
 							<input type="file" class="applicant-file-field" id="applicant-questionnaire-file-38768" name="other_file">
+						</div>
+					</div>
+					<div class="applicant-field-wrapper applicant-resume-text">
+						<div class="applicant-label applicant-resume-text">
+							If you are experiencing difficulties in attaching your files to your application now, please send them separately by email to <a href = "mailto: recruiting@activeglobalcaregiver.com">recruiting@activeglobalcaregiver.com</a>
+							We will only process your application once you have submitted this form and all your files.
 						</div>
 					</div>
 					<div id="applicant-submit" class="applicant-field-wrapper applicant-resume-text clrfix">

@@ -15,6 +15,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -83,6 +84,7 @@ public class FileService {
 	 * @throws Exception
 	 */
 	public List<DocumentFile> downloadCaregiverDocuments(String path, Caregiver caregiver, List<DocumentFile> dfList) throws Exception {
+		logger.info("downloadCaregiverDocuments path:"+path+" caregiver:"+caregiver);
 		AmazonS3 s3client = new AmazonS3Client();
 		String region = env.getProperty("aws.region");
 		String[] regionSuffix = region.split("-");
@@ -101,17 +103,20 @@ public class FileService {
 
 			for (S3ObjectSummary objectSummary : objects.getObjectSummaries()) {
 				String objetkey = objectSummary.getKey();
+				logger.info("Processing object with key:"+objetkey);
 				//S3Object object = s3client.getObject(new GetObjectRequest(bucketName, objetkey));
 				
 				//InputStream objectData = object.getObjectContent();
 				//uploadFormFile(objectData, path, objetkey);			//download to server
 				
 				String[] ok = objetkey.split("/");
+				logger.info("ok:" + Arrays.toString(ok));
 				if(ok.length == 3){
 					//get the file url from s3
 					GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(
 			        		bucketName, objetkey, HttpMethod.GET);
-			        URL s3Url = s3client.generatePresignedUrl(urlRequest);  
+			        URL s3Url = s3client.generatePresignedUrl(urlRequest);
+			        logger.info("s3Url:"+s3Url);
 			        
 					DocumentFile df = new DocumentFile(); 
 					df.setName(ok[2]);
@@ -133,7 +138,8 @@ public class FileService {
 				}else if(ok.length == 4){		//attachment
 					GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(
 			        		bucketName, objetkey, HttpMethod.GET);
-			        URL s3Url = s3client.generatePresignedUrl(urlRequest);  
+			        URL s3Url = s3client.generatePresignedUrl(urlRequest);
+					logger.info("s3Url:"+s3Url);
 			        
 					DocumentFile df = new DocumentFile(); 
 					df.setName(ok[3]);
@@ -170,12 +176,14 @@ public class FileService {
 					+ "such as not being able to access the network.");
 			logger.error("Error Message: " + ace.getMessage());
 		}
-		
+
+		logger.info("result dfList:"+dfList);
 		return dfList;
 	}
 	
 	
 	public void uploadFiles(List<MultipartFile> files, String id, HttpServletRequest request) throws IOException {
+		logger.info("upload files for candidate:"+id+" files:"+files);
 		AmazonS3 s3client = new AmazonS3Client();
 		String region = env.getProperty("aws.region");
 		String[] regionSuffix = region.split("-");
@@ -187,6 +195,7 @@ public class FileService {
 		ImageInputStream imageInputStream=null;
 		
 		for (MultipartFile file : files) {
+			logger.info("Processing file name:"+file.getName()+" originalFileName:"+file.getOriginalFilename());
 			try {
 				String key = "";
 				if ("resume1".equals(file.getName())) {		//resume
@@ -199,6 +208,8 @@ public class FileService {
 							ObjectMetadata meta = new ObjectMetadata();
 							meta.setContentLength(file.getSize());
 							meta.setContentType(file.getContentType());
+
+							logger.info("storing file with key:"+key);
 				
 							PutObjectRequest req = new PutObjectRequest(bucketName, key, file.getInputStream(), meta);
 							s3client.putObject(req);
@@ -207,6 +218,8 @@ public class FileService {
 							ObjectMetadata meta = new ObjectMetadata();
 							meta.setContentLength(file.getSize());
 							meta.setContentType(file.getContentType());
+
+							logger.info("storing file with key:"+key);
 				
 							PutObjectRequest req = new PutObjectRequest(bucketName, key, file.getInputStream(), meta);
 							s3client.putObject(req);
@@ -219,7 +232,8 @@ public class FileService {
 								key = id +"/"+ "resume" +"/"+ f.getName();
 								//ObjectMetadata meta1 = new ObjectMetadata();
 								//meta1.setContentLength(f.length());
-								
+
+								logger.info("storing file with key:"+key);
 								PutObjectRequest req1 = new PutObjectRequest(bucketName, key, f);
 								s3client.putObject(req1);
 							}
@@ -236,6 +250,7 @@ public class FileService {
 						//meta.setContentLength(f.length());
 			
 						//PutObjectRequest req = new PutObjectRequest(bucketName, key, new FileInputStream(f), meta);
+						logger.info("storing file with key:"+key);
 						PutObjectRequest req = new PutObjectRequest(bucketName, key, f);
 						
 						s3client.putObject(req);
@@ -247,6 +262,7 @@ public class FileService {
 						ObjectMetadata meta = new ObjectMetadata();
 						meta.setContentLength(file.getSize());
 						meta.setContentType(file.getContentType());
+						logger.info("storing file with key:"+key);
 						PutObjectRequest req = new PutObjectRequest(bucketName, key, file.getInputStream(), meta);
 						s3client.putObject(req);
 			
@@ -264,6 +280,7 @@ public class FileService {
 			                File newFile = new File(file.getOriginalFilename() + ImageThumbnailConstants.FILE_SUFFIX);
 			                ImageIO.write(resizedImage, "jpg", newFile);
 			                String image_thumbnail_name = key + ImageThumbnailConstants.FILE_SUFFIX;
+							logger.info("storing thumbnail with key:"+image_thumbnail_name);
 			                PutObjectRequest req_img_thumbnail = new PutObjectRequest(bucketName, image_thumbnail_name, newFile);
 			                s3client.putObject(req_img_thumbnail);
 			            }
@@ -272,6 +289,7 @@ public class FileService {
 						ObjectMetadata meta = new ObjectMetadata();
 						meta.setContentLength(file.getSize());
 						meta.setContentType(file.getContentType());
+						logger.info("storing file with key:"+key);
 						PutObjectRequest req = new PutObjectRequest(bucketName, key, file.getInputStream(), meta);
 						s3client.putObject(req);
 			
@@ -289,6 +307,7 @@ public class FileService {
 			                File newFile = new File(file.getOriginalFilename() + ImageThumbnailConstants.FILE_SUFFIX);
 			                ImageIO.write(resizedImage, "jpg", newFile);
 			                String image_thumbnail_name = key + ImageThumbnailConstants.FILE_SUFFIX;
+							logger.info("storing thumbnail with key:"+image_thumbnail_name);
 			                PutObjectRequest req_img_thumbnail = new PutObjectRequest(bucketName, image_thumbnail_name, newFile);
 			                s3client.putObject(req_img_thumbnail);
 			            }
@@ -298,6 +317,7 @@ public class FileService {
 					ObjectMetadata meta = new ObjectMetadata();
 					meta.setContentLength(file.getSize());
 					meta.setContentType(file.getContentType());
+					logger.info("storing file with key:"+key);
 					PutObjectRequest req = new PutObjectRequest(bucketName, key, file.getInputStream(), meta);
 					s3client.putObject(req);
 		
@@ -315,6 +335,7 @@ public class FileService {
 		                File newFile = new File(file.getOriginalFilename() + ImageThumbnailConstants.FILE_SUFFIX);
 		                ImageIO.write(resizedImage, "jpg", newFile);
 		                String image_thumbnail_name = key + ImageThumbnailConstants.FILE_SUFFIX;
+						logger.info("storing thumbnail with key:"+image_thumbnail_name);
 		                PutObjectRequest req_img_thumbnail = new PutObjectRequest(bucketName, image_thumbnail_name, newFile);
 		                s3client.putObject(req_img_thumbnail);
 		            }

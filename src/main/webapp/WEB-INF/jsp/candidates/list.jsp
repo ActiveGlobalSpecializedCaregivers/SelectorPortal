@@ -119,7 +119,7 @@
 								<div class="row">
 									<div class="col-md-2"><h4>Profile Filters</h4></div>
 									<div class="col-md-10">
-										<button id="search_c" type="button" class="btn btn-danger">SEARCH CANDIDATES</button> &nbsp; &nbsp;
+										<button id="search_c" type="button" class="btn btn-success">SEARCH CANDIDATES</button> &nbsp; &nbsp;
 										<button class="btn btn-default" type="button" onclick="closeSearch();">CLOSE</button>
 									</div>
 								</div>

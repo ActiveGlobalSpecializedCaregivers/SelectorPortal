@@ -71,40 +71,32 @@
 					<!--footer-->
 					<div id="footer" class="footer">
 						<div class="row footer-inner">
-							<div class="large-6 medium-6 medium-push-6 footer-social columns">
-								<ul class="footer_list">
-									<li>
-										<a href="contact-us">Contact Us </a></li>
-									<li>
-										<a href="privacy-policy">Privacy Policy </a></li>
-									<li>
-										<a href="https://www.facebook.com/activeglobalcaregiver" target="_blank">Facebook </a></li>
-								</ul>
-							</div>
 							<div class="large-6 medium-6 medium-pull-6 footer-ag-details columns">
 								<div class="row collapse">
-									<div class="large-3 medium-3 columns">
-										Copyright &copy; 2017        </div>
 									<div class="large-9 medium-9 columns">
 										<div class="address" itemscope itemtype="http://schema.org/LocalBusiness">
-											<span itemprop="name">Active Global Specialised Caregivers Pte Ltd</span>
-											<div class="address">
-												UEN: 201231142H | EA&nbsp;Licence: 13C6324
-											</div>
-										</div>
-
-										<div class="address" itemscope itemtype="http://schema.org/LocalBusiness">
-											<span itemprop="name">Active Global Respite Care Pte Ltd</span>
-											<div class="address">
-												<div class="address">UEN: <span itemprop="leiCode">201315332W</span></div>
+											<br/>
+											<div class="address" itemprop="address" >
+												<br/>
+												<span itemprop="name">Active Global Recruiting Team</span>
+												<br/><br/>
+												<span itemprop="streetAddress">51 Goldhill Plaza, #12-11</span><br/>
+												<span itemprop="addressLocality">Singapore</span>&nbsp;<span itemprop="postalCode">308900</span>
 											</div>
 											<div class="address">
-												<div class="address" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
-													<span itemprop="streetAddress">51 Goldhill Plaza, #12-11</span>,&nbsp;<span itemprop="addressLocality">Singapore</span>
-													<span itemprop="postalCode">308900</span>
+												EA&nbsp;Licence: 13C6324
+											</div>
+											<div class="address">
+												<div class="address" itemprop="address" >
+													<span itemprop="streetAddress"Unit 801, 13/F, Lucky Centre, 165-171</span><br/>
+													<span itemprop="addressLocality">Wan Chai Road, Wan Chai,</span>
 												</div>
 											</div>
-										</div>        </div>
+											<div class="address">
+												EA&nbsp;Licence: 43220
+											</div>
+										</div>
+									 </div>
 								</div>
 							</div>
 						</div>
