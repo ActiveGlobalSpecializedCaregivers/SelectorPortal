@@ -8,9 +8,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import javax.sql.DataSource;
 
+import static com.cloudaxis.agsc.portal.helpers.StringUtil.filterSurrogateCharacters;
+
+import com.cloudaxis.agsc.portal.model.AutomatedEmailsTemplates;
+import com.cloudaxis.agsc.portal.model.Caregiver;
+import com.cloudaxis.agsc.portal.model.EmailHistory;
+import com.cloudaxis.agsc.portal.model.EmailTemplates;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -20,11 +25,6 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
-import com.cloudaxis.agsc.portal.model.AutomatedEmailsTemplates;
-import com.cloudaxis.agsc.portal.model.Caregiver;
-import com.cloudaxis.agsc.portal.model.EmailHistory;
-import com.cloudaxis.agsc.portal.model.EmailTemplates;
 
 @Repository
 public class EmailTemplatesDAOImpl implements EmailTemplatesDAO {
@@ -66,10 +66,10 @@ public class EmailTemplatesDAOImpl implements EmailTemplatesDAO {
 		final String sql = "insert into email_templates(name,subject,content,attachment) values(?,?,?,?);";
 		
 		final Object[] innerO=new Object[]{
-							emailTemplates.getName(),
-							emailTemplates.getSubject(),
-							emailTemplates.getContent(),
-							emailTemplates.getAttachment()
+				emailTemplates.getName(),
+				emailTemplates.getSubject(),
+				filterSurrogateCharacters(emailTemplates.getContent()),
+				emailTemplates.getAttachment()
 								};
 		
 		

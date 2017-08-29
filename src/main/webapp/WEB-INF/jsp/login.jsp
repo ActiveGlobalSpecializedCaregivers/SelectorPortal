@@ -15,7 +15,7 @@
     <meta name="description" content="Active Global">
 
     <!-- <link href="assets/less/styles.less" rel="stylesheet/less" media="all"> -->
-    <link rel="shortcut icon" href="http://activeglobalcaregiver.sg/misc/favicon.ico" type="image/vnd.microsoft.icon" />
+	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/newfavicon.png" type="image/x-icon" />
     <link rel="apple-touch-icon" sizes="192x192" href="${pageContext.request.contextPath}/logo-active-global-caregiver-dashboard-app.png">
     <!-- <link rel="stylesheet" href="assets/css/styles.min.css?=120"> -->
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>

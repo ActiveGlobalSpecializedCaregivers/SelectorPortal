@@ -1,6 +1,9 @@
 package com.cloudaxis.agsc.portal.service;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -19,7 +22,11 @@ import javax.imageio.stream.ImageInputStream;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.cloudaxis.agsc.portal.helpers.StringUtil.filterSurrogateCharacters;
+
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.multipart.MultipartFile;
@@ -401,8 +408,22 @@ public class SelectedCaregiverService {
 		
 		ImageInputStream imageInputStream = null;
 		try {
-			 File fileOfImage = new File(fileName);
-	         file.transferTo(fileOfImage);
+			ByteArrayOutputStream bas = new ByteArrayOutputStream();
+			BufferedInputStream bis = new BufferedInputStream(file.getInputStream());
+			if(file.getSize() > 0){
+				// copy
+				byte[] bytes = new byte[(int) file.getSize()];
+				int cnt;
+				do{
+
+					cnt = bis.read(bytes);
+					bas.write(bytes);
+				}
+				while(cnt != -1);
+			}
+
+			File fileOfImage = new File(fileName);
+	        file.transferTo(fileOfImage);
 	            
 			if("resume".equals(type) && !StringUtil.isBlank(caregiver.getResume())){		//delete original's resume
 				String originalPath = caregiver.getUserId()+"/" +type+"/" +caregiver.getResume();
@@ -446,8 +467,8 @@ public class SelectedCaregiverService {
 	        }*/
 	        
 	        //upload file
-            logger.info("uploading file "+fileOfImage+" to bucket:"+bucketName+" with key:"+key);
-			PutObjectRequest req = new PutObjectRequest(bucketName, key, fileOfImage);
+            logger.info("1. uploading file "+fileOfImage+" to bucket:"+bucketName+" with key:"+key);
+			PutObjectRequest req = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(bas.toByteArray()), null);
 			s3client.putObject(req);
 			
 			// thumbnail image
@@ -457,6 +478,7 @@ public class SelectedCaregiverService {
             if (iter.hasNext()) {
                 isImage = true;
             }
+            logger.info("2. is image:"+isImage);
             if(isImage){
                 BufferedImage originalBufferedImage = ImageIO.read(imageInputStream);
                 BufferedImage resizedImage = new ImageUtils().createThumbnailImage(originalBufferedImage);
@@ -467,7 +489,29 @@ public class SelectedCaregiverService {
                 PutObjectRequest req_img_thumbnail = new PutObjectRequest(bucketName, image_thumbnail_name, newFile);
                 s3client.putObject(req_img_thumbnail);
             }
-            // TODO: verify!!!!
+
+			String filename = file.getOriginalFilename();
+            logger.info("originalFileName:"+filename);
+			String suffixName = filename.substring(filename.lastIndexOf(".")+1, filename.length());
+			logger.info("suffix:"+suffixName);
+			if("pdf".equalsIgnoreCase(suffixName)){
+				logger.info("Creating thumbnail image for PDF file:"+filename);
+				PDDocument document = PDDocument.load(new ByteArrayInputStream(bas.toByteArray()));
+				PDFRenderer renderer = new PDFRenderer(document);
+				if(document.getNumberOfPages() > 0){
+					BufferedImage image = renderer.renderImage(0, 1);
+					BufferedImage resizedImage = new ImageUtils().createThumbnailImage(image);
+
+					File newFile = new File(file.getOriginalFilename() + ImageThumbnailConstants.FILE_SUFFIX);
+					ImageIO.write(resizedImage, "jpg", newFile);
+					String image_thumbnail_name = key + ImageThumbnailConstants.FILE_SUFFIX;
+					logger.info("storing thumbnail with key:"+image_thumbnail_name);
+					PutObjectRequest req_img_thumbnail = new PutObjectRequest(bucketName, image_thumbnail_name, newFile);
+					s3client.putObject(req_img_thumbnail);
+				}
+			}
+
+			// TODO: verify!!!!
             fileOfImage.delete();
 		}
 		catch (AmazonServiceException ase) {
@@ -550,7 +594,7 @@ public class SelectedCaregiverService {
 			}else{
 				details += "*" + caregiverBeforeExp;
 			}
-			return details;
+			return filterSurrogateCharacters(details);
 		}else{
 			return null;
 		}
@@ -627,7 +671,7 @@ public class SelectedCaregiverService {
 		
 		basicInfo.append(getPronun(candidate.getGender(), false)).append(space).append("can speak").append(space).append(getLanguage(candidate.getLanguages())).append(period);
 		
-		return basicInfo.toString();
+		return filterSurrogateCharacters(basicInfo.toString());
 	}
 
 	private String getEduactionLevel(String educationalLevel) {

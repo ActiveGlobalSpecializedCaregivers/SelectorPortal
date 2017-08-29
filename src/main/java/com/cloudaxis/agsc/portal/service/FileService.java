@@ -1,11 +1,13 @@
 package com.cloudaxis.agsc.portal.service;
 
-import java.awt.Graphics;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,21 +17,15 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
@@ -59,6 +55,13 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import org.apache.log4j.Logger;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileService {
@@ -180,7 +183,65 @@ public class FileService {
 		logger.info("result dfList:"+dfList);
 		return dfList;
 	}
-	
+
+	/**
+	 * Finds all keys
+	 *
+	 * @author Vineela Sharma
+	 * @param path
+	 * @param caregiver
+	 * @param dfList
+	 * @throws Exception
+	 */
+	public List<String> findAllFiles() throws Exception {
+
+		List<String> resultList = new ArrayList<>();
+
+		AmazonS3 s3client = new AmazonS3Client();
+		String region = env.getProperty("aws.region");
+		String[] regionSuffix = region.split("-");
+		String bucketName = env.getProperty("aws.bucket.name") + "-" + regionSuffix[0];
+		String key = "";
+
+		Region reg = Region.getRegion(Regions.fromName(region));
+		s3client.setRegion(reg);
+
+		ListObjectsRequest request = new ListObjectsRequest()
+				.withBucketName(bucketName);
+
+		try {
+			ObjectListing objects;
+			do
+			{
+
+				objects = s3client.listObjects(request);
+
+				for (S3ObjectSummary objectSummary : objects.getObjectSummaries())
+				{
+					resultList.add(objectSummary.getKey());
+				}
+				request.setMarker(objects.getNextMarker());
+			}while(objects.isTruncated());
+		}
+		catch (AmazonServiceException ase) {
+			logger.error("Caught an AmazonServiceException, which means your request made it "
+					+ "to Amazon S3, but was rejected with an error response for some reason.");
+			logger.error("Error Message:    " + ase.getMessage());
+			logger.error("HTTP Status Code: " + ase.getStatusCode());
+			logger.error("AWS Error Code:   " + ase.getErrorCode());
+			logger.error("Error Type:       " + ase.getErrorType());
+			logger.error("Request ID:       " + ase.getRequestId());
+		}
+		catch (AmazonClientException ace) {
+			logger.error("Caught an AmazonClientException, which means the client encountered "
+					+ "a serious internal problem while trying to communicate with S3, "
+					+ "such as not being able to access the network.");
+			logger.error("Error Message: " + ace.getMessage());
+		}
+
+		return resultList;
+	}
+
 	
 	public void uploadFiles(List<MultipartFile> files, String id, HttpServletRequest request) throws IOException {
 		logger.info("upload files for candidate:"+id+" files:"+files);
@@ -197,6 +258,19 @@ public class FileService {
 		for (MultipartFile file : files) {
 			logger.info("Processing file name:"+file.getName()+" originalFileName:"+file.getOriginalFilename());
 			try {
+				ByteArrayOutputStream bas = new ByteArrayOutputStream();
+				BufferedInputStream bis = new BufferedInputStream(file.getInputStream());
+				if(file.getSize() > 0){
+					// copy
+					byte[] bytes = new byte[(int) file.getSize()];
+					int cnt;
+					do{
+
+						cnt = bis.read(bytes);
+						bas.write(bytes);
+					}
+					while(cnt != -1);
+				}
 				String key = "";
 				if ("resume1".equals(file.getName())) {		//resume
 					if(file.getSize() > 0){
@@ -211,7 +285,7 @@ public class FileService {
 
 							logger.info("storing file with key:"+key);
 				
-							PutObjectRequest req = new PutObjectRequest(bucketName, key, file.getInputStream(), meta);
+							PutObjectRequest req = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(bas.toByteArray()), meta);
 							s3client.putObject(req);
 						}else{
 							key = id +"/"+ "resume" +"/"+ file.getOriginalFilename();
@@ -221,7 +295,7 @@ public class FileService {
 
 							logger.info("storing file with key:"+key);
 				
-							PutObjectRequest req = new PutObjectRequest(bucketName, key, file.getInputStream(), meta);
+							PutObjectRequest req = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(bas.toByteArray()), meta);
 							s3client.putObject(req);
 							
 							//resume template
@@ -263,12 +337,12 @@ public class FileService {
 						meta.setContentLength(file.getSize());
 						meta.setContentType(file.getContentType());
 						logger.info("storing file with key:"+key);
-						PutObjectRequest req = new PutObjectRequest(bucketName, key, file.getInputStream(), meta);
+						PutObjectRequest req = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(bas.toByteArray()), meta);
 						s3client.putObject(req);
 			
 						// thumbnail image
 			            boolean isImage = false;
-			            imageInputStream = ImageIO.createImageInputStream(file.getInputStream());
+			            imageInputStream = ImageIO.createImageInputStream(new ByteArrayInputStream(bas.toByteArray()));
 			            Iterator<ImageReader> iter = ImageIO.getImageReaders(imageInputStream);
 			            if (iter.hasNext()) {
 			                isImage = true;
@@ -290,12 +364,12 @@ public class FileService {
 						meta.setContentLength(file.getSize());
 						meta.setContentType(file.getContentType());
 						logger.info("storing file with key:"+key);
-						PutObjectRequest req = new PutObjectRequest(bucketName, key, file.getInputStream(), meta);
+						PutObjectRequest req = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(bas.toByteArray()), meta);
 						s3client.putObject(req);
 			
 						// thumbnail image
 			            boolean isImage = false;
-			            imageInputStream = ImageIO.createImageInputStream(file.getInputStream());
+			            imageInputStream = ImageIO.createImageInputStream(new ByteArrayInputStream(bas.toByteArray()));
 			            Iterator<ImageReader> iter = ImageIO.getImageReaders(imageInputStream);
 			            if (iter.hasNext()) {
 			                isImage = true;
@@ -318,12 +392,12 @@ public class FileService {
 					meta.setContentLength(file.getSize());
 					meta.setContentType(file.getContentType());
 					logger.info("storing file with key:"+key);
-					PutObjectRequest req = new PutObjectRequest(bucketName, key, file.getInputStream(), meta);
+					PutObjectRequest req = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(bas.toByteArray()), meta);
 					s3client.putObject(req);
 		
 					// thumbnail image
 		            boolean isImage = false;
-		            imageInputStream = ImageIO.createImageInputStream(file.getInputStream());
+		            imageInputStream = ImageIO.createImageInputStream(new ByteArrayInputStream(bas.toByteArray()));
 		            Iterator<ImageReader> iter = ImageIO.getImageReaders(imageInputStream);
 		            if (iter.hasNext()) {
 		                isImage = true;
@@ -340,6 +414,25 @@ public class FileService {
 		                s3client.putObject(req_img_thumbnail);
 		            }
 					
+				}
+
+				String filename = file.getOriginalFilename();
+				String suffixName = filename.substring(filename.lastIndexOf(".")+1, filename.length());
+				if("pdf".equalsIgnoreCase(suffixName)){
+					logger.info("Creating thumbnail image for PDF file:"+filename);
+					PDDocument document = PDDocument.load(new ByteArrayInputStream(bas.toByteArray()));
+					PDFRenderer renderer = new PDFRenderer(document);
+					if(document.getNumberOfPages() > 0){
+						BufferedImage image = renderer.renderImage(0, 1);
+						BufferedImage resizedImage = new ImageUtils().createThumbnailImage(image);
+
+						File newFile = new File(file.getOriginalFilename() + ImageThumbnailConstants.FILE_SUFFIX);
+						ImageIO.write(resizedImage, "jpg", newFile);
+						String image_thumbnail_name = key + ImageThumbnailConstants.FILE_SUFFIX;
+						logger.info("storing thumbnail with key:"+image_thumbnail_name);
+						PutObjectRequest req_img_thumbnail = new PutObjectRequest(bucketName, image_thumbnail_name, newFile);
+						s3client.putObject(req_img_thumbnail);
+					}
 				}
 			}
 			catch (AmazonServiceException ase) {

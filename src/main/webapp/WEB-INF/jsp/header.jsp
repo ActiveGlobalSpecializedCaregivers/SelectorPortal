@@ -9,7 +9,7 @@
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/newfavicon.png" type="image/x-icon" />
     <link rel="apple-touch-icon" sizes="192x192" href="http://selector.activeglobalcaregiver.com/logo-active-global-caregiver-dashboard-app.png">
 
     <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet">

@@ -37,7 +37,16 @@
 							<td>
 								<c:choose>
 									<c:when test="${file.extension eq fn:toUpperCase('pdf')}">
-										<i class="fa fa-file-pdf-o"></i> 
+										<c:set var="found" value="${false}"/>
+										<c:forEach items="${dfList}" var="f">
+											<c:if test="${file.name eq fn:replace(f.name, '.thumbnail.jpg', '') && fn:contains(f.s3Key, file.s3Key)}">
+												<c:set var="found" value="${true}"/>
+												<img src="${f.thumbnail}"></img>
+											</c:if>
+										</c:forEach>
+										<c:if test="${found == false}">
+											<i class="fa fa-file-pdf-o"></i>
+										</c:if>
 									</c:when>
 									<c:when test="${file.extension eq fn:toUpperCase('doc') || file.extension eq fn:toUpperCase('docx')}">
 										<i class="fa fa-file-word-o"></i> 

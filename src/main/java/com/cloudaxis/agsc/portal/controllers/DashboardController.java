@@ -317,6 +317,7 @@ public class DashboardController extends AbstractController {
 			}
 			if(StringUtil.isBlank(active) || "0".equals(active)){		//profile
 				active = "0";
+				model.addAttribute("userJson", "[]");
 				/*if(!StringUtil.isBlank(caregiver.getResume())){
 					String key = caregiver.getUserId().concat("/resume/"+caregiver.getResume());
 					String url = fileService.getFileUrl(key);
@@ -347,6 +348,7 @@ public class DashboardController extends AbstractController {
 				caregiver.setLanguageList(languageList);
 				caregiver.setDiagnosedList(diagnosedList);
 				caregiver.setSpecialitiesList(specialitiesList);
+				model.addAttribute("userJson", "[]");
 			}else if("2".equals(active)){		//comments
 				List<Comment> comments = null;
 				String userInitials = String.valueOf(user.getFirstName().charAt(0))
@@ -355,15 +357,18 @@ public class DashboardController extends AbstractController {
 				
 				model.addAttribute("userInitials", userInitials);
 				model.addAttribute("comments", comments);
+				model.addAttribute("userJson", "[]");
 			}else if("3".equals(active)){		//assessment
 				// evaluation template
 				List<EvaluationModel> evaluationModelList = assessmentService.getEvaluationAnswerListByApplicationId(caregiver.getUserId().toString());
 				List<EvaluationTemplate> evaluationTemplateList = getEvaluationTemplateList(evaluationModelList);
 				model.addAttribute("evaluationTemplateList", evaluationTemplateList);
 				model.addAttribute("evaluationModelList", evaluationModelList);
+				model.addAttribute("userJson", "[]");
 			}else if("4".equals(active)){       //bio
 				Bio bio = selectedCaregiverService.getBioByCaregiverId(caregiver);
 				model.addAttribute("bio", bio);
+				model.addAttribute("userJson", "[]");
 			}else if("5".equals(active)){		//email
 				//get the email history messageId (receive email) 
 				List<String> listMessageId = emailHistoryService.getMessageIds(caregiver.getEmail());
@@ -407,6 +412,7 @@ public class DashboardController extends AbstractController {
 				List<DocumentFile> dfList = new ArrayList<DocumentFile>();
 				dfList = fileService.downloadCaregiverDocuments(path, caregiver, dfList);
 				model.addAttribute("dfList",dfList);
+				model.addAttribute("userJson", "[]");
 			}else if("7".equals(active)){		//history
 				// find workflow history by the userId
 				List<Workflow> workflowList = new ArrayList<Workflow>();
@@ -428,6 +434,7 @@ public class DashboardController extends AbstractController {
 				}
 				
 				model.addAttribute("workflowList", workflowList);
+				model.addAttribute("userJson", "[]");
 			}
 		}
 

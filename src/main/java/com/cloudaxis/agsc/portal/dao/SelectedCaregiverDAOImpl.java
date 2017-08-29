@@ -328,7 +328,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 			}
 		}
 		catch (DataAccessException e) {
-			logger.error("Data Access Exception retrieving the list of companies", e);
+			logger.error("Data Access Exception retrieving the list of companies"+ e);
 		}
 
 		return c;
