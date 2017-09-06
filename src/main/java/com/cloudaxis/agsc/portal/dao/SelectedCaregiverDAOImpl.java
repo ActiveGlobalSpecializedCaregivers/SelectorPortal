@@ -408,6 +408,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 
 	@Override
 	public void editStatus(Caregiver caregiver, User user, String changeStatus) {
+		logger.info("editStatus, caregiverId="+caregiver.getUserId()+" status="+changeStatus);
 		String dateOfChangeStatus = ApplicationDict.getDateOfStatusMap().get(changeStatus);
 		String sql = "update candidate_profile set status=?," +
 					 " last_modified=SYSDATE()," +
@@ -416,8 +417,8 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 					 " numbers_of_placement = ?," +
 					 " tag = ?," +
 					 " tag_status = ?," +
-					 " tagged_to = ?," +
-					 " " + dateOfChangeStatus + " = ?  " +
+					 " tagged_to = ?" +
+					 (dateOfChangeStatus == null ? "" : " ," + dateOfChangeStatus + " = ?  ") +
 					 "where user_id="+ caregiver.getUserId() + ";";
 		try {
 			jdbcTemplate.update(sql, new Object[] { changeStatus, caregiver.getMarkedAsRedayTime(),
@@ -559,6 +560,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 		
 		List<Caregiver> caregiverList = new ArrayList<Caregiver>();
 		try {
+			logger.info("Running SQL:"+query);
 			List<Map<String, Object>> list = jdbcTemplate.queryForList(query.toString());
 
 			for (Map<String, Object> row : list) {
@@ -650,6 +652,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 			logger.error("Data Access Exception retrieving the list of companies", e);
 		}
 
+		logger.info("Found "+caregiverList.size()+" entries");
 		return caregiverList;
 	}
 
@@ -1283,6 +1286,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 	public List<Caregiver> getCandidatesByParams(String queryInfo) {
 		List<Caregiver> candidateList = new ArrayList<Caregiver>();
 		String sql = "select * from candidate_profile left join bio on candidate_profile.user_id = bio.candidateid " + queryInfo + ";";
+		logger.info("getCandidatesByParams sql: "+sql);
 		try{
 			List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql);
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -1369,6 +1373,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 		}catch(DataAccessException e){
 			logger.error("Data Access Exception retrieving the list of candidate_profile according to the status", e);
 		}
+		logger.info("Found "+candidateList.size()+" entries");
 		return candidateList;
 	}
 

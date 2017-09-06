@@ -811,7 +811,7 @@ $("#search_c").click(function (){
 	for(var i=0;i<divList.length;i++){
 		var sf = $(divList[i]).find("select[name='p_field']").val();		//get the select value
 		var sm = $(divList[i]).find("select[name='p_match']").val();
-		var sv = $(divList[i]).find("input[name='p_value']").val();	
+		var sv = $(divList[i]).find("input[name='p_value']").val();
 		if(sf != '0'){
 			if(sv != null){
 				searchList[i] = sf +"="+ sm +"="+ sv;							//build up a list;
@@ -829,10 +829,11 @@ $("#search_c").click(function (){
 						sm = sm + "0";
 					}
 				}
-				searchList[i] = sf +"=exactly="+ sm;	
+				searchList[i] = sf +"=contain="+ sm;
 			}
 		}
 	}
+	console.log("searchList:"+searchList);
 	
 	var href = "${pageContext.request.contextPath}/candidates?searchList="+searchList +"&tag=search";
 	window.location.href = href;

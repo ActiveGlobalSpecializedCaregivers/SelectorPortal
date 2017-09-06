@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -133,6 +134,7 @@ public class DashboardController extends AbstractController {
 		}
 
 		List<SearchParamOfApplicant> searchParamList = new ArrayList<SearchParamOfApplicant>();
+		logger.info("/candidates, searchList=" + Arrays.toString(searchList));
 		if (searchList != null) {
 
 			List<String> criteria = new ArrayList<>();

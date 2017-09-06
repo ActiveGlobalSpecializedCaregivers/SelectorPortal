@@ -57,6 +57,7 @@ public class ShortlistController extends AbstractController{
 		String jsonString = null;
 		ObjectMapper mapper = new ObjectMapper();
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		logger.info("getCandidatesByStatus status:"+status+" queryParams:"+queryParam);
 		try{
 			List<Caregiver> candidateList;
 			if(StringUtils.isNotEmpty(queryParam)){
@@ -78,6 +79,13 @@ public class ShortlistController extends AbstractController{
 	
 	@RequestMapping(value="/saveCandidate", method = RequestMethod.POST)
 	public void saveCandidate(HttpServletRequest request, HttpServletResponse response, @RequestParam("adminId") String adminId, @RequestParam("adminFirstName") String adminFirstName, @RequestParam("adminLastName") String adminLastName) throws IOException, ParseException {
+		String action = request.getParameter("action");
+		logger.info("saveCandidate invoked. Action:" + action);
+		if(StringUtils.isBlank(request.getParameter("data[user_id]")) && "edit".equalsIgnoreCase(action))
+		{
+			logger.info("Missing user_id in the request parameters for candidate editing.");
+			throw new IOException("Invalid data - missing candidate unique key for edit action");
+		}
 		Caregiver candidate = new Caregiver();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		candidate.setUserId(request.getParameter("data[user_id]"));

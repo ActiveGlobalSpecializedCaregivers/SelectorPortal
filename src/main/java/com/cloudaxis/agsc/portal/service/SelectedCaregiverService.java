@@ -68,6 +68,12 @@ import com.itextpdf.text.PageSize;
 
 public class SelectedCaregiverService {
 
+	private static final List<String> DEFAULT_EMAILS = new ArrayList<String>(){{
+			add("malaka@activeglobalcaregiver.com");
+			add("activeglobalsl@gmail.com");
+			add("activeglobalyangon@gmail.com");
+			add("singapore@activeglobalcaregiver.com");
+	}};
 	protected Logger		logger	= Logger.getLogger(SelectedCaregiverService.class);
 
 	private String space = " ";
@@ -386,6 +392,7 @@ public class SelectedCaregiverService {
 
 
 	public List<Caregiver> searchByProfileFilter(List<String> criteria) {
+		logger.info("searchByProfileFilter criteria:"+criteria);
 		return selectedCaregiverDAO.searchByProfileFilter(criteria);
 	}
 
@@ -1075,11 +1082,11 @@ public class SelectedCaregiverService {
 	}
 
 	public int checkExistCandidate(String email) {
-		return selectedCaregiverDAO.checkExistCandidate(email);
+		return DEFAULT_EMAILS.contains(email) ? 0 : selectedCaregiverDAO.checkExistCandidate(email);
 	}
 
 	public int checkExistCandidate(String email, String userEmail) {
-		return selectedCaregiverDAO.checkExistCandidate(email,userEmail);
+		return DEFAULT_EMAILS.contains(email) ? 0 : selectedCaregiverDAO.checkExistCandidate(email,userEmail);
 	}
 
 	public boolean emailVerify(String email) {
