@@ -829,7 +829,7 @@ $("#search_c").click(function (){
 						sm = sm + "0";
 					}
 				}
-				searchList[i] = sf +"=contain="+ sm;
+				searchList[i] = sf +"=in="+ sm;
 			}
 		}
 	}

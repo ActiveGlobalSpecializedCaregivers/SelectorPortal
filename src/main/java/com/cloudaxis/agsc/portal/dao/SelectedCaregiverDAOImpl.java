@@ -729,11 +729,17 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				case "notempty":
 					expression = "is not null";
 					break;
+				case "in":
+					expression = " = '"+searchText+"' or " +
+								 columnName +" like '"+searchText+",%' or "+
+								 columnName +" like '%,"+searchText+",%' or " +
+								 columnName +" like '%,"+searchText+"'";
+					break;
 				default:
 					break;
 			}
 		}
-        return columnName + " " + expression;
+        return "(" + columnName + " " + expression+")";
 	}
 
 	@Override
