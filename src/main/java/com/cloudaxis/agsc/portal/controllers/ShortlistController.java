@@ -105,6 +105,8 @@ public class ShortlistController extends AbstractController{
 		}else{
 			candidate.setNumbersOfPlacement("0");
 		}
+
+		candidate.setTaggedTo(request.getParameter("data[tagged_to]"));
 		if(StringUtils.isNoneBlank(tag)){
 			int tagNum = Integer.parseInt(tag);
 			candidate.setTag(tagNum);
@@ -113,19 +115,27 @@ public class ShortlistController extends AbstractController{
 				candidate.setTagStatus(getTagStatus(tagNum, adminName));
 				if(tagNum == 0){
 					candidate.setMarkedAsRedayTime(new Date());
+					candidate.setTaggedTo(null);
+					candidate.setTaggedDate(null);
 				}else{
 					candidate.setMarkedAsRedayTime(null);
 				} 
 				if(tagNum == 1){
 					candidate.setTagId(Integer.parseInt(adminId));
+					candidate.setTaggedDate(new Date());
 				}else if(tagNum == 2){
 					candidate.setDateOfPlacement(new Date());
 					int numbersOfPlacement = Integer.parseInt(candidate.getNumbersOfPlacement()) + 1;
 					candidate.setNumbersOfPlacement(String.valueOf(numbersOfPlacement));
+					candidate.setTaggedTo(null);
+					candidate.setTaggedDate(null);
 				}
+
+				User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				selectedCaregiverService.addStatusChangeHistory(candidate, user, String.valueOf(candidate.getStatus()));
 			}
 		}
-		candidate.setTaggedTo(request.getParameter("data[tagged_to]"));
+
 		candidate.setResume(request.getParameter("data[resume]"));
 		candidate.setContractedTo(request.getParameter("data[contracted_to]"));
 		candidate.setFullName(request.getParameter("data[full_name]"));

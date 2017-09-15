@@ -1495,7 +1495,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 	public void editCaregiverOfDashboard(Caregiver candidate) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String sql = "update candidate_profile set "
-					 + "tag = ?, contracted_to = ?, tagged_to = ? , date_applied = ?, full_name = ?, "
+					 + "tag = ?, contracted_to = ?, tagged_to = ? , tagged_date = ?, date_applied = ?, full_name = ?, "
 					 + "email = ?, mobile = ?, video_url = ?, work_in_sg = ?, work_in_hk = ?, "
 					 + "work_in_tw = ?, skype = ?, gender = ?, dob = ?, age = ?, "
 					 + "country_of_birth = ?, nearest_airport = ?, nationality = ?, height = ?, weight = ?, "
@@ -1514,6 +1514,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 			values.add(candidate.getTag());
 			values.add(candidate.getContractedTo());
 			values.add(candidate.getTaggedTo());
+			values.add(candidate.getTaggedDate());
 			values.add(candidate.getDateApplied());
 			values.add(candidate.getFullName());
 			values.add(candidate.getEmail());

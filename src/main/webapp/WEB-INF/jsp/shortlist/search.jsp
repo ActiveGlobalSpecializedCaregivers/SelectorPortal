@@ -563,7 +563,6 @@
 					"sRowSelect":"multi",
 					"aButtons":[
 					    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_RECRUITER', 'ROLE_SALES', 'ROLE_SALES_SG', 'ROLE_SALES_HK', 'ROLE_SALES_TW')">
-					        { "sExtends":"editor_create", "editor":editor },
 					        { "sExtends":"editor_edit", "editor":editor },
 					        { "sExtends":"send_cv", 
 					          "sButtonText":"Send CV",
