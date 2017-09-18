@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
@@ -469,6 +471,7 @@ public class CsvCandidateStorageTest {
 
 
     @Test
+    @Ignore("Missing data file")
     public void testEvaluationName() throws IOException {
         String evaluationsFileName = "D:\\projects\\toptal\\agcs\\agsc-portal\\data\\data_records\\candidate_evaluations.csv";
 
@@ -510,6 +513,7 @@ public class CsvCandidateStorageTest {
     }
 
     @Test
+    @Ignore("Missing data file")
     public void testQuestionnaireName() throws IOException {
         String evaluationsFileName = "D:\\projects\\toptal\\agcs\\agsc-portal\\data\\data_records\\candidate_questionnaires.csv";
 
