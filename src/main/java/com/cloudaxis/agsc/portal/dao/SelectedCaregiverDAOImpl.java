@@ -418,16 +418,21 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 					 " tag = ?," +
 					 " tag_status = ?," +
 					 " tagged_to = ?" +
-					 (dateOfChangeStatus == null ? "" : " ," + dateOfChangeStatus + " = ?  ") +
+					 (dateOfChangeStatus == null ? " " : " ," + dateOfChangeStatus + " = ?  ") +
 					 "where user_id="+ caregiver.getUserId() + ";";
 		try {
-			jdbcTemplate.update(sql, new Object[] { changeStatus, caregiver.getMarkedAsRedayTime(),
-													caregiver.getDateOfPlacement(),
-													caregiver.getNumbersOfPlacement(),
-													caregiver.getTag(),
-													caregiver.getTaggedTo(),
-													caregiver.getTagStatus(),
-													new Date() });
+			ArrayList values = new ArrayList(8);
+			values.add(changeStatus);
+			values.add(caregiver.getMarkedAsRedayTime());
+			values.add(caregiver.getDateOfPlacement());
+			values.add(caregiver.getNumbersOfPlacement());
+			values.add(caregiver.getTag());
+			values.add(caregiver.getTaggedTo());
+			values.add(caregiver.getTagStatus());
+			if(dateOfChangeStatus != null){
+				values.add(new Date());
+			}
+			jdbcTemplate.update(sql, values.toArray());
 		}
 		catch (DataAccessException e) {
 			logger.error("Data Access Exception updating status of candidate", e);

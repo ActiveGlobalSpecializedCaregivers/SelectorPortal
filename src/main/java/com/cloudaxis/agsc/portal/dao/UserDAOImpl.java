@@ -276,11 +276,11 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void editUser(User user) {
-		String sql = "UPDATE users SET first_name=?,last_name=?,email=?,role=?,update_date=? WHERE username=?";
+		String sql = "UPDATE users SET first_name=?,last_name=?,email=?,role=?,update_date=?, registration_number=? WHERE username=?";
 		
 		try {
 			jdbcTemplate.update(sql, new Object[]{user.getFirstName(),user.getLastName(),user.getEmail(),
-					user.getRole(),new Date(),user.getUsername()});
+					user.getRole(),new Date(), user.getRegistrationNumber(), user.getUsername()});
 		}
 		catch (DataAccessException e) {
 			logger.error("Data Access Exception updating a User into the database", e);

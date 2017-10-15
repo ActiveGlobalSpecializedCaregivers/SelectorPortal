@@ -577,7 +577,7 @@ public class DashboardController extends AbstractController {
 		//Send notification email
 		if(!StringUtil.isBlank(caregiver.getEmail()) && !StringUtil.isBlank(emailTemplates.getTemplateType())){
 			emailTemplates = emailTemplatesService.getAutomateEmailTemplate(emailTemplates.getTemplateType());
-			
+
 			if(null != emailTemplates.getName()){
 				emailService.sendShortlistedNotification(request, emailTemplates, caregiver, user);
 			}

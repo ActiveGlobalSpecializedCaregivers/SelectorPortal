@@ -90,7 +90,19 @@
 						</div>
 					</td>
 				</tr>
-				<%-- <tr>
+				<tr>
+					<td><label>Registration Number</label></td>
+					<td><spring:bind path="registrationNumber">
+						<div class="form-group ${status.error ? 'has-error' : ''}"
+							 style="width: 400px; padding-left: 30px;">
+							<form:input type="text" path="registrationNumber" class="form-control"
+										placeholder="registrationNumber" autofocus="true"></form:input>
+							<form:errors path="registrationNumber"></form:errors>
+						</div>
+					</spring:bind></td>
+				</tr>
+
+			<%-- <tr>
 					<td><label>Location</label></td>
 					<td>
 						<div class="form-group ${status.error ? 'has-error' : ''}"

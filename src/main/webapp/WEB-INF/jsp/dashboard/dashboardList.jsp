@@ -885,8 +885,10 @@ function changeStatus(changeStatus,status){
 		message: 'Are you sure want to change it?',  
 		callback: function(result) {
             if(result){
+                var fullName = '${caregiver.fullName}';
+
             	var href = "${pageContext.request.contextPath}/dashboard/changeStatus?userId="+'${caregiver.userId}' + "&numbersOfPlacement=" + '${caregiver.numbersOfPlacement}' +
-            				"&fullName="+'${caregiver.fullName}' +"&status="+'${caregiver.status}' +"&email="+'${caregiver.email}'+
+            				"&fullName="+ encodeURIComponent(fullName) +"&status="+'${caregiver.status}' +"&email="+'${caregiver.email}'+
             				"&templateType="+changeStatus +"&active="+$("#tab").val();
             	location.href = href;
             }
