@@ -288,19 +288,19 @@ function p_fieldSelect(field){
 		
 		$(fieldParent).after("<div class='form-group col-md-2 div_match'>" +
 							"<select class='form-control' name='p_match'>" +
-							 		"<option value='0'>1-New Applicant</option>" 
-								+	"<option value='3'>2-Awaiting Documents</option>" 
-								+	"<option value='1'>3-Scheduling Interview</option>" 
-								+   "<option value='10'>4-Interview Scheduled</option>"
-								+	"<option value='2'>5-Shortlisted</option>" 
-								+	"<option value='4'>6-Not Selected / Not Interested for now</option>" 
-								+	"<option value='6'>7-Shortlisted with differed availability</option>" 
-								+	"<option value='7'>8-Ready For Placement</option>" 
-								+	"<option value='8'>9-Tagged</option>" 
-								+	"<option value='9'>10-Contracted</option>" 
-								+	"<option value='5'>11-On Hold</option>" 
-								+	"<option value='11'>12-Blacklisted</option>" +
-							"</select>" +
+								"<option value='0'>1-New Applicant</option>"
+							+	"<option value='1'>2-Scheduling Interview</option>"
+							+   "<option value='10'>3-Interview Scheduled</option>"
+							+	"<option value='2'>4-Shortlisted</option>"
+							+	"<option value='3'>5-Awaiting Documents</option>"
+							+	"<option value='4'>6-Not Selected / Not Interested for now</option>"
+							+	"<option value='5'>7-On Hold</option>"
+							+	"<option value='6'>8-Shortlisted with differed availability</option>"
+							+	"<option value='7'>9-Ready For Placement</option>"
+							+	"<option value='8'>10-Tagged</option>"
+							+	"<option value='9'>11-Contracted</option>"
+							+	"<option value='11'>12-Blacklisted</option>"
+            				+"</select>" +
 						    "</div>");
 		
 	}else if(fieldVal == 'p_registered_concorde' || fieldVal== 'p_pre_deployment' || fieldVal=='p_medical_cert_verified' || fieldVal == 'p_work_in_sg' || fieldVal == 'p_work_in_hk' || fieldVal == 'p_work_in_tw'){
