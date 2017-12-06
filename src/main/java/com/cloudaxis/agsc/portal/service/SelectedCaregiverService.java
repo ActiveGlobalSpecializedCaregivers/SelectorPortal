@@ -386,6 +386,9 @@ public class SelectedCaregiverService {
 		catch (DocumentException documentException) {
 			logger.error(documentException.getMessage());
 		}
+		catch(RuntimeException rtEx){
+			logger.error("Error creating profile:"+rtEx, rtEx);
+		}
 
 		return profile;
 	}
@@ -1123,22 +1126,18 @@ public class SelectedCaregiverService {
 		for(Caregiver caregiver : candidateList){
 			if(caregiver.getStatus() == 8){// Tagged
 				logger.info("processing tagged caregiver, tag_date="+caregiver.getTaggedDate());
-				if (caregiver.getTaggedDate() != null)
-				{
-					if (daysAfter(caregiver.getTaggedDate(), 7))
+				if (caregiver.getTaggedDate() == null || daysAfter(caregiver.getTaggedDate(), 7)){
+					// update status to ReadyForPlacement (7)
+					logger.info("setting status to 7");
+					editStatus(caregiver, user, "7");
+					if (includeUpdatedCaregiver)
 					{
-						// update status to ReadyForPlacement (7)
-						logger.info("setting status to 7");
-						editStatus(caregiver, user, "7");
-						if (includeUpdatedCaregiver)
-						{
-							resultList.add(caregiver);
-						}
-						continue;
+						resultList.add(caregiver);
 					}
-					else{
-						caregiver.setNewCaregiverFlag("new");
-					}
+					continue;
+				}
+				else{
+					caregiver.setNewCaregiverFlag("new");
 				}
 			}
 			resultList.add(caregiver);

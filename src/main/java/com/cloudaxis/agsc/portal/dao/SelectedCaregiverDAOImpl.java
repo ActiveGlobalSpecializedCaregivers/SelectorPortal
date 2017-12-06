@@ -833,12 +833,12 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 		try{
 			jdbcTemplate.update(sql, new Object[]{
 					bio.getCaregiverId(), 
-					bio.getCandidateBasicInformation(), 
-					bio.getEducationAndExperience(), 
-					bio.getExperienceDetails(),
-					bio.getTrainedToCprOrFA(), 
-					bio.getNursingExperience(), 
-					bio.getHobby(),
+					StringUtil.filterSurrogateCharacters(bio.getCandidateBasicInformation()) ,
+					StringUtil.filterSurrogateCharacters(bio.getEducationAndExperience()),
+					StringUtil.filterSurrogateCharacters(bio.getExperienceDetails()),
+					bio.getTrainedToCprOrFA(),
+					StringUtil.filterSurrogateCharacters(bio.getNursingExperience()),
+					StringUtil.filterSurrogateCharacters(bio.getHobby()),
 					new Date()
 			});
 		}catch(DataAccessException e){
@@ -1739,7 +1739,9 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 	public void editCvBio(Bio bio, Integer userId) {
 		String sql = "update bio set basic_info = ?, education_experience = ?, experience_details = ?, cpr_or_first_aid = ?, "
 				+ "nursing_experience = ?, hobby = ?, last_modify = ? where candidateid = ?";
-		
+		logger.info("editCvBio, sql:"+sql);
+		logger.info("bio:"+bio);
+		logger.info("userId:"+userId);
 		try{
 			jdbcTemplate.update(sql, new Object[]{
 				bio.getCandidateBasicInformation(),
