@@ -68,16 +68,6 @@ function selectChange(obj){
 							"<option value='Sikh'>Sikh</option>"+
 							"<option value='Others'>Others</option>"+
 						"</select></div>");
-	}else if(questionValue == "q_food_choice"){
-		$(questionExpression).remove();		
-		$(question_text).remove();
-		
-		$(questionSelect).after("<div class='form-group col-md-2 question_expression'>" +
-						"<select class='form-control' name='p_match'>" +
-							"<option value='No restrictions'>No restrictions</option>"+
-							"<option value='Vegetarian'>Vegetarian</option>"+
-							"<option value='Halal'>Halal</option>"+
-						"</select></div>");
 	}else if(questionValue == "q_hold_passport"){
 		$(questionExpression).remove();		
 		$(question_text).remove();

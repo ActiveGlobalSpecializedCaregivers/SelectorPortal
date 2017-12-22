@@ -699,14 +699,17 @@ public class SelectedCaregiverService {
 	}
 
 	private String getDiet(String foodChoice) {
-		String diet = "";
-		if("No restrictions".equals(foodChoice)){
+		String diet;
+		if("No restrictions".equalsIgnoreCase(foodChoice)){
 			diet = "has no dietary restrictions";
-		}else if("Vegetarian".equals(foodChoice)){
+		}else if("Vegetarian".equalsIgnoreCase(foodChoice)){
 			diet = "is a vegetarian";
-		}else if("Halal".equals(foodChoice)){
+		}else if("Halal".equalsIgnoreCase(foodChoice)){
 			diet = "eats only Halal food";
 		}
+		else{
+		    diet = "has dietary restriction: "+foodChoice;
+        }
 		return diet;
 	}
 	

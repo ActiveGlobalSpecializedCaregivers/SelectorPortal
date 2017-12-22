@@ -522,14 +522,10 @@
 					</div>
 					<div class="applicant-field-wrapper applicant-resume-text" id="applicant-diet">
 						<div class="applicant-label applicant-resume-text" id="applicant-diet-label">
-						Do you follow a specific diet?<font color="red">**</font></div>
+						Do you follow a specific diet (ex. No restriction, Vegetarian, Halal)?<font color="red">**</font></div>
 						<div class="applicant-input" id="applicant-diet-field">
-							<select id="applicant-diet-value" name="food_choice" class="form-control applicant-select-field">
-								<option value="applicant_no_selection">-- No answer --</option>
-								<option value="No restrictions">No restrictions</option>
-								<option value="Vegetarian">Vegetarian</option>
-								<option value="Halal">Halal</option>
-							</select>
+							<input type="text"  title="No restriction, Vegetarian, Halal"
+                                   name="food_choice" id="applicant-diet-value" maxlength="50" class="form-control applicant-field"  />
 						</div>
 					</div>
 					<div class="applicant-field-wrapper applicant-resume-text" id="applicant-passport">

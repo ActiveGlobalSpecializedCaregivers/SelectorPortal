@@ -270,7 +270,7 @@ function closeEdit(){
 			<div class="questionnaire1">
 				<div class="divLeft1">Food choice:</div>
 				<div class="divRitht">
-					<form:select path="foodChoice" items="<%=ApplicationDict.getFoodchoice()%>"></form:select>
+					<form:input path="foodChoice"  title="for example, No restriction, Vegeterian, Halal"  class="i-c"/>
 				</div>
 				<div class="divRitht1">${caregiver.foodChoice}</div>
 				<div id="cleanStyle"></div>

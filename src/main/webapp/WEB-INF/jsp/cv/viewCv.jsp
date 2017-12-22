@@ -225,9 +225,7 @@
 													<td>Food choice</td>
 													<td>
 														<span id="food_span">${caregiver.foodChoice}</span>
-														<form:select path="foodChoice" name="food_choice" id="food_edit" style="display:none;">
-															<form:options items="<%=ApplicationDict.getFoodchoice()%>"/>
-														</form:select>																													
+														<form:input path="foodChoice" title="for example, No restriction, Vegeterian, Halal" name="food_choice" id="food_edit" style="display:none;"/>
 													</td>
 												</tr>
 												<tr>
@@ -586,9 +584,11 @@ function editCV(){
 		$('#exp_span').hide();
 		$('#availability_span').hide();
 		$('#languages_span').hide();
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
 		$('#salary_hkd_span').hide();
 		$('#salary_sgd_span').hide();
 		$('#salary_twd_span').hide();
+		</sec:authorize>
 		$('#marital_span').hide();
 		$('#dob_span').hide();
 		$('#siblings_span').hide();
@@ -629,9 +629,11 @@ function editCV(){
 		$('#exp_edit').show();
 		$('#availability_edit').show();
 		$('#languages_edit').show();
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
 		$('#salary_hkd_edit').show();
 		$('#salary_sgd_edit').show();
 		$('#salary_twd_edit').show();
+		</sec:authorize>
 		$('#marital_edit').show();
 		$('#dob_edit').show();
 		$('#siblings_edit').show();

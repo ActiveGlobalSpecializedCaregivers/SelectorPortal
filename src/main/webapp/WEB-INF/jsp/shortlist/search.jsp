@@ -173,6 +173,7 @@
                                                                                     <li><label><input name="food_choice[]" type="checkbox" value="No Restrictions" data-category="food" class="filter" > No Restrictions</label></li>
                                                                                     <li><label><input name="food_choice[]" type="checkbox" value="Vegetarian" data-category="food" class="filter" > Vegetarian</label></li>
                                                                                     <li><label><input name="food_choice[]" type="checkbox" value="Halal" data-category="food" class="filter" > Halal</label></li>
+                                                                                    <li><label><input name="food_choice[]" type="text" data-category="food" class="filter" > Other</label></li>
                                                                                 </ul>
                                                                                 <br />
                                                                                 <strong>Marital status:</strong>
@@ -961,13 +962,7 @@
 	            },
 	            {
 	                "label":"Food choice:",
-	                "name":"food_choice",
-	                "type": "select",
-	                ipOpts: [
-	                    { label: "No restrictions", value: "No restrictions" },
-	                    { label: "Vegetarian", value: "Vegetarian" },
-	                    { label: "Halal", value: "Halal" }
-	                ]
+	                "name":"food_choice"
 	            },
 				{
 	                "label":"Education level:",
@@ -1087,7 +1082,9 @@
 	                    { label: "Malaria", value: "Malaria" },
 	                    { label: "Operations", value: "Operations" }
 	                ]                
-	            },
+	            }
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
+	            ,
 	            {
 	            	"label" : "Expected salary in HKD:",
 	            	"name" : "salary_hkd",
@@ -1103,6 +1100,7 @@
 	            	"name" : "salary_twd",
 	            	"type" : "textarea"
 	            }
+	            </sec:authorize>
 	            
 	         ]
 	    });

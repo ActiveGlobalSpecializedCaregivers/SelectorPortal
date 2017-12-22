@@ -580,7 +580,7 @@ $(document).ready(function(){
 					+	"</select>"
 					+	"</div>";
 
-			if(value.title != "q_gender" && value.title != "q_dob" && value.title != "q_nationality" && value.title != "q_marital_status" && value.title != "q_has_children" &&value.title != "q_religion" && value.title != "q_food_choice" && value.title != "q_hold_passport" && value.title != "q_educational_level" && value.title != "q_certified_cpr" && value.title != "q_workingplace"){
+			if(value.title != "q_gender" && value.title != "q_dob" && value.title != "q_nationality" && value.title != "q_marital_status" && value.title != "q_has_children" &&value.title != "q_religion" && value.title != "q_hold_passport" && value.title != "q_educational_level" && value.title != "q_certified_cpr" && value.title != "q_workingplace"){
 				var condition = "<div class=\"form-group col-md-2 div_match\">"
 					+	"<select class=\"form-control\" name=\"p_match\" id=\"" + q_condition_id + "\">"
 					+	"<option value=\"exactly\">is exactly</option>"
@@ -706,19 +706,6 @@ $(document).ready(function(){
 					+	"<option value='Muslim'>Muslim</option>"
 					+	"<option value='Sikh'>Sikh</option>"
 					+	"<option value='Others'>Others</option>"
-					+	"</select>"
-					+	"</div>";
-				var searchHtml = q_title + q_question + condition + q_button + footer;
-				$("#p_searchParam").append(searchHtml);
-				$("#"+q_question_id).val(value.title);
-				$("#"+q_condition_id).val(value.input);
-			}else if(value.title == "q_food_choice"){
-				var q_condition_id = "condition" + n;
-				var condition = "<div class='form-group col-md-2 question_expression'>" 
-					+	"<select class='form-control' name='p_match' id='" + q_condition_id + "'>"   
-					+	"<option value='No restrictions'>No restrictions</option>"
-					+	"<option value='Vegetarian'>Vegetarian</option>"
-					+	"<option value='Halal'>Halal</option>"
 					+	"</select>"
 					+	"</div>";
 				var searchHtml = q_title + q_question + condition + q_button + footer;
