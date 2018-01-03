@@ -208,10 +208,14 @@ public class SelectedCaregiverService {
 			String birth_date = request.getParameter("birth_date");
 			if (!StringUtil.isBlank(birth_date)) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				Date dob = sdf.parse(birth_date);
-				int age = new Date().getYear() - dob.getYear();
-				profile.setAge(String.valueOf(age));
-				profile.setDob(dob);
+				try {
+					Date dob = sdf.parse(birth_date);
+					int age = new Date().getYear() - dob.getYear();
+					profile.setAge(String.valueOf(age));
+					profile.setDob(dob);
+				} catch (ParseException pEx) {
+					logger.error("Unable to parse Date of birth: " + pEx.getMessage());
+				}
 			}
 
 			profile.setWork_in_tw("NO");
@@ -379,9 +383,6 @@ public class SelectedCaregiverService {
 		}
 		catch (IOException ioException) {
 			logger.error("Unable to upload files to S3 server: " + ioException.getMessage());
-		}
-		catch (ParseException parseException) {
-			logger.error("Unable to parse Date of birth: " + parseException.getMessage());
 		}
 		catch (DocumentException documentException) {
 			logger.error(documentException.getMessage());
