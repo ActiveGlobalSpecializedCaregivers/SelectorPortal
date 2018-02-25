@@ -10,11 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -74,6 +70,7 @@ public class SelectedCaregiverService {
 			add("activeglobalyangon@gmail.com");
 			add("singapore@activeglobalcaregiver.com");
 	}};
+	private static final String[] EMPTY_ARRAY = new String[0];
 	protected Logger		logger	= Logger.getLogger(SelectedCaregiverService.class);
 
 	private String space = " ";
@@ -941,7 +938,11 @@ public class SelectedCaregiverService {
 		String[] queryParams = medical.split(",");
 		List<String> queryList = arrayToList(queryParams);
 		for(Caregiver caregiver :  candidateList){
-			String[] specialitesArr = caregiver.getSpecialities().split(",");
+			String[] specialitesArr = EMPTY_ARRAY;
+			String specialities = caregiver.getSpecialities();
+			if(specialities != null) {
+				specialitesArr = specialities.split(",");
+			}
 			List<String> specilitesList = arrayToList(specialitesArr);
 			if(specilitesList.containsAll(queryList)){
 				candidateListNew.add(caregiver);

@@ -507,8 +507,12 @@ public class EmailService {
 		}else{
 			str = str.replace("${caregiver.hobbies}","");
 		}
-		
-		str = str.replace("${caregiver.dateOfBirth}",new SimpleDateFormat("dd/MM/yyyy").format(caregiver.getDateOfBirth()));
+
+		String formattedDate = "unknown";
+		if(caregiver.getDateOfBirth() != null) {
+			formattedDate = new SimpleDateFormat("dd/MM/yyyy").format(caregiver.getDateOfBirth());
+		}
+		str = str.replace("${caregiver.dateOfBirth}", formattedDate);
 		
 
 		BodyPart content = new MimeBodyPart();

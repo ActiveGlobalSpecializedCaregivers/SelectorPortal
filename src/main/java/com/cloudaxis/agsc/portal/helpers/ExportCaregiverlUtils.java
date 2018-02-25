@@ -93,7 +93,9 @@ public class ExportCaregiverlUtils {
 				row.createCell(index++).setCellValue(caregiver.getWorkInTW());
 				row.createCell(index++).setCellValue(caregiver.getSkype());
 				row.createCell(index++).setCellValue(caregiver.getGender());
-				row.createCell(index++).setCellValue(caregiver.getDateOfBirth().toString());
+				if(caregiver.getDateOfBirth() != null) {
+					row.createCell(index++).setCellValue(caregiver.getDateOfBirth().toString());
+				}
 				row.createCell(index++).setCellValue(caregiver.getCountryOfBirth());
 				/** -----  newly added ------- */
 				row.createCell(index++).setCellValue(caregiver.getAge());

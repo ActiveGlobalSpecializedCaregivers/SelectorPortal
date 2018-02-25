@@ -1318,7 +1318,10 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				candidate.setWorkInTW((String)result.get("work_in_tw"));
 				candidate.setSkype((String)result.get("skype"));
 				candidate.setGender((String)result.get("gender"));
-				candidate.setD_of_birth(sdf.format(result.get("dob")));
+				Object dob = result.get("dob");
+				if(dob != null) {
+					candidate.setD_of_birth(sdf.format(dob));
+				}
 				
 				candidate.setCountryOfBirth((String)result.get("country_of_birth"));
 				candidate.setNearestAirport((String)result.get("nearest_airport"));

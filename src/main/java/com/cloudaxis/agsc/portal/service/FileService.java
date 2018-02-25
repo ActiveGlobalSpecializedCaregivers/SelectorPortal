@@ -926,8 +926,11 @@ public class FileService {
 				/*dob  eg:02/12/16*/
 				Date dob = caregiver.getDateOfBirth();
 				SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
-				String date = format.format(dob);
-				
+				String date = "unknown";
+				if(dob != null) {
+					date = format.format(dob);
+				}
+
 				String[] d = date.split("-");
 				String day = d[2];
 				String mon = d[1];
