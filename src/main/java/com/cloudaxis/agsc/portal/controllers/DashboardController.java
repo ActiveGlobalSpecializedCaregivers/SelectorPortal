@@ -861,14 +861,16 @@ public class DashboardController extends AbstractController {
 		String tagged = request.getParameter("tagged_to");
 		String contracted = request.getParameter("contracted_to");
 		String tagFlag = request.getParameter("tag_flag");
+		Date today = new Date();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date dateOfBirth = sdf.parse(dob);
-		caregiver.setDateOfBirth(dateOfBirth);
-		
-		Date today = new Date();
-		int age = today.getYear() - dateOfBirth.getYear();
-		caregiver.setAge(String.valueOf(age));
+		if(org.apache.commons.lang3.StringUtils.isNotEmpty(dob)) {
+			Date dateOfBirth = sdf.parse(dob);
+			caregiver.setDateOfBirth(dateOfBirth);
+
+			int age = today.getYear() - dateOfBirth.getYear();
+			caregiver.setAge(String.valueOf(age));
+		}
 		boolean statusChanged = false;
 		
 		if(caregiver.getTag() == 0 && !tagFlag.equals(String.valueOf(caregiver.getTag()))){

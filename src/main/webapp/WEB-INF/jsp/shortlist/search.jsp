@@ -633,7 +633,8 @@
 	    var client_email = $('#client_email').val();
 	    var email_msg = $('#email_msg').val();
 
-	    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var email = "[A-Za-z0-9\._%-]+@[A-Za-z0-9\.-]+\.[A-Za-z]{2,4}";
+        var re = new RegExp('^'+email+'(;\\n*'+email+')*;?$');
 	     
 	    if ( client_email == '' ) {
 	        alert('Email must be given');

@@ -9,14 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
+import java.util.*;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -387,9 +380,11 @@ public class EmailService {
 		MimeMessage message = mailSender.createMimeMessage();
 		Properties mailProperties = mailSender.getJavaMailProperties();
 		String senderEmail = user.getEmail() == null ? mailProperties.getProperty("mail.sender") : user.getEmail();
+        logger.info("senderEmail:"+senderEmail);
 
 		// Set up TO, FROM, CC, SUBJECT, RECEIPIENT
 		message.setFrom(new InternetAddress(senderEmail));
+		message.setSender(new InternetAddress(senderEmail));
 		String[] sentToArray = cv.getSentTo().split(";");
 		for(String sentTo : sentToArray){
 			if(sentTo.isEmpty()){
@@ -513,7 +508,6 @@ public class EmailService {
 			formattedDate = new SimpleDateFormat("dd/MM/yyyy").format(caregiver.getDateOfBirth());
 		}
 		str = str.replace("${caregiver.dateOfBirth}", formattedDate);
-		
 
 		BodyPart content = new MimeBodyPart();
 		content.setText(cv.getEmailMsg());

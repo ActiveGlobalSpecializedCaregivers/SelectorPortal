@@ -206,7 +206,7 @@ public class User implements UserDetails {
 	@Override
 	public String toString() {
 		return "User [location=" + location + ", username=" + username + ", password=" + password
-				+ ", enabled=" + enabled + ", accountNonExpired="
+				+ ", enabled=" + enabled + ", email=" + email + ", accountNonExpired="
 				+ accountNonExpired + ", credentialsNonExpired="
 				+ credentialsNonExpired + ", accountNonLocked="
 				+ accountNonLocked + ", authorities=" + authorities + ", userId=" + userId + "]";
