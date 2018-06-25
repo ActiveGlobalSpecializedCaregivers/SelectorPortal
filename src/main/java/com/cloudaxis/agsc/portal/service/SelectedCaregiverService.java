@@ -367,7 +367,11 @@ public class SelectedCaregiverService {
 
 			// save bio
 			saveBio(String.valueOf(caregiverId));
-			
+
+			// to handle situation with orphan entries (file already exists for the newly created user) - delete
+			// all those entries
+			fileService.deleteS3File(String.valueOf(caregiverId));
+
 			// Upload files to S3
 			fileService.uploadFiles(filesToBeUploaded, String.valueOf(caregiverId), request);
 

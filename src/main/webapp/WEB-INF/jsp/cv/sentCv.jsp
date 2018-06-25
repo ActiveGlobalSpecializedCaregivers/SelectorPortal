@@ -461,7 +461,9 @@
                         <td style="padding:20px 15px 20px 15px;font-family: Arial, Helvetica, sans-serif;font-size: 10px;font-weight: normal;color: #666666;">Active Global Specialised Caregivers</td>
                     </tr>
                     <tr>
-                        <td style="padding:20px 15px 20px 15px;font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: bold;color: #666666; font-style: italic; text-align: justify;">Disclaimer: This biodata has been prepared by our team, to the best of our knowledge, based on the information provided by the candidate, and checked during our selection process. Please make sure to double-confirm things that are most important to you during the interview with the candidate. Please also take note that many caregivers do not eat pork or beef, despite declaring 'no food restrictions' in our questionnaire, so please check during your interview with them if this is important to you. </td>
+                        <td style="padding:20px 15px 20px 15px;font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: bold;color: #666666; font-style: italic; text-align: justify;">Disclaimer: This biodata has been prepared by our team, to the best of our knowledge, based on the information provided by the candidate. While some information was checked during our interviewing process, we are unable to verify 100% of the information provided by the candidate.
+
+                            Please make sure to double-confirm the things that are most important to you during the interview with the candidate. Please also take note that many caregivers do not eat pork or beef, despite declaring 'no food restrictions' in our questionnaire, so please check during your interview with them if this is important to you. </td>
                     </tr>
                     <tr>
                         <td style="padding:20px 15px 20px 15px;font-family: Arial, Helvetica, sans-serif;font-size: 10px;font-weight: normal;color: #666666;">Employee Registration Number:${registrationNumber} </td>

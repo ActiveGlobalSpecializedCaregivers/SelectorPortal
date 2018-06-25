@@ -109,7 +109,7 @@ public class CreateStrategy extends AbstractStrategy{
             else if(question.startsWith("For how long would you like to work as a Live-In Caregiver with Active Global?")){
                 profile.setTime_of_sg(answer);
             }
-            else if(question.startsWith("FOR FILIPINO CAREGIVERS ONLY: HAVE YOU OBTAINED TESDA NCII Certification")){
+            else if(question.startsWith("FOR FILIPINO CAREGIVERS ONLY: HAVE YOU OBTAINED TESDA NCII CAREGIVING CERTIFICATION?")){
                 profile.setTesda_ncii(answer);
             }
             else if(question.startsWith("What is your religion?")){

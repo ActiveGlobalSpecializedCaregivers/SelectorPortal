@@ -1294,6 +1294,7 @@ public class FileService {
 	 * @param key		delete the folder of all files
 	 */
 	public void deleteS3File(String key) {
+		logger.info("deleteS3File with key: "+ key);
 		AmazonS3 s3client = new AmazonS3Client();
 		String region = env.getProperty("aws.region");
 		String[] regionSuffix = region.split("-");
@@ -1305,7 +1306,10 @@ public class FileService {
 			ListObjectsRequest listObjectsRequest = new ListObjectsRequest().withBucketName(bucketName).withPrefix(key);
 		    ObjectListing objects = s3client.listObjects(listObjectsRequest);
 		    do {
-		        for (S3ObjectSummary objectSummary : objects.getObjectSummaries()) {
+				logger.info("Found "+objects.getObjectSummaries().size()+" objects.");
+
+				for (S3ObjectSummary objectSummary : objects.getObjectSummaries()) {
+		        	logger.info("deleting object with key:"+objectSummary.getKey());
 		        	s3client.deleteObject(bucketName, objectSummary.getKey());
 		        }
 		        objects = s3client.listNextBatchOfObjects(objects);
