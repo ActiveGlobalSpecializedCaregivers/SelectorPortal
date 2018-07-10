@@ -242,8 +242,8 @@ public class CaregiverSelectorController extends AbstractController {
 		String[] languages = caregiver.getLanguages().split(",");
 		
 		String[] specialities = null;
-		if(!StringUtil.isBlank(caregiver.getBio().getNursingExperience())){
-			specialities = caregiver.getBio().getNursingExperience().split(",");
+		if(!StringUtil.isBlank(caregiver.getSpecialities())){
+			specialities = caregiver.getSpecialities().split(",");
 			for(String s : specialities){
 				specialitiesList.add(s);
 			}
