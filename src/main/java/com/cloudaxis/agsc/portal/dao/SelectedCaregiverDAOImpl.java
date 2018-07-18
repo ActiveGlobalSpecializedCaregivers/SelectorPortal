@@ -491,8 +491,10 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				comment.setCandidateId(caregiverId);
 				comment.setCreateDate((Date) row.get("create_date"));
 				comment.setUserName(firstName + " " + lastName);
-				comment.setUserInitials(String.valueOf(firstName.charAt(0))
-						+ String.valueOf(lastName.charAt(lastName.indexOf(" ") + 1)));
+                String firstInitial = !StringUtils.isEmpty(firstName) ? String.valueOf(firstName.charAt(0)) : "";
+                String lastInitial = !StringUtils.isEmpty(lastName)
+									 && !lastName.endsWith(" ") ? String.valueOf(lastName.charAt(lastName.indexOf(" ") + 1)) : "";
+                comment.setUserInitials(firstInitial + lastInitial);
 
 				comments.add(comment);
 			}
