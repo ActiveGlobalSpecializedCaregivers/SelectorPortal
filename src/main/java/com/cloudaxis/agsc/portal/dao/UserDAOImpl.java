@@ -45,6 +45,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public UserDetails getUserByUsername(String username) {
 
+		logger.info("getUserByUsername:'"+username+"'");
 		String sql = " SELECT t.*  FROM users t  WHERE t.username = ? ";
 
 		User user = null;
@@ -56,6 +57,7 @@ public class UserDAOImpl implements UserDAO {
 		catch (DataAccessException e) {
 			logger.error("Data Access Exception getting the user information", e);
 		}
+		logger.info("Loaded user:"+user);
 
 		return user;
 	}
