@@ -54,11 +54,11 @@
 										<label><strong><i class="fa fa-phone header-color"></i>&nbsp; &nbsp;</strong>${caregiver.mobile}</label>
 									</div>
 									<div class="col-md-6">
-										<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_RECRUITER', 'ROLE_PH_RECRUITING_PARTNER')">
+										<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_SUB_ADMIN', 'ROLE_RECRUITER', 'ROLE_PH_RECRUITING_PARTNER')">
 											<input id="registerStatus" style="height:13px;width:13px;" type="checkbox" onclick="changeConcordeStatus();"/>
 											<label class="header-color"><strong>Registered with Concorde</strong></label>
 										</sec:authorize>
-										<sec:authorize access="hasAnyRole('ROLE_SALES', 'ROLE_SALES_SG', 'ROLE_SALES_HK', 'ROLE_SALES_TW')">
+										<sec:authorize access="hasAnyRole('ROLE_SALES', 'ROLE_SUB_ADMIN', 'ROLE_SALES_SG', 'ROLE_SALES_HK', 'ROLE_SALES_TW')">
 											<input id="registerStatus" style="height:13px;width:13px;" type="checkbox" disabled/>
 											<label class="header-color"><strong>Registered with Concorde</strong></label>
 										</sec:authorize>
@@ -71,7 +71,7 @@
 	        				    		<label><strong><i class="fa fa-envelope header-color"></i>&nbsp; &nbsp;</strong>${caregiver.email}</label>
 	        				    	</div>
 									<div class="col-md-6">
-										<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_RECRUITER')">
+										<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_SUB_ADMIN', 'ROLE_RECRUITER')">
 											<input id="schemaStatus" style="height:13px;width:13px;" type="checkbox" onclick="changeSchemaStatus();"/>
 											<label class="header-color"><strong>Advance Placement Scheme</strong></label>
 										</sec:authorize>

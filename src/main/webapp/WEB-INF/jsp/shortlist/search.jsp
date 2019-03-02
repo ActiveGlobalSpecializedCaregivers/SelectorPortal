@@ -563,7 +563,7 @@
 				"oTableTools":{
 					"sRowSelect":"multi",
 					"aButtons":[
-					    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_RECRUITER', 'ROLE_SALES', 'ROLE_SALES_SG', 'ROLE_SALES_HK', 'ROLE_SALES_TW')">
+					    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_SUB_ADMIN', 'ROLE_RECRUITER', 'ROLE_SALES', 'ROLE_SALES_SG', 'ROLE_SALES_HK', 'ROLE_SALES_TW')">
 					        { "sExtends":"editor_edit", "editor":editor },
 					        { "sExtends":"send_cv", 
 					          "sButtonText":"Send CV",
@@ -1084,7 +1084,7 @@
 	                    { label: "Operations", value: "Operations" }
 	                ]                
 	            }
-                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_SUB_ADMIN')">
 	            ,
 	            {
 	            	"label" : "Expected salary in HKD:",

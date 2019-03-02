@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page import="com.cloudaxis.agsc.portal.helpers.ApplicationDict" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
@@ -79,17 +80,19 @@
 							</div>
 						</spring:bind></td>
 				</tr>
-				<tr>
-					<td><label>Role</label></td>
-					<td>
-						<div class="form-group ${status.error ? 'has-error' : ''}"
-							style="width: 400px; padding-left: 30px;">
-							 <form:select path="role">  
-					            <form:options items="<%=ApplicationDict.getRolemap()%>"/>  
-					        </form:select>
-						</div>
-					</td>
-				</tr>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<tr>
+						<td><label>Role</label></td>
+						<td>
+							<div class="form-group ${status.error ? 'has-error' : ''}"
+								 style="width: 400px; padding-left: 30px;">
+								<form:select path="role">
+									<form:options items="<%=ApplicationDict.getRolemap()%>"/>
+								</form:select>
+							</div>
+						</td>
+					</tr>
+				</sec:authorize>
 				<tr>
 					<td><label>Registration Number</label></td>
 					<td><spring:bind path="registrationNumber">

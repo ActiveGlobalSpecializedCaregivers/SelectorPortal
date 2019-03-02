@@ -18,17 +18,19 @@
 				value="${_csrf.token}" />
 				<div class="row">
 					<div class="col-md-8">
-						<div style="float: right; margin-bottom: 5px">
-							<button class="btn btn-danger" type="button"
-								onclick="deleteUser()">
-								<i class="fa fa-times"
-									style="margin-right: 5px; line-height: 2;"></i>Delete
-							</button>
-							<button class="btn btn-success"
-								onclick="createUser()">
-								<i class="fa fa-plus" style="margin-right: 5px; line-height: 2;"></i>Create
-							</button>
-						</div>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<div style="float: right; margin-bottom: 5px">
+								<button class="btn btn-danger" type="button"
+										onclick="deleteUser()">
+									<i class="fa fa-times"
+									   style="margin-right: 5px; line-height: 2;"></i>Delete
+								</button>
+								<button class="btn btn-success"
+										onclick="createUser()">
+									<i class="fa fa-plus" style="margin-right: 5px; line-height: 2;"></i>Create
+								</button>
+							</div>
+						</sec:authorize>
 						<table class="table table-hover" id="users">
 							<thead>
 								<tr style="background: grey">

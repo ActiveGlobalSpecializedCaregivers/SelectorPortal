@@ -6,5 +6,6 @@ public class PortalConstants {
 	public static final String POWER_USER = "ROLE_POWER_USER";
 	public static final String STANDARD_USER = "ROLE_USER";
 	public static final String ADMIN_USER = "ROLE_ADMIN";
+	public static final String SUB_ADMIN_USER = "ROLE_SUB_ADMIN";
 
 }

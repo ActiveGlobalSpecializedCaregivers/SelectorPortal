@@ -67,9 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				.authorizeRequests()
 				.antMatchers("/admin/**")
-				.access("hasAnyRole('ROLE_ADMIN','ROLE_RECRUITER','ROLE_HOSPITAL','ROLE_SALES','ROLE_SALES_SG','ROLE_SALES_HK','ROLE_SALES_TW')")
+				.access("hasAnyRole('ROLE_ADMIN','ROLE_SUB_ADMIN','ROLE_RECRUITER','ROLE_HOSPITAL','ROLE_SALES','ROLE_SALES_SG','ROLE_SALES_HK','ROLE_SALES_TW')")
 				.antMatchers("/dashboard/**")
-				.access("hasRole('ROLE_ADMIN') or hasRole('ROLE_HOSPITAL') or hasRole('ROLE_SALES') or hasRole('ROLE_PH_RECRUITING_PARTNER') or hasRole('ROLE_RECRUITER') or hasRole('ROLE_SALES_SG') or hasRole('ROLE_SALES_HK') or hasRole('ROLE_SALES_TW')")
+				.access("hasRole('ROLE_ADMIN') or hasRole('ROLE_SUB_ADMIN') or hasRole('ROLE_HOSPITAL') or hasRole('ROLE_SALES') or hasRole('ROLE_PH_RECRUITING_PARTNER') or hasRole('ROLE_RECRUITER') or hasRole('ROLE_SALES_SG') or hasRole('ROLE_SALES_HK') or hasRole('ROLE_SALES_TW')")
 				.and()
 				.formLogin()
 				.loginPage("/login")

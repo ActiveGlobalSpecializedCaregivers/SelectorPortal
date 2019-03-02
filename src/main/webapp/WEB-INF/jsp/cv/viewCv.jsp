@@ -155,7 +155,7 @@
 														</div>														
 													</td>
 												</tr>
-												<sec:authorize access="hasAnyRole('ROLE_SALES_TW', 'ROLE_ADMIN')">
+												<sec:authorize access="hasAnyRole('ROLE_SALES_TW', 'ROLE_ADMIN', 'ROLE_SUB_ADMIN')">
 													<tr>
 														<td>Expected salary in TWD</td>
 														<td>
@@ -164,7 +164,7 @@
 														</td>
 													</tr>
 												</sec:authorize>
-												<sec:authorize access="hasAnyRole('ROLE_SALES_SG', 'ROLE_ADMIN')">
+												<sec:authorize access="hasAnyRole('ROLE_SALES_SG', 'ROLE_ADMIN', 'ROLE_SUB_ADMIN')">
 													<tr>
 														<td>Expected salary in SGD</td>
 														<td>
@@ -173,7 +173,7 @@
 														</td>
 													</tr>
 												</sec:authorize>
-												<sec:authorize access="hasAnyRole('ROLE_SALES_HK', 'ROLE_ADMIN')">
+												<sec:authorize access="hasAnyRole('ROLE_SALES_HK', 'ROLE_ADMIN', 'ROLE_SUB_ADMIN')">
 													<tr>
 														<td>Expected salary in HKD</td>
 														<td>
@@ -586,7 +586,7 @@ function editCV(){
 		$('#exp_span').hide();
 		$('#availability_span').hide();
 		$('#languages_span').hide();
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_SUB_ADMIN')">
 		$('#salary_hkd_span').hide();
 		$('#salary_sgd_span').hide();
 		$('#salary_twd_span').hide();
@@ -631,7 +631,7 @@ function editCV(){
 		$('#exp_edit').show();
 		$('#availability_edit').show();
 		$('#languages_edit').show();
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_SUB_ADMIN')">
 		$('#salary_hkd_edit').show();
 		$('#salary_sgd_edit').show();
 		$('#salary_twd_edit').show();

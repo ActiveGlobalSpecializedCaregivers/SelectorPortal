@@ -414,7 +414,7 @@ if(active == '5'){
 		                <th>SUBJECT</th>
 		                <th>DATE</th>
 	                	<th style="text-align: center;">
-			                <sec:authorize access="hasRole('ROLE_ADMIN')">
+			                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_SUB_ADMIN')">
 		                		<input class="all_check" type="checkbox">
 			                </sec:authorize>
 	                	</th>
@@ -428,7 +428,7 @@ if(active == '5'){
 		        			<td><a href="#" onclick="getEmail(${emailHistory.id},'send',this);">${emailHistory.subject}</a></td>
 		        			<td><fmt:formatDate value="${emailHistory.createDate}" type="both" pattern="dd/MM/yyyy HH:mm:ss"/></td>
 		        				<td align="center">
-		        			<sec:authorize access="hasRole('ROLE_ADMIN')">
+		        			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_SUB_ADMIN')">
 		        					<input type="checkbox" name="check_email" value="${emailHistory.id}">
 		        			</sec:authorize>
 		        				</td>

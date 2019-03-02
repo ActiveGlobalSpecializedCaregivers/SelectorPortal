@@ -72,8 +72,8 @@
 				            	onclick="openSearch();">
 							  <span class="fa fa-search" aria-hidden="true"></span>
 							</button>
-							<sec:authorize access="!hasAnyRole('ROLE_RECRUITER', 'ROLE_PH_RECRUITING_PARTNER', 'ROLE_SALES', 'ROLE_SALES_SG', 'ROLE_SALES_HK', 'ROLE_SALES_TW')">
-								<button class="btn btn-danger" style="margin-top: 25px;" onclick="deleteCandidates()">DELETE</button>
+							<sec:authorize access="!hasAnyRole('ROLE_RECRUITER', 'ROLE_PH_RECRUITING_PARTNER', 'ROLE_SALES', 'ROLE_SALES_SG', 'ROLE_SALES_HK', 'ROLE_SALES_TW', 'ROLE_SUB_ADMIN')">
+								<button class="btn btn-danger test-cls" style="margin-top: 25px;" onclick="deleteCandidates()">DELETE</button>
 							</sec:authorize>
 						</div>
 						
@@ -248,8 +248,8 @@
 						</div>
 			        </div>
 					<div id="searchCandidate" class="col-md-8" style="margin-left: 20px;display: none;margin-top: -20px; margin-bottom: 10px">
-						<sec:authorize access="!hasAnyRole('ROLE_RECRUITER', 'ROLE_PH_RECRUITING_PARTNER', 'ROLE_SALES', 'ROLE_SALES_SG', 'ROLE_SALES_HK', 'ROLE_SALES_TW')">
-							<button class="btn btn-danger" style="float:right;margin-right: 20px;" onclick="deleteCandidates()">DELETE</button>
+						<sec:authorize access="!hasAnyRole('ROLE_RECRUITER', 'ROLE_PH_RECRUITING_PARTNER', 'ROLE_SALES', 'ROLE_SALES_SG', 'ROLE_SALES_HK', 'ROLE_SALES_TW','ROLE_SUB_ADMIN')">
+							<button class="btn btn-danger test-cls" style="float:right;margin-right: 20px;" onclick="deleteCandidates()">DELETE</button>
 						</sec:authorize>
 						<button class="btn btn-success" style="float:right;margin-right: 20px;" type="button" id="exprot_results">EXPORT RESULTS</button>
 					</div>
@@ -261,7 +261,7 @@
 		            		<table class="table table-hover" id="caregiverList">
 		            			<thead>
 		            				<tr style="background:grey">
-		            					<sec:authorize access="hasRole('ROLE_ADMIN')">
+		            					<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_SUB_ADMIN')">
 		            						<th style="color:white"><input id="selectAllIds" type="checkbox" onclick="selectAll()"/></th>
 		            					</sec:authorize>
 		            					<th style="color:white">APPLICANT</th>
@@ -273,9 +273,9 @@
 		            			<tbody>
 		            				<c:forEach items="${list}" var="caregiver">
 		            					<tr>
-		            						<c:if test="${user.authorities == '[ROLE_ADMIN]'}">	
+											<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_SUB_ADMIN')">
 		            							<td><input type="checkbox" name="candidateId" value="${caregiver.userId}" /></td>
-		            						</c:if>
+											</sec:authorize>
 		            						<td><a href="${pageContext.request.contextPath}/dashboard/getCandidate?userId=${caregiver.userId}">${caregiver.fullName}</a></td>
 		            						<td>
 			            						<c:forEach items="${selectStatusList}" var="status">
@@ -354,7 +354,7 @@ $(document).ready(function(){
 		dateFormat: 'yy-mm-dd'
 	} );
 	 
-	if("${user.authorities}" == '[ROLE_ADMIN]'){
+	if("${user.authorities}" == '[ROLE_ADMIN]' || "${user.authorities}" == '[ROLE_SUB_ADMIN]'){
 		$('#caregiverList').DataTable({
 	    	bLengthChange: false,		//each page display
 	    	"aaSorting": [				//sort 2:means the third column

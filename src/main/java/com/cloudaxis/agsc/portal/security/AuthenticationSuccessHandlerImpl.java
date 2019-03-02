@@ -57,7 +57,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 	 */
 	protected String determineTargetUrl(Authentication authentication) {
 		Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-		if (authorities.contains("ROLE_ADMIN") || authorities.contains("ROLE_RECRUITER") || authorities.contains("ROLE_PH_RECRUITING_PARTNER") ) {
+		if (authorities.contains("ROLE_ADMIN") || authorities.contains("ROLE_SUB_ADMIN") || authorities.contains("ROLE_RECRUITER") || authorities.contains("ROLE_PH_RECRUITING_PARTNER") ) {
 			return "/candidates"; 
 		}
 		else if (authorities.contains("ROLE_SALES") || authorities.contains("ROLE_HOSPITAL") || authorities.contains("ROLE_SALES_SG") || authorities.contains("ROLE_SALES_HK") || authorities.contains("ROLE_SALES_TW")) {

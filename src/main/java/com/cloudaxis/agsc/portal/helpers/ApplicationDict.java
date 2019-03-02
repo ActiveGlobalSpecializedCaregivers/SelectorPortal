@@ -49,6 +49,7 @@ public class ApplicationDict {
 	private static final HashMap<String, String> roleMap = new HashMap<String, String>() {
         {
             put("ROLE_ADMIN", "ADMIN");
+            put("ROLE_SUB_ADMIN", "SUB_ADMIN");
             put("ROLE_SALES", "SALES");
             put("ROLE_RECRUITER","RECRUITER");
             put("ROLE_PH_RECRUITING_PARTNER","PH RECRUITING PARTNER");

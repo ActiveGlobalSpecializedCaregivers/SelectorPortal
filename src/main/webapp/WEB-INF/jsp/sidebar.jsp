@@ -21,14 +21,14 @@
                 	<li><a href="${pageContext.request.contextPath}/shortlist/getStatusAmount"><i class="fa fa-user"></i> <span>Dashboard</span></a></li>
                 </sec:authorize>
                 
-                <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_RECRUITER')">
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_SUB_ADMIN','ROLE_RECRUITER')">
                 	<li><a href="${pageContext.request.contextPath}/admin/users/sent_history"><i class="fa fa-envelope"></i> <span>CV Sent History</span></a></li>
                 	<sec:authorize access="!hasAnyRole('ROLE_RECRUITER')">
 	                	<li><a href="${pageContext.request.contextPath}/emailTemplates/setEmailTemplate"><i class="fa fa-cogs"></i> <span>Automated Emails</span> </a></li>
 	                </sec:authorize>
 				</sec:authorize>
 				
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_SUB_ADMIN')">
 	                <li class="divider"></li>
 	                <li><a href="${pageContext.request.contextPath}/admin/users"><i class="fa fa-key"></i> <span>Admin Users</span> </a></li>
 				</sec:authorize>

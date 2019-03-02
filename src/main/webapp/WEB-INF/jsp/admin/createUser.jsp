@@ -115,6 +115,7 @@
 								style="width: 400px; padding-left: 30px;">
 								<select id="role" name="role">
 									<option value="ROLE_ADMIN" label="ADMIN">ADMIN</option>
+									<option value="ROLE_SUB_ADMIN" label="SUB_ADMIN">SUB ADMIN</option>
 									<option value="ROLE_SALES" label="SALES">SALES</option>
 									<option value="ROLE_RECRUITER" label="RECRUITER">RECRUITER</option>
 									<option value="ROLE_PH_RECRUITING_PARTNER" label="PH RECRUITING PARTNER">PH RECRUITING PARTNER</option>

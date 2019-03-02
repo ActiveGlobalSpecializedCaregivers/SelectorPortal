@@ -1592,17 +1592,17 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 									 String salarySGD,
 									 String salaryTWD)
 	{
-		if(userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SALES_HK"))
+		if(userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SUB_ADMIN") || userHasRole(user, "ROLE_SALES_HK"))
         {
             values.add(salaryHKD);
         }
 
-		if(userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SALES_SG"))
+		if(userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SUB_ADMIN") || userHasRole(user, "ROLE_SALES_SG"))
         {
             values.add(salarySGD);
         }
 
-		if(userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SALES_TW"))
+		if(userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SUB_ADMIN") || userHasRole(user, "ROLE_SALES_TW"))
         {
             values.add(salaryTWD);
         }
@@ -1610,9 +1610,9 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 
 	private String createUpdateSalaryStatement(User user)
 	{
-		return (userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SALES_HK") ? "salary_hkd = ?, " : "")
-			   + (userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SALES_SG") ? "salary_sgd = ?, " : "")
-			   + (userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SALES_TW") ? "salary_twd = ?, " : "");
+		return (userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SUB_ADMIN") || userHasRole(user, "ROLE_SALES_HK") ? "salary_hkd = ?, " : "")
+			   + (userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SUB_ADMIN") || userHasRole(user, "ROLE_SALES_SG") ? "salary_sgd = ?, " : "")
+			   + (userHasRole(user, "ROLE_ADMIN") || userHasRole(user, "ROLE_SUB_ADMIN") || userHasRole(user, "ROLE_SALES_TW") ? "salary_twd = ?, " : "");
 	}
 
 	private boolean userHasRole(User user, String role)

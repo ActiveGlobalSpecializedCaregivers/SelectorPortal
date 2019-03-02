@@ -22,7 +22,7 @@
 		$("#editTrained").css({"display":"block"});
 		$("#trainedEdit").val("${bio.trainedToCprOrFA}");
 		
-		if("${loginUser.role}" == "ROLE_ADMIN" || "${loginUser.role}" == "ROLE_RECRUITER"){
+		if("${loginUser.role}" == "ROLE_ADMIN" || "${loginUser.role}" == "ROLE_SUB_ADMIN" || "${loginUser.role}" == "ROLE_RECRUITER"){
 			$("#workInSGId").css({"display":"none"});
 			$("#editWorkInSG").css({"display":"block"});
 			$("#workInSGEdit").val("${bio.workInSG}");
