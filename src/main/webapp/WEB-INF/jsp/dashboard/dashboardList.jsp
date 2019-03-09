@@ -100,7 +100,7 @@
 								</div>
 							</div>       					        		
 	        			</div>
-	        		
+
 	        			<div id="page-head1-right">
 						    <div class="btn-group">
 							 	<c:forEach items="${selectStatusList}" var="status" varStatus="s">
@@ -114,6 +114,14 @@
 										</c:when>
 									</c:choose>
 								</c:forEach>
+								<c:set var="canChangeStatus" value="${true}"/>
+								<c:if test="${caregiver.status == 11}">
+									<c:set var="canChangeStatus" value="${false}"/>
+									<sec:authorize access="hasRole('ROLE_ADMIN')">
+										<c:set var="canChangeStatus" value="${true}"/>
+									</sec:authorize>
+								</c:if>
+
 								<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 									<c:forEach items="${selectStatusList}" var="status" varStatus="index">
 										<c:choose>
@@ -121,8 +129,15 @@
 												<li class="disabled"><a href="#">${index.count}-${status.name}</a></li>
 											</c:when>
 											<c:otherwise>
-												<li><a href="#"
-													onclick="changeStatus('${status.id}','${status.name}');">${index.count}-${status.name}</a></li>
+												<c:choose>
+													<c:when test="${canChangeStatus}">
+														<li><a href="#"
+															   onclick="changeStatus('${status.id}','${status.name}');">${index.count}-${status.name}</a></li>
+													</c:when>
+													<c:otherwise>
+														<li class="disabled"><a href="#">${index.count}-${status.name}</a></li>
+													</c:otherwise>
+												</c:choose>
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
