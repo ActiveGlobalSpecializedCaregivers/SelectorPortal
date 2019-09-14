@@ -88,12 +88,13 @@
 											</div>
 											<div class="address">
 												<div class="address" itemprop="address" >
-													<span itemprop="streetAddress"Unit 801, 13/F, Lucky Centre, 165-171</span><br/>
-													<span itemprop="addressLocality">Wan Chai Road, Wan Chai,</span>
+													<br/><br/>
+													<span itemprop="streetAddress">Unit A, 11/F, Gold Swan Commercial Building</span><br/>
+													<span itemprop="addressLocality">438-444 Hennessy Road, Hong Kong</span>
 												</div>
 											</div>
 											<div class="address">
-												EA&nbsp;Licence: 43220
+												EA&nbsp;Licence: 57358
 											</div>
 										</div>
 									 </div>
