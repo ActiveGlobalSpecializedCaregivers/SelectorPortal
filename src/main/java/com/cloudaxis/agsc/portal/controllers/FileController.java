@@ -608,4 +608,11 @@ public class FileController extends AbstractController{
 		}
 		return msg;
 	}
+
+	@RequestMapping("/cleanupTempFiles")
+	public @ResponseBody String cleanupTempFiles(){
+		fileService.cleanUpTempFiles();
+		return "OK";
+	}
+
 }

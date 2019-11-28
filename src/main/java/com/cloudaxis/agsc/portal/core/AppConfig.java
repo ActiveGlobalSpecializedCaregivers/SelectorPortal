@@ -14,6 +14,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -34,6 +35,7 @@ import com.cloudaxis.agsc.portal.service.SelectedCaregiverService;
 import com.cloudaxis.agsc.portal.service.UserDetailsServiceImpl;
 
 @EnableWebMvc
+@EnableScheduling
 @Configuration
 @ComponentScan({ "com.cloudaxis.agsc.portal.*" })
 @Import({ SecurityConfig.class, MailConfig.class})

@@ -16,6 +16,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,6 +63,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -1730,6 +1734,77 @@ public class FileService {
 		}
 		return flag;
 	}  
-	
-	
+
+	@Scheduled(cron = "0 0 2 ? * SUN")
+	public void cleanUpTempFiles(){
+		logger.info("cleanup temp files task started");
+		String property = env.getProperty("cleanup.directories");
+		if(!property.trim().isEmpty()){
+			String[] directories = property.split(",");
+			for(String directory : directories){
+				try {
+					cleanupDirectory(directory);
+				} catch (IOException e) {
+					logger.error("Error cleaning directory:"+directory, e);
+				}
+			}
+		}
+		logger.info("cleanup temp files task ended");
+
+	}
+
+	private void cleanupDirectory(String directory) throws IOException {
+		logger.info("cleaning up directory:"+directory);
+		Path path = Paths.get(directory);
+		// delete direct content
+		deleteFilesInDirectory(path);
+
+		// delete sub-directories, which are caregiver id - integer value
+		deleteSubDirectoriesInDirectory(path);
+
+	}
+
+	private void deleteSubDirectoriesInDirectory(Path path) throws IOException {
+		Files.list(path)
+				.filter(p ->
+						Files.isDirectory(p) && isNumber(p)).forEach(dir -> {
+			try {
+				logger.info("deleting directory:"+dir);
+				Files.delete(dir);
+			} catch (IOException e) {
+				logger.error("Error deleting directory:"+dir, e);
+			}
+		});
+	}
+
+	private void deleteFilesInDirectory(Path path) throws IOException {
+		Files.list(path)
+				.filter(p ->
+				Files.isRegularFile(p) && isTempFile(p)).forEach(file -> {
+			try {
+				logger.info("deleting file:"+file);
+				Files.delete(file);
+			} catch (IOException e) {
+				logger.error("Error deleting file:"+file, e);
+			}
+		});
+	}
+
+	private boolean isNumber(Path p) {
+		try {
+			Integer.parseInt(p.getFileName().toString());
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	private boolean isTempFile(Path p) {
+		String fileName = p.getFileName().toString().toLowerCase();
+		return fileName.endsWith(".jpg")
+				|| fileName.endsWith(".png")
+				|| fileName.endsWith(".jpeg")
+				|| fileName.endsWith(".pdf");
+	}
+
 }
