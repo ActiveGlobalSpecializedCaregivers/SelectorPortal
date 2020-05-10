@@ -1769,6 +1769,7 @@ public class FileService {
 				.filter(p ->
 						Files.isDirectory(p) && isNumber(p)).forEach(dir -> {
 			try {
+				deleteFilesInDirectory(dir);
 				logger.info("deleting directory:"+dir);
 				Files.delete(dir);
 			} catch (IOException e) {
