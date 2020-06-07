@@ -1780,13 +1780,36 @@ public class FileService {
 
 	private void deleteFilesInDirectory(Path path) throws IOException {
 		Files.list(path)
-				.filter(p ->
-				Files.isRegularFile(p) && isTempFile(p)).forEach(file -> {
+				.filter(p -> Files.isRegularFile(p) && isTempFile(p))
+				.forEach(file -> {
 			try {
 				logger.info("deleting file:"+file);
 				Files.delete(file);
 			} catch (IOException e) {
 				logger.error("Error deleting file:"+file, e);
+			}
+		});
+		Files.list(path)
+				.filter(p -> Files.isDirectory(p))
+				.forEach(dir -> {
+				try {
+					deleteSubDirectory(dir);
+				} catch (IOException e) {
+					logger.error("Error deleting directory:"+dir, e);
+				}
+			});
+	}
+
+	private void deleteSubDirectory(Path path) throws IOException {
+		Files.list(path)
+				.filter(p -> Files.isDirectory(p) )
+				.forEach(dir -> {
+			try {
+				deleteFilesInDirectory(dir);
+				logger.info("deleting directory:"+dir);
+				Files.delete(dir);
+			} catch (IOException e) {
+				logger.error("Error deleting directory:"+dir, e);
 			}
 		});
 	}
