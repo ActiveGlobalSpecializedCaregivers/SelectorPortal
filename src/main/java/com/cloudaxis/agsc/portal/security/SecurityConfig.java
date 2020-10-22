@@ -85,6 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.csrf().disable();
 
+		http.requiresChannel().anyRequest().requiresSecure();
 	}
 
 }

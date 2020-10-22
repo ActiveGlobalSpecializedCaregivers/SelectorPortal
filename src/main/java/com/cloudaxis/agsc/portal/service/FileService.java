@@ -1735,7 +1735,7 @@ public class FileService {
 		return flag;
 	}  
 
-	@Scheduled(cron = "0 0 2 ? * SUN")
+//	@Scheduled(cron = "0 0 2 ? * SUN")
 	public void cleanUpTempFiles(){
 		logger.info("cleanup temp files task started");
 		String property = env.getProperty("cleanup.directories");
