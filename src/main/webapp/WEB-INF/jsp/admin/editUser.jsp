@@ -104,6 +104,23 @@
 						</div>
 					</spring:bind></td>
 				</tr>
+				<tr>
+					<td><label>New Password</label></td>
+					<td><div class="form-group" style="width: 400px; padding-left: 30px;">
+						<input id="newResetPassword" type="password" class="form-control"/>
+					</div></td>
+				</tr>
+				<tr>
+					<td><label>New Password Confirmation</label></td>
+					<td><div class="form-group" style="width: 400px; padding-left: 30px;">
+						<input id="newResetPasswordConfirmation" type="password"
+							   class="form-control"/>
+					</div></td>
+					<td><div class="form-group" style="text-align: center;padding-left: 10px;">
+						<button type="button" class="btn btn-default"
+								onclick="resetPassword();">Change Password</button>
+					</div></td>
+				</tr>
 
 			<%-- <tr>
 					<td><label>Location</label></td>
@@ -129,4 +146,36 @@
 	</div>
 	<!-- /container -->
 </body>
+<script type="text/javascript">
+	function resetPassword(){
+		var userId = "${pageContext.findAttribute("user").getUserId()}";
+		var newPassword = $('#newResetPassword').val();
+		var passwordConfirmation = $('#newResetPasswordConfirmation').val();
+		console.log('userId:'+userId+' password='+newPassword+' password.length:'+newPassword.length);
+		if(!(newPassword.length >= 8 && newPassword.length <= 30)){
+			alert("New password should be between 8 and 30 characters long");
+			return;
+		}
+		if(passwordConfirmation != newPassword){
+			alert("The new passwords do not match. Please try again");
+		}else{
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath}/user/resetPassword",
+				async : true,
+				cache : false,
+				data : {"userid" : userId, "newPassword" : newPassword},
+				dataType : "json",
+				success : function(data){
+					var isTheCorrectPassword = data;
+					if(isTheCorrectPassword){
+						alert("Password has been reset!");
+						cancel();
+					}
+				}
+			});
+		}
+	}
+</script>
+
 </html>
