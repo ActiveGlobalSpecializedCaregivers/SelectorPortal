@@ -103,6 +103,14 @@ public class UserService {
 		return isSuccessful;
 	}
 
+	public boolean resetPassword(String userid, String newPassword) {
+		User user = new User();
+		user.setUserId(Integer.parseInt(userid));
+		user = userDao.getUserById(user);
+		user.setPassword(newPassword);
+		userDao.setNewPwd(user);
+		return true;
+	}
 
 	public List<String> getAllUserEmails() {
 		return userDao.getAllUserEmails();

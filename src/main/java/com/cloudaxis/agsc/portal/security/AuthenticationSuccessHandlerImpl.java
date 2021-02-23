@@ -25,6 +25,7 @@ import com.cloudaxis.agsc.portal.model.User;
  */
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
 
+	public static final int EXPIRATION_TIME = 60 * 24 * 60 * 60 * 60 * 1000;
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	@Override
@@ -45,20 +46,26 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		// Retrieve information for the Dashboard display
 
 		// Set target URL to redirect
-		String targetUrl = determineTargetUrl(authentication);
+		String targetUrl = determineTargetUrl(authUser, authentication);
+		if (passwordExpired(authUser)) {
+			session.setAttribute("originalTargetUrlOnLogin", targetUrl);
+			targetUrl = "/user/passwordExpired";
+		}
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
 
 	/**
 	 * Determines the page to redirect to according to the roles of the user.
 	 * 
+	 *
+	 * @param authUser
 	 * @param authentication
 	 * @return
 	 */
-	protected String determineTargetUrl(Authentication authentication) {
+	private String determineTargetUrl(User authUser, Authentication authentication) {
 		Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 		if (authorities.contains("ROLE_ADMIN") || authorities.contains("ROLE_SUB_ADMIN") || authorities.contains("ROLE_RECRUITER") || authorities.contains("ROLE_PH_RECRUITING_PARTNER") ) {
-			return "/candidates"; 
+			return "/candidates";
 		}
 		else if (authorities.contains("ROLE_SALES") || authorities.contains("ROLE_HOSPITAL") || authorities.contains("ROLE_SALES_SG") || authorities.contains("ROLE_SALES_HK") || authorities.contains("ROLE_SALES_TW")) {
 			return "/shortlist/getStatusAmount";
@@ -66,6 +73,10 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		else {
 			throw new IllegalStateException();
 		}
+	}
+
+	private boolean passwordExpired(User user) {
+		return System.currentTimeMillis() - user.getLastPasswordChangeDate().getTime() > EXPIRATION_TIME;
 	}
 
 	public RedirectStrategy getRedirectStrategy() {

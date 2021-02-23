@@ -25,6 +25,7 @@ public class User implements UserDetails {
 	private boolean credentialsNonExpired;
 	private boolean accountNonLocked;
 	private String registrationNumber;
+	private Date lastPasswordChangeDate;
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public User() {
@@ -220,4 +221,11 @@ public class User implements UserDetails {
 		this.location = location;
 	}
 
+	public Date getLastPasswordChangeDate() {
+		return lastPasswordChangeDate;
+	}
+
+	public void setLastPasswordChangeDate(Date lastPasswordChangeDate) {
+		this.lastPasswordChangeDate = lastPasswordChangeDate;
+	}
 }

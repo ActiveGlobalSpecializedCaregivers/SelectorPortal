@@ -30,6 +30,7 @@ public class UserRowMapper implements RowMapper<User> {
 		user.setCredentialsNonExpired(rs.getBoolean("CREDS_NON_EXPIRED"));
 		user.setRegistrationNumber(rs.getString("registration_number"));
 		user.setLocation(rs.getString("location"));
+		user.setLastPasswordChangeDate(rs.getDate("LAST_PASSWORD_CHANGE_DATE"));
 
 		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority(rs.getString("ROLE")));

@@ -216,12 +216,10 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void setNewPwd(User user) {
-		
-		String sql = "UPDATE users SET password=?,update_date=? where username=?";
+		String sql = "UPDATE users SET password=?,update_date=?, last_password_change_date=now() where username=?";
 
 		try {
 			jdbcTemplate.update(sql, new Object[]{passwordEncoder.encode(user.getPassword()), new Date(), user.getUsername()});
-			
 		}
 		catch (DataAccessException e) {
 			logger.error("Data Access Exception update password to the database", e);
@@ -247,6 +245,7 @@ public class UserDAOImpl implements UserDAO {
 				user.setEnabled(Boolean.parseBoolean(row.get("ENABLED").toString()));
 				user.setRole(String.valueOf(row.get("ROLE")));
 				user.setCreateDate((Date)row.get("CREATE_DATE"));
+				user.setLastPasswordChangeDate((Date)row.get("LAST_PASSWORD_CHANGE_DATE"));
 				user.setRegistrationNumber((String)row.get("registration_number"));
 				user.setLocation((String) row.get("location"));
 				users.add(user);
@@ -354,9 +353,9 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void changePassword(User user) {
-		String sql = "UPDATE users SET password=?,update_date=? where username=?";
+		String sql = "UPDATE users SET password=?,update_date=?,last_password_change_date=new() where username=?";
 
-		try {
+		try {List<String> emailList = new ArrayList<String>();
 			jdbcTemplate.update(sql, new Object[]{passwordEncoder.encode(user.getPassword()), new Date(), user.getUsername()});
 			
 		}

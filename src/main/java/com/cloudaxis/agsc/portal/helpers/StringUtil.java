@@ -108,6 +108,7 @@ public final class StringUtil {
 	private static String replaceStrangeSequences(String text) {
 		return text.replace("\\xe2\\x80\\x99", "'").
 				replace("\\xc3\\xa9", "e").
+				replace("\\xe1\\x80\\xb6", "").
 				replace("\\xe2\\x80\\x90", "-").
 				replace("\\xe2\\x80\\x91", "-").
 				replace("\\xe2\\x80\\x92", "-").

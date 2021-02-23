@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -78,6 +79,16 @@ public class UserController {
 		return "admin/editUser";
 	}
 
+	@RequestMapping(value = "/passwordExpired", method = RequestMethod.GET)
+	public String passwordExpired(Model model) {
+
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		user = userService.getUserById(user);
+		model.addAttribute("user", user);
+
+		return "changePassword";
+	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String editUser(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
 		userValidator.validateEdit(user, bindingResult);
@@ -132,6 +143,14 @@ public class UserController {
 		boolean isSuccessful = userService.changePassword(userid, currentPassword, newPassword);
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(isSuccessful);  
+		response.getWriter().print(json);
+	}
+
+	@RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+	public void resetPassword(@RequestParam("userid") String userid, @RequestParam("newPassword") String newPassword, HttpServletRequest request, HttpServletResponse response) throws IOException{
+		boolean isSuccessful = userService.resetPassword(userid, newPassword);
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(isSuccessful);
 		response.getWriter().print(json);
 	}
 }

@@ -11,6 +11,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.sql.DataSource;
 
+import com.cloudaxis.agsc.portal.helpers.StringUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -56,31 +57,31 @@ public class UserProfileDAOImpl implements UserProfileDAO {
 		final Object[] innerO = new Object[] {
 				profile.getUser_id(),
 				profile.getApp_id(),
-				profile.getEmail(),
-				profile.getFull_name(),
-				profile.getFirst_name(),
-				profile.getLast_name(),
+				StringUtil.filterSurrogateCharacters(profile.getEmail()),
+				StringUtil.filterSurrogateCharacters(profile.getFull_name()),
+				StringUtil.filterSurrogateCharacters(profile.getFirst_name()),
+				StringUtil.filterSurrogateCharacters(profile.getLast_name()),
 				profile.getGender(),
 				profile.getDob(),
 				profile.getAge(),
-				profile.getCountry_of_birth(), // 10
+				StringUtil.filterSurrogateCharacters(profile.getCountry_of_birth()), // 10
 				profile.getHas_children(),
-				profile.getSiblings(),
+				StringUtil.filterSurrogateCharacters(profile.getSiblings()),
 				profile.getLanguages(),
-				profile.getNationality(),
-				profile.getEducational_level(),
+				StringUtil.filterSurrogateCharacters(profile.getNationality()),
+				StringUtil.filterSurrogateCharacters(profile.getEducational_level()),
 				profile.getCertified_cpr(),
-				profile.getExp(),
+				StringUtil.filterSurrogateCharacters(profile.getExp()),
 				profile.getMarital_status(),
 				profile.getReligion(),
 				profile.getMobile(), // 20
 				profile.getHeight(),
 				profile.getWeight(),
-				profile.getMotivation(),
-				profile.getAbout(),
-				profile.getEducation(),
-				profile.getSpecialties(),
-				profile.getHobbies(),
+				StringUtil.filterSurrogateCharacters(profile.getMotivation()),
+				StringUtil.filterSurrogateCharacters(profile.getAbout()),
+				StringUtil.filterSurrogateCharacters(profile.getEducation()),
+				StringUtil.filterSurrogateCharacters(profile.getSpecialties()),
+				StringUtil.filterSurrogateCharacters(profile.getHobbies()),
 				profile.getAvailability(),
 				profile.getDate_applied(),
 				profile.getWork_in_hk(), // 30
@@ -89,10 +90,10 @@ public class UserProfileDAOImpl implements UserProfileDAO {
 				profile.getSalary_hkd(),
 				profile.getSalary_sgd(),
 				profile.getSalary_twd(),
-				profile.getFood_choice(),
+				StringUtil.filterSurrogateCharacters(profile.getFood_choice()),
 				profile.getPhoto(),
-				profile.getSkype(),
-				profile.getResume(),
+				StringUtil.filterSurrogateCharacters(profile.getSkype()),
+				StringUtil.filterSurrogateCharacters(profile.getResume()),
 				profile.getTag(), // 40
 				profile.getTag_id(),
 				profile.getTag_status(),
@@ -102,13 +103,13 @@ public class UserProfileDAOImpl implements UserProfileDAO {
 				profile.getAssigned(),
 				profile.getLocation(),
 				profile.getRegistration_number(),
-				profile.getRemarks(),
-				profile.getNearest_airport(), // 50
-				profile.getCurrent_address(),
+				StringUtil.filterSurrogateCharacters(profile.getRemarks()),
+				StringUtil.filterSurrogateCharacters(profile.getNearest_airport()), // 50
+				StringUtil.filterSurrogateCharacters(profile.getCurrent_address()),
 				profile.getNumber_of_children(),
-				profile.getChildren_names(),
+				StringUtil.filterSurrogateCharacters(profile.getChildren_names()),
 				profile.getWork_in_sg(),
-				profile.getAllergies(),
+				StringUtil.filterSurrogateCharacters(profile.getAllergies()),
 				profile.getDiagnosed_conditions(),
 				profile.getVideo_url(),
 				profile.getApplicant_status(),
