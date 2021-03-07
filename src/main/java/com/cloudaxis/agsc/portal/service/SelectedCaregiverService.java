@@ -56,7 +56,6 @@ import com.cloudaxis.agsc.portal.model.SendCV;
 import com.cloudaxis.agsc.portal.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Lists;
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -958,7 +957,7 @@ public class SelectedCaregiverService {
 	
 	
 	private List<String> arrayToList(String[] stringArr) {
-		List<String> stringList = Lists.newArrayList();
+		List<String> stringList = new ArrayList<>();
 		for(String str : stringArr){
 			stringList.add(str);
 		}

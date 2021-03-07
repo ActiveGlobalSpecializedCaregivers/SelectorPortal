@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -43,7 +44,6 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.cloudaxis.agsc.portal.helpers.StringUtil;
 import com.cloudaxis.agsc.portal.model.EmailHistory;
-import com.google.common.collect.Lists;
 import com.sun.mail.imap.IMAPFolder;
 import com.sun.mail.imap.IMAPStore;
 
@@ -181,7 +181,7 @@ public class GmailService {
 	    		//save data to database
 	    		long id = emailHistoryService.save(emailHistory);
 	    		
-	    		List<File> lf = Lists.newArrayList();
+	    		List<File> lf = new ArrayList<>();
 	    		if (isContainAttachment(msg)) {		//attachment  
 	    			StringBuffer attachment = new StringBuffer(); 
 	    			
