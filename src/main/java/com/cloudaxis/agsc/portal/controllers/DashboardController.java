@@ -580,7 +580,11 @@ public class DashboardController extends AbstractController {
 			emailTemplates = emailTemplatesService.getAutomateEmailTemplate(emailTemplates.getTemplateType());
 
 			if(null != emailTemplates.getName()){
-				emailService.sendShortlistedNotification(request, emailTemplates, caregiver, user);
+				try {
+					emailService.sendShortlistedNotification(request, emailTemplates, caregiver, user);
+				} catch (Throwable e) {
+					logger.error("Failure to send email:"+e, e);
+				}
 			}
 		}
 	
