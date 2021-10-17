@@ -28,7 +28,7 @@ public class SecurityController extends AbstractController {
 
 		ModelAndView model = new ModelAndView();
 		if (error != null) {
-			model.addObject("error", "Invalid username and password!");
+			model.addObject("error", "Invalid username and/or password and/or security code!");
 		}
 
 		if (logout != null) {

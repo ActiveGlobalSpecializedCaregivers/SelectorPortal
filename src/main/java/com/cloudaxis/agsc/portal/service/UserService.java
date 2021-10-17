@@ -1,7 +1,9 @@
 package com.cloudaxis.agsc.portal.service;
 
+import java.security.SecureRandom;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Base32;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -88,6 +90,25 @@ public class UserService {
 
 	public void changePassword(User user) {
 		userDao.changePassword(user);
+	}
+
+	public User updateSecretKey(String username) {
+		User user = getUser(username);
+
+		user.setSecretKey(createSecretKey());
+
+		userDao.updateSecretKey(user);
+
+		return user;
+	}
+
+	private String createSecretKey() {
+		SecureRandom random = new SecureRandom();
+		byte[] bytes = new byte[20];
+		random.nextBytes(bytes);
+		Base32 base32 = new Base32();
+
+		return base32.encodeToString(bytes);
 	}
 
 	public boolean changePassword(String userid, String currentPassword, String newPassword) {

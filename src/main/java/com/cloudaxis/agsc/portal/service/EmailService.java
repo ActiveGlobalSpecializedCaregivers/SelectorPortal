@@ -1,13 +1,7 @@
 package com.cloudaxis.agsc.portal.service;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
+import java.io.*;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -29,6 +23,11 @@ import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -169,6 +168,85 @@ public class EmailService {
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("code", verificationCode);
 		response.getWriter().print(jsonObj.toString());
+	}
+
+	/**
+	 * Sends email with QR code to configure Google Authenticator.
+	 * @param user the user to send email with QE code
+	 * @throws IOException
+	 * @throws MessagingException
+	 * @throws WriterException
+	 */
+	public void sendSecurityCodeEmail(User user)
+			throws IOException, MessagingException, WriterException {
+		logger.info("sendSecurityCodeEmail for the user:"+user);
+		MimeMessage message = mailSender.createMimeMessage();
+		Properties mailProperties = mailSender.getJavaMailProperties();
+
+		// Set up TO, FROM, CC, SUBJECT, RECEIPIENT
+		message.setFrom(new InternetAddress(mailProperties.getProperty("mail.sender")));
+		message.setRecipient(RecipientType.TO, new InternetAddress(user.getEmail()));
+		message.setRecipient(RecipientType.BCC, new InternetAddress(mailProperties.getProperty("mail.sender")));
+		message.setSubject(mailProperties.getProperty("mail.subject.2fa.securityCode"));
+
+		Multipart multipart = new MimeMultipart();
+
+		addQRCodeContentBodyPart(multipart);
+		addQRCodeAttachmentBodyPart(user, multipart);
+
+		message.setContent(multipart);
+
+		// Send the mail
+		mailSender.send(message);
+		logger.info("Email is sent");
+	}
+
+	private void addQRCodeAttachmentBodyPart(User user, Multipart multipart) throws WriterException, IOException, MessagingException {
+		String companyName = "Active Global Specialised Caregivers";
+		String barCodeUrl = getGoogleAuthenticatorBarCode(user.getSecretKey(), user.getEmail(), companyName);
+		logger.info("barcodeUrl:"+barCodeUrl);
+		byte[] bytes = createQRCode(barCodeUrl);
+
+		//add QR code as attachment
+		BodyPart attachmentBodyPart = new MimeBodyPart();
+		DataSource source = new ByteArrayDataSource(bytes, "image/png");
+		attachmentBodyPart.setDataHandler(new DataHandler(source));
+		attachmentBodyPart.setHeader("Content-ID", "<qrc>");
+		attachmentBodyPart.setDisposition(MimeBodyPart.INLINE);
+		attachmentBodyPart.setFileName("qrc");
+		multipart.addBodyPart(attachmentBodyPart);
+	}
+
+	private void addQRCodeContentBodyPart(Multipart multipart) throws MessagingException {
+		BodyPart contentPart = new MimeBodyPart();
+		contentPart.setContent("<html>\n" +
+				"<body>\n" +
+				"  <p>Open Google Authenticator and scan this QR code:<br><img src=\"cid:qrc\" width=\"15%\" height=\"15%\"/></p>\n" +
+				"  </body>  \n" +
+				"</html>", "text/html;charset=UTF-8");
+		multipart.addBodyPart(contentPart);
+	}
+
+	private byte[] createQRCode(String barCodeData)
+			throws WriterException, IOException {
+
+		BitMatrix matrix = new MultiFormatWriter().encode(barCodeData, BarcodeFormat.QR_CODE, 400, 400);
+		try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+			MatrixToImageWriter.writeToStream(matrix, "png", out);
+			return out.toByteArray();
+		}
+	}
+
+
+	private String getGoogleAuthenticatorBarCode(String secretKey, String account, String issuer) {
+		try {
+			return "otpauth://totp/"
+					+ URLEncoder.encode(issuer + ":" + account, "UTF-8").replace("+", "%20")
+					+ "?secret=" + URLEncoder.encode(secretKey, "UTF-8").replace("+", "%20")
+					+ "&issuer=" + URLEncoder.encode(issuer, "UTF-8").replace("+", "%20");
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 	/**

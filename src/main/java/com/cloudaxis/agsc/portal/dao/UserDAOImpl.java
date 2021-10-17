@@ -366,6 +366,20 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
+	public void updateSecretKey(User user) {
+		String sql = "UPDATE users SET secret_key=? where username=?";
+
+		try {List<String> emailList = new ArrayList<>();
+			jdbcTemplate.update(sql, new Object[]{user.getSecretKey(), user.getUsername()});
+
+		}
+		catch (DataAccessException e) {
+			logger.error("Data Access Exception update password to the database", e);
+		}
+
+	}
+
+	@Override
 	public List<String> getAllUserEmails() {
 		List<String> emailList = new ArrayList<String>();
 		String sql = "select email from users ;";

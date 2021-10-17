@@ -31,6 +31,7 @@ public class UserRowMapper implements RowMapper<User> {
 		user.setRegistrationNumber(rs.getString("registration_number"));
 		user.setLocation(rs.getString("location"));
 		user.setLastPasswordChangeDate(rs.getDate("LAST_PASSWORD_CHANGE_DATE"));
+		user.setSecretKey(rs.getString("SECRET_KEY"));
 
 		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority(rs.getString("ROLE")));

@@ -45,6 +45,7 @@ import com.cloudaxis.agsc.portal.service.WorkflowService;
 import com.cloudaxis.agsc.portal.validator.UserValidator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.zxing.WriterException;
 import com.mysql.jdbc.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -606,6 +607,17 @@ public class DashboardController extends AbstractController {
 	}
 
 	/**
+	 * return the page to send security key by email
+	 *
+	 * @return
+	 */
+	@RequestMapping("user/send_security_code_email")
+	public String emailSecurityKey() {
+
+		return "forgot/sendSecurityCodeEmail";
+	}
+
+	/**
 	 * verify the mail code is correct
 	 * 
 	 * @author Damien
@@ -681,6 +693,19 @@ public class DashboardController extends AbstractController {
 			throws IOException, MessagingException {
 		emailService.sendVerificationCode(request, response, email);
 
+	}
+
+	/**
+	 * Sends email with QR code containing security key for 2FA code generation
+	 */
+	@RequestMapping("user/sendSecurityCode")
+	public void sendSecurityCode(HttpServletRequest request, HttpServletResponse response, String username)
+			throws IOException, MessagingException, WriterException {
+
+		User user = userService.updateSecretKey(username);
+		emailService.sendSecurityCodeEmail(user);
+
+		response.sendRedirect("/login");
 	}
 
 	@RequestMapping("user/createCode")

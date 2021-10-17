@@ -42,6 +42,8 @@ public interface UserDAO {
 
 	public void changePassword(User user);
 
+	void updateSecretKey(User user);
+
 	public List<String> getAllUserEmails();
 
 }

@@ -55,19 +55,39 @@
 						</div>
 					</div>
 				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+							<input type="text" class="form-control" id="verification-code" name="verification_code" placeholder="Security Code">
+						</div>
+					</div>
+				</div>
 				<div class="clearfix">
 					<div class="pull-right"><label><input type="checkbox" style="margin-bottom: 20px" checked="" name="remember_me"> Remember Me</label></div>
 				</div>
 		</div>
 		<div class="panel-footer">
-			<a href="${pageContext.request.contextPath}/user/forgot_password" class="pull-left btn btn-link" style="padding-left:0;margin-top: 0;">Forgot password?</a>
-			
-			<div class="pull-right">
-				<!-- <a href="#" class="btn btn-default">Reset</a> -->
-				<input type="reset" class="btn btn-default" value="Reset">
-				<input type="submit" name="login" value="Log In" class="btn btn-primary">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="row">
+							<div class="col-xs-12 pink">
+								<a href="${pageContext.request.contextPath}/user/forgot_password" class="pull-left btn btn-link" style="padding-left:0;margin-top: 0;">Forgot password?</a>
+							</div>
+							<div class="col-xs-12 green">
+								<a href="${pageContext.request.contextPath}/user/send_security_code_email" class="pull-left btn btn-link" style="padding-left:0;margin-top: 0;">Send email with security code</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6 blue">
+						<div class="pull-right">
+							<input type="reset" class="btn btn-default" value="Reset">
+							<input type="submit" name="login" value="Log In" class="btn btn-primary">
+						</div>
+					</div>
+				</div>
 			</div>
-			
 		</div>
 		</form>		
 	</div>

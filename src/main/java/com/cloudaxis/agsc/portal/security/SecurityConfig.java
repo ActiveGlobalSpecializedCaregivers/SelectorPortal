@@ -27,6 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AuthenticationSuccessHandler	authSuccessHandler;
 
+	@Autowired
+	private CustomWebAuthenticationDetailsSource authenticationDetailsSource;
+
 	@Bean(name = "myAuthenticationManager")
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -41,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+		DaoAuthenticationProvider authenticationProvider = new TwoFADaoAuthenticationProvider();
 		authenticationProvider.setUserDetailsService(userDetailsService);
 		authenticationProvider.setPasswordEncoder(passwordEncoder());
 		return authenticationProvider;
@@ -73,6 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.formLogin()
 				.loginPage("/login")
+				.authenticationDetailsSource(authenticationDetailsSource)
 				.defaultSuccessUrl("/candidates")
 				.failureUrl("/login?error")
 				.usernameParameter("username")

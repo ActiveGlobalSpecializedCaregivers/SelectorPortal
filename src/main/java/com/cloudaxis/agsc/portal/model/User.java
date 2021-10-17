@@ -26,6 +26,7 @@ public class User implements UserDetails {
 	private boolean accountNonLocked;
 	private String registrationNumber;
 	private Date lastPasswordChangeDate;
+	private String secretKey;
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public User() {
@@ -206,7 +207,7 @@ public class User implements UserDetails {
 
 	@Override
 	public String toString() {
-		return "User [location=" + location + ", username=" + username + ", password=" + password
+		return "User [location=" + location + ", username=" + username + ", password=" + password+", secretKey="+secretKey
 				+ ", enabled=" + enabled + ", email=" + email + ", accountNonExpired="
 				+ accountNonExpired + ", credentialsNonExpired="
 				+ credentialsNonExpired + ", accountNonLocked="
@@ -227,5 +228,13 @@ public class User implements UserDetails {
 
 	public void setLastPasswordChangeDate(Date lastPasswordChangeDate) {
 		this.lastPasswordChangeDate = lastPasswordChangeDate;
+	}
+
+	public String getSecretKey() {
+		return secretKey;
+	}
+
+	public void setSecretKey(String secretKey) {
+		this.secretKey = secretKey;
 	}
 }
