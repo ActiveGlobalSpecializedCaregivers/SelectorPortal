@@ -66,6 +66,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import static com.mysql.jdbc.StringUtils.isNullOrEmpty;
+
 @Controller
 @RequestMapping("/")
 public class DashboardController extends AbstractController {
@@ -141,9 +143,9 @@ public class DashboardController extends AbstractController {
 			List<String> criteria = new ArrayList<>();
 			String[] crit = searchList[0].split(",");
 			for (int i = 0; i < crit.length; i++) {
-				if(!StringUtils.isNullOrEmpty(crit[i])){
+				if(!isNullOrEmpty(crit[i])){
 					criteria.add(crit[i].substring(2, crit[i].length()));
-					if(!StringUtils.isNullOrEmpty(crit[i])){
+					if(!isNullOrEmpty(crit[i])){
 						SearchParamOfApplicant searchParamOfApplicant = new SearchParamOfApplicant();
 						String[] paramInfo = crit[i].split("=");
 						searchParamOfApplicant.setQuestionFlag(paramInfo[0].substring(0, 1));
@@ -198,7 +200,7 @@ public class DashboardController extends AbstractController {
 			List<String> criteria = new ArrayList<>();
 			String[] crit = searchList[0].split(",");
 			for (int i = 0; i < crit.length; i++) {
-				if(!StringUtils.isNullOrEmpty(crit[i])){
+				if(!isNullOrEmpty(crit[i])){
 					criteria.add(crit[i].substring(2, crit[i].length()));
 				}
 			}
@@ -313,7 +315,7 @@ public class DashboardController extends AbstractController {
 			caregiver = selectedCaregiverService.getCaregiver(caregiver.getUserId());
 			
 			String caregiverBeforeExp = caregiver.getCaregiverBeforeExp();
-			if(!StringUtils.isNullOrEmpty(caregiverBeforeExp)){
+			if(!isNullOrEmpty(caregiverBeforeExp)){
 				if(caregiverBeforeExp.contains("*")){
 					caregiver.setCaregiverBeforeExp(caregiverBeforeExp.replaceAll("\\*", ""));
 				}

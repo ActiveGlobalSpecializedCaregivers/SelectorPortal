@@ -18,6 +18,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.cloudaxis.agsc.portal.constants.CandidateProfileConstants;
 import com.cloudaxis.agsc.portal.model.Caregiver;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
 public class ExportCaregiverlUtils {
 
@@ -61,7 +62,7 @@ public class ExportCaregiverlUtils {
 		HSSFFont font = workbook.createFont();
 		font.setBold(true);
 		style.setFont(font);
-		style.setAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		style.setAlignment(HorizontalAlignment.CENTER);
 
 		// set header value
 		String[] headers = CandidateProfileConstants.EXCEL_HEADERS;

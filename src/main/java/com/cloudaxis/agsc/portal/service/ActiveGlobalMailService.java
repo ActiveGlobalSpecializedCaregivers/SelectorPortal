@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -26,8 +28,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.cloudaxis.agsc.portal.model.EmailHistory;
-import com.google.common.collect.Lists;
-import com.google.common.io.Files;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
 import microsoft.exchange.webservices.data.core.PropertySet;
@@ -52,6 +52,8 @@ import microsoft.exchange.webservices.data.search.FindItemsResults;
 import microsoft.exchange.webservices.data.search.ItemView;
 import microsoft.exchange.webservices.data.search.filter.SearchFilter;
 import microsoft.exchange.webservices.data.search.filter.SearchFilter.IsEqualTo;
+
+import static com.mysql.jdbc.StringUtils.isNullOrEmpty;
 
 @Service
 public class ActiveGlobalMailService {
@@ -263,7 +265,7 @@ public class ActiveGlobalMailService {
 	}
 
 	public List<File> downloadAttachments(Item mail,String path, String senderEmailAddress) throws ServiceLocalException, IOException, Exception {
-		List<File> downloadedAttachmentList = Lists.newArrayList();
+		List<File> downloadedAttachmentList = new ArrayList<>();
 		AttachmentCollection attachments = mail.getAttachments();
 		FileAttachment remoteFile = null;
 		for (Attachment attachment : attachments) {
@@ -273,8 +275,8 @@ public class ActiveGlobalMailService {
 				continue;
 			}
 			String fullFileName = remoteFile.getName();
-			String fileExtension = Files.getFileExtension(fullFileName);
-			String fileName = Files.getNameWithoutExtension(fullFileName);
+			String fileExtension = getFileExtension(fullFileName);
+			String fileName = getNameWithoutExtension(fullFileName);
 			File localFile = File.createTempFile(fileName.concat("."), ".".concat(fileExtension));
 			remoteFile.load(localFile.getAbsolutePath());
 			downloadedAttachmentList.add(localFile);
@@ -285,7 +287,24 @@ public class ActiveGlobalMailService {
 		return downloadedAttachmentList;
 	}
 
-	
+	private String getNameWithoutExtension(String fileName) {
+		if(isNullOrEmpty(fileName)){
+			return "";
+		}
+		int dotIndex = fileName.lastIndexOf('.');
+		return dotIndex == 0 ? fileName.substring(1)
+				: dotIndex > 0 ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
+	}
+
+	private String getFileExtension(String fileName) {
+		if(isNullOrEmpty(fileName)){
+			return "";
+		}
+		int dotIndex = fileName.lastIndexOf('.');
+		return dotIndex > 0 ? fileName.substring(dotIndex +1) : "";
+	}
+
+
 	/**
 	 * upload on the server
 	 * 

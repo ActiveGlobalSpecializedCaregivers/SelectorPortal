@@ -2,6 +2,8 @@ package com.cloudaxis.agsc.portal.mail;
 
 import java.util.Properties;
 
+import com.cloudaxis.agsc.portal.controllers.DashboardController;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,15 +17,19 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
  */
 @Configuration
 public class MailConfig {
-	
+	protected Logger logger = Logger.getLogger(MailConfig.class);
+
 	@Autowired
 	private Environment environment;
 
 	@Bean
 	public JavaMailSenderImpl javaMailService() {
 		JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-		javaMailSender.setUsername(environment.getProperty("mail.username"));
-		javaMailSender.setPassword(environment.getProperty("mail.password"));
+		String username = environment.getProperty("mail.username");
+		javaMailSender.setUsername(username);
+		String password = environment.getProperty("mail.password");
+		logger.info("Creating mail sender with user="+username+" and password="+password);
+		javaMailSender.setPassword(password);
 		javaMailSender.setHost(environment.getProperty("mail.smtp.host"));
 		javaMailSender.setProtocol(environment.getProperty("mail.protocol"));
 		javaMailSender.setPort(Integer.valueOf(environment.getProperty("mail.smtp.port")));
