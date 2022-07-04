@@ -76,7 +76,9 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 	}
 
 	private boolean passwordExpired(User user) {
-		return System.currentTimeMillis() - user.getLastPasswordChangeDate().getTime() > EXPIRATION_TIME;
+		return user == null
+				|| user.getLastPasswordChangeDate() == null
+				|| System.currentTimeMillis() - user.getLastPasswordChangeDate().getTime() > EXPIRATION_TIME;
 	}
 
 	public RedirectStrategy getRedirectStrategy() {

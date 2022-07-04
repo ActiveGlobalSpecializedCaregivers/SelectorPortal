@@ -43,7 +43,8 @@ public class MailConfig {
 		properties.put("mail.subject.forgot.password", environment.getProperty("mail.subject.forgot.password"));
 		properties.put("mail.subject.shortlisted", environment.getProperty("mail.subject.shortlisted"));
 		properties.put("mail.smtp.starttls.enable", "true");
-		
+		properties.put("mail.smtp.starttls.required", "true");
+		properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
 		return properties;
 	}
 

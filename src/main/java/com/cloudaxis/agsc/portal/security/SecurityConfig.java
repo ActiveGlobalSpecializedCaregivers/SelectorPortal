@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Configuration
@@ -34,6 +35,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
+	}
+
+	@Bean
+	public HttpSessionEventPublisher httpSessionEventPublisher() {
+		return new HttpSessionEventPublisher();
 	}
 
 	@Autowired
@@ -90,6 +96,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.csrf().disable();
 
 		http.requiresChannel().anyRequest().requiresSecure();
+
+		http.sessionManagement()
+				.sessionConcurrency(configurer -> configurer.expiredUrl("/login"))
+				.invalidSessionUrl("/login");
 	}
 
 }

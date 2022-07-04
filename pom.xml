@@ -10,8 +10,8 @@
 	<properties>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<java-version>1.7</java-version>
-		<org.springframework-version>4.2.1.RELEASE</org.springframework-version>
-		<spring.security.version>4.0.2.RELEASE</spring.security.version>
+		<org.springframework-version>5.3.21</org.springframework-version>
+		<spring.security.version>5.7.1</spring.security.version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 		<httpcore.version>4.2</httpcore.version>
 		<hibernate.version>4.1.9.Final</hibernate.version>	
@@ -224,12 +224,12 @@
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-core</artifactId>
-		    <version>2.6.6</version>
+		    <version>2.13.3</version>
 		</dependency>
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
-		    <version>2.6.6</version>
+		    <version>2.13.3</version>
 		</dependency>
 
 		<dependency>
