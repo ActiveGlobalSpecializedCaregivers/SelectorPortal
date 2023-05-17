@@ -29,7 +29,7 @@
        <div class="liutext"><em>4</em><br /><strong>complete</strong></div>
       </div>
      </div>
-     <form:form id="myForm" action="${pageContext.request.contextPath}/user/complete" method="post" commandName="user" class="forget-pwd">
+     <form:form id="myForm" action="${pageContext.request.contextPath}/user/complete" method="post" modelAttribute="user" class="forget-pwd">
      <input type="hidden" name="username" value="${user.username}"/>
      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
        <!-- <dl>

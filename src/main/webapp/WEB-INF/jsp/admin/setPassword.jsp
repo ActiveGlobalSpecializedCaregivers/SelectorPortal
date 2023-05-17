@@ -16,7 +16,7 @@ body{background-color: lightgray;}
 </style>
 </head>
 <body>
-	<form:form method="POST" action="${pageContext.request.contextPath}/user/changePwd" commandName="user" class="form-horizontal">
+	<form:form method="POST" action="${pageContext.request.contextPath}/user/changePwd" modelAttribute="user" class="form-horizontal">
 		<form:input type="hidden" path="username"/>
 		<div class="main">
 			<div class="form-group">

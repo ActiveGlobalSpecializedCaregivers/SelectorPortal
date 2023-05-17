@@ -25,7 +25,7 @@
 <body>
 	<jsp:include page="../header.jsp" />
 	<div style="margin-left: 80px; margin-top: 10px">
-		<form:form id="userForm" method="POST" commandName="user" class="form-signin">
+		<form:form id="userForm" method="POST" modelAttribute="user" class="form-signin">
 			<h2 class="form-signin-heading">Create New User</h2>
 		    <a href="${contextPath}/admin/users">Users</a> > Create	
 			<div style="background-color: lightgray; padding: 20px; width: 50%;">
