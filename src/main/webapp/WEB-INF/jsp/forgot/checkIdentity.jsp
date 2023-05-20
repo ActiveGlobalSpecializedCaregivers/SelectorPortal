@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -112,7 +112,7 @@
        <div class="liutext"><em>4</em><br /><strong>complete</strong></div>
       </div>
      </div>
-     <form:form id ="myForm" action="${pageContext.request.contextPath}/user/setNewPassword" commandName="user" method="post" class="forget-pwd">
+     <form:form id ="myForm" action="${pageContext.request.contextPath}/user/setNewPassword" modelAttribute="user" method="post" class="forget-pwd">
      	<input type="hidden" name="username" value="${user.username}"/>
      	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
        <dl>
