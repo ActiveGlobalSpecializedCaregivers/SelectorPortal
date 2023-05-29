@@ -23,7 +23,7 @@
       </div>
      </div><!--for-liucheng/-->
       <div class="successs">
-       <h3>Your password has been reset!<a href="${pageContext.request.contextPath}">Click here</a> to log in using new password</h3>
+       <h3>Your password has been reset!<a href="/login">Click here</a> to log in using new password</h3>
       </div>
    </div><!--web-width/-->
   </div><!--content/-->

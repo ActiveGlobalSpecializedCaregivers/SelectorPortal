@@ -72,7 +72,7 @@ public class UserValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "not.empty");
         if(user.getEmail() != null && user.getEmail() != ""){
         	User u = userService.getUser(user.getUsername());
-        	if(!user.getEmail().equals(u.getEmail())){
+        	if(!user.getEmail().equalsIgnoreCase(u.getEmail())){
         		errors.rejectValue("email", "email.difference");
         	}	
         	
