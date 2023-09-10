@@ -46,7 +46,6 @@ import com.cloudaxis.agsc.portal.validator.UserValidator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.WriterException;
-import com.mysql.jdbc.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +65,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import static com.mysql.jdbc.StringUtils.isNullOrEmpty;
+import static com.mysql.cj.util.StringUtils.isNullOrEmpty;
 
 @Controller
 @RequestMapping("/")

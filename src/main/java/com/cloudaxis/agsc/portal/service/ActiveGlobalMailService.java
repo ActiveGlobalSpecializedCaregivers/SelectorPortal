@@ -53,7 +53,7 @@ import microsoft.exchange.webservices.data.search.ItemView;
 import microsoft.exchange.webservices.data.search.filter.SearchFilter;
 import microsoft.exchange.webservices.data.search.filter.SearchFilter.IsEqualTo;
 
-import static com.mysql.jdbc.StringUtils.isNullOrEmpty;
+import static com.mysql.cj.util.StringUtils.isNullOrEmpty;
 
 @Service
 public class ActiveGlobalMailService {
