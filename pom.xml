@@ -15,7 +15,7 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 		<httpcore.version>4.2</httpcore.version>
 		<hibernate.version>4.1.9.Final</hibernate.version>	
-		<mysql.connector.version>8.1.0</mysql.connector.version>
+		<mysql.connector.version>8.0.22</mysql.connector.version>
 		<httpclient.version>4.2.3</httpclient.version>
 		<commons-logging.version>1.1.3</commons-logging.version>
 		<aws-sdk.version>1.11.68</aws-sdk.version>
@@ -103,13 +103,14 @@
 
 		
         <!-- MySQL -->
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>${mysql.connector.version}</version>
-            <!--<scope>provided</scope>-->
-        </dependency>
-        		
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.version}</version>
+		</dependency>
+
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
