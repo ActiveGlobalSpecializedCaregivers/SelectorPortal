@@ -1,3 +1,10 @@
 /target/
 /.idea/
 /agsc-portal.iml
+/.ssh/agsc-sg-201703.pem
+/.ssh/agsc-sg-201703.ppk
+/Dockerfile
+/Added_emergency_contact.patch
+/run.sh
+/workbook.txt
+/.m2/
