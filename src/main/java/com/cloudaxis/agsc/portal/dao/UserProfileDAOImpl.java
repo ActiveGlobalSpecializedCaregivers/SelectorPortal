@@ -53,7 +53,8 @@ public class UserProfileDAOImpl implements UserProfileDAO {
 				+ "?,?,?,?,?,?,?,?,?,?,"   // 70
 				+ "?,?,?,?,?,?,?,?,?,?,"   // 80
 				+ "?,?,?,?,?,?,?,?,?,?,"   // 90
-				+ "?,?,?,?,?,?,?,?,?,?);"; //100
+				+ "?,?,?,?,?,?,?,?,?,?,"   //100
+				+ "?,?,?);"; //103
 		final Object[] innerO = new Object[] {
 				profile.getUser_id(),
 				profile.getApp_id(),
@@ -154,8 +155,11 @@ public class UserProfileDAOImpl implements UserProfileDAO {
 				null,
 				null,
 				null,
-				0	// 100
-		}; 			
+				0,	// 100
+				profile.getEmergency_contact_name(),		// 101
+				profile.getEmergency_contact_phone(),		// 102
+				profile.getEmergency_contact_relationship() // 103
+		};
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		try {

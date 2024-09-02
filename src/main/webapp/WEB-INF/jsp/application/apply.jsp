@@ -74,7 +74,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/application/js/view.position.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/application/js/jquery.placeholder.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/resources/application/js/jquery.textareacounter.js" type="text/javascript"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/application/js/submit-resume.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/application/js/submit-resume.js?v=3"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootbox.js"></script>
 
 </head>
@@ -1051,6 +1051,24 @@
 						<div class="applicant-label applicant-resume-text" id="applicant-q38768-label">Other relevant file upload (4)</div>
 						<div class="applicant-input" id="applicant-q38768-field">
 							<input type="file" class="applicant-file-field" id="applicant-questionnaire-file-38768" name="other_file">
+						</div>
+					</div>
+					<div class="applicant-field-wrapper applicant-resume-text" id="emergency-contact-name">
+						<div class="applicant-label applicant-resume-text" id="emergency-contact-name-label" >Emergency Contact Name<font color="red">**</font></div>
+						<div class="applicant-input" id="emergency-contact-name-field">
+							<input type="text" name="emergency_contact_name" id="emergency-contact-name-value" maxlength="255" class="applicant-field" />
+						</div>
+					</div>
+					<div class="applicant-field-wrapper applicant-resume-text" id="emergency-contact-phone">
+						<div class="applicant-label applicant-resume-text" id="emergency-contact-phone-label">Contact No. The emergency contact phone number cannot be the same number as the candidate’s<font color="red">**</font></div>
+						<div class="applicant-input" id="emergency-contact-phone-field">
+							<input type="text" name="emergency_contact_phone" id="emergency-contact-phone-value" maxlength="50" class="applicant-field"/>
+						</div>
+					</div>
+					<div class="applicant-field-wrapper applicant-resume-text" id="emergency-contact-relationship">
+						<div class="applicant-label applicant-resume-text" id="emergency-contact-relationship-label">Relationship<font color="red">**</font></div>
+						<div class="applicant-input" id="emergency-contact-relationship-field">
+							<input type="text" name="emergency_contact_relationship" id="emergency-contact-relationship-value" maxlength="100" class="applicant-field"/>
 						</div>
 					</div>
 					<div class="applicant-field-wrapper applicant-resume-text">

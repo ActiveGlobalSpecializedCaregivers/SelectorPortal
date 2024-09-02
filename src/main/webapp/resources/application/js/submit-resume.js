@@ -190,6 +190,10 @@ var translationsObj = {
 		stateLabel: 'Introduce tu estado',
 		postalLabel: 'Introduce postal',
 		phoneLabel: 'Introduce tu número de teléfono',
+		emergencyContactLabel:'Enter emergency contact',
+		emergencyContactPhoneLabel:'Enter emergency contact phone number',
+		emergencyContactPhoneDuplicateLabel:"Enter emergency contact phone number different from candidate's phone",
+		emergencyContactRelationshipLabel:'Enter emergency contact relationship',
 		errorLabel: 'Introducir texto',
 		birthLabel:'Enter birth date',
 		birthPlaceLabel:'Enter birth place',
@@ -231,6 +235,10 @@ var translationsObj = {
 		stateLabel: 'Voer State',
 		postalLabel: 'Voer postcode',
 		phoneLabel: 'Voer het telefoonnummer',
+		emergencyContactLabel:'Enter emergency contact',
+		emergencyContactPhoneLabel:'Enter emergency contact phone number',
+		emergencyContactPhoneDuplicateLabel:"Enter emergency contact phone number different from candidate's phone",
+		emergencyContactRelationshipLabel:'Enter emergency contact relationship',
 		errorLabel: 'Voer tekst',
 		birthLabel:'Enter birth date',
 		birthPlaceLabel:'Enter birth place',
@@ -272,6 +280,10 @@ var translationsObj = {
 		stateLabel: 'Enter State',
 		postalLabel: 'Enter postal code',
 		phoneLabel: 'Enter phone number',
+		emergencyContactLabel:'Enter emergency contact',
+		emergencyContactPhoneLabel:'Enter emergency contact phone number',
+		emergencyContactPhoneDuplicateLabel:"Enter emergency contact phone number different from candidate's phone",
+		emergencyContactRelationshipLabel:'Enter emergency contact relationship',
 		errorLabel: 'Enter text',
 		birthLabel:'Enter birth date',
 		birthPlaceLabel:'Enter birth place',
@@ -425,6 +437,9 @@ function check_submission_form(){
 		applicant_postal = $("#applicant-postal-value").attr("value"); 
 		applicant_phone = $("#applicant-phone-value").attr("value");
 		applicant_address = $("#applicant-address-value").attr("value");
+		emergency_name = $("#emergency-contact-name-value").attr("value");
+		emergency_phone = $("#emergency-contact-phone-value").attr("value");
+		emergency_relationship = $("#emergency-contact-relationship-value").attr("value");
 		applicant_file = $("#applicant-resume-value").attr("value");
 		resume_text = $("#applicant-resumetext-value").attr("value");
 		resume_manual = $("#manual").attr("value");
@@ -603,6 +618,22 @@ function check_submission_form(){
 		if( applicant_phone == "" || isNaN(applicant_phone)){
 			add_error("#applicant-phone-label", curLanguage.phoneLabel);
 				window.location.hash = "#applicant-phone-label";
+		}
+		console.log('emergency_name=['+emergency_name+'] relationship=['+emergency_relationship+'] phone=['+emergency_phone+']')
+		if( emergency_name == ""){
+			add_error("#emergency-contact-name-label", curLanguage.emergencyContactLabel);
+				window.location.hash = "#emergency-contact-name-label";
+		}
+		if( emergency_relationship == ""){
+			add_error("#emergency-contact-relationship-label", curLanguage.emergencyContactRelationshipLabel);
+				window.location.hash = "#emergency-contact-relationship-label";
+		}
+		if( emergency_phone == "" || isNaN(emergency_phone)){
+			add_error("#emergency-contact-phone-label", curLanguage.emergencyContactPhoneLabel);
+				window.location.hash = "#emergency-contact-phone-label";
+		} else if(emergency_phone == applicant_phone) {
+			add_error("#emergency-contact-phone-label", curLanguage.emergencyContactPhoneDuplicateLabel);
+			window.location.hash = "#emergency-contact-phone-label";
 		}
 		if ( eeoc_disability > 0 ){
 			if ( eeoc_signature == "" ){

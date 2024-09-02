@@ -28,16 +28,19 @@ public class TwoFADaoAuthenticationProvider extends DaoAuthenticationProvider {
 
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+		logger.info("additionAuthentication, user="+userDetails+" authentication.credentials="+authentication.getCredentials()+" principal="+authentication.getPrincipal());
 		super.additionalAuthenticationChecks(userDetails, authentication);
 
 		User user = (User) userDetails;
 		String secretKey = user.getSecretKey();
+		logger.info("user="+user);
 		if(StringUtil.isBlank(secretKey)){
 			logger.debug("Secret key is missing");
 			throw new BadCredentialsException("Google Authenticator configuration is missing.");
 		}
 
 		String verificationCode = ((CustomWebAuthenticationDetails) authentication.getDetails()).getVerificationCode();
+		logger.debug("verificationCode="+verificationCode);
 		if (!validVerificationCode(verificationCode, secretKey)) {
 			throw new BadCredentialsException("Invalid verification code");
 		}
@@ -49,6 +52,7 @@ public class TwoFADaoAuthenticationProvider extends DaoAuthenticationProvider {
 		String hexKey = Hex.encodeHexString(bytes);
 		String calculatedOtp = TOTP.getOTP(hexKey);
 		boolean validCode = calculatedOtp.equals(verificationCode);
+		logger.info("checking verification code, received:"+verificationCode+" expected="+calculatedOtp);
 		if(!validCode){
 			logger.info("invalid verification code, received:"+verificationCode+" expected="+calculatedOtp);
 			logger.info("Current server time now:"+new Date());

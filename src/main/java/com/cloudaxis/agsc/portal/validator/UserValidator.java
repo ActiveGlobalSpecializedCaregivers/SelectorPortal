@@ -2,6 +2,8 @@ package com.cloudaxis.agsc.portal.validator;
 
 import java.util.List;
 
+import com.cloudaxis.agsc.portal.security.TwoFADaoAuthenticationProvider;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -13,6 +15,7 @@ import com.cloudaxis.agsc.portal.service.UserService;
 
 @Component
 public class UserValidator implements Validator {
+    private final static Logger logger	= Logger.getLogger(UserValidator.class);
     @Autowired
     private UserService userService;
 

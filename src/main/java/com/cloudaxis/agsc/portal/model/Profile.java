@@ -13,6 +13,9 @@ public class Profile {
 	private String gender;
 	private Date dob; // jsp:birth_date
 	private String age;
+	private String emergency_contact_name;
+	private String emergency_contact_phone;
+	private String emergency_contact_relationship;
 	private String country_of_birth;
 	private String has_children;
 	private String siblings;
@@ -778,8 +781,31 @@ public class Profile {
 		this.medicalCertValidator = medicalCertValidator;
 	}
 
+	public String getEmergency_contact_name() {
+		return emergency_contact_name;
+	}
 
-    @Override
+	public void setEmergency_contact_name(String emergency_contact_name) {
+		this.emergency_contact_name = emergency_contact_name;
+	}
+
+	public String getEmergency_contact_phone() {
+		return emergency_contact_phone;
+	}
+
+	public void setEmergency_contact_phone(String emergency_contact_phone) {
+		this.emergency_contact_phone = emergency_contact_phone;
+	}
+
+	public String getEmergency_contact_relationship() {
+		return emergency_contact_relationship;
+	}
+
+	public void setEmergency_contact_relationship(String emergency_contact_relationship) {
+		this.emergency_contact_relationship = emergency_contact_relationship;
+	}
+
+	@Override
     public String toString() {
         return "Profile{" +
                "about='" + about + '\'' +
@@ -803,6 +829,9 @@ public class Profile {
                ", marital_status='" + marital_status + '\'' +
                ", religion='" + religion + '\'' +
                ", mobile='" + mobile + '\'' +
+               ", emergency_contact_name='" + emergency_contact_name + '\'' +
+               ", emergency_contact_phone='" + emergency_contact_phone + '\'' +
+               ", emergency_contact_relationship='" + emergency_contact_relationship + '\'' +
                ", height='" + height + '\'' +
                ", weight='" + weight + '\'' +
                ", motivation='" + motivation + '\'' +

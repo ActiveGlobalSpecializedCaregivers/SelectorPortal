@@ -116,6 +116,9 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				c.setRegisteredConcorde((String) row.get("registered_concorde"));
 				c.setPreDeployment((String) row.get("pre_deployment"));
 				c.setNumbersOfPlacement((String) row.get("numbers_of_placement"));
+				c.setEmergencyContactName((String) row.get("emergency_contact_name"));
+				c.setEmergencyContactPhone((String) row.get("emergency_contact_phone"));
+				c.setEmergencyContactRelationship((String) row.get("emergency_contact_relationship"));
 				caregiverList.add(c);
 			}
 		}
@@ -226,6 +229,9 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				c.setDateOfTagged((Date)row.get("date_tagged"));
 				c.setDateOfOnHold((Date)row.get("date_on_hold"));
 				c.setDateOfBlacklisted((Date)row.get("date_blacklisted"));
+				c.setEmergencyContactName((String) row.get("emergency_contact_name"));
+				c.setEmergencyContactPhone((String) row.get("emergency_contact_phone"));
+				c.setEmergencyContactRelationship((String) row.get("emergency_contact_relationship"));
 				caregiverList.add(c);
 			}
 		}
@@ -325,6 +331,9 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				c.setMedicalCertVerified((String) row.get("medical_cert_verified"));
 				c.setMedicalCertValidator((String)row.get("medical_cert_validator"));
 				c.setNumbersOfPlacement((String)row.get("numbers_of_placement"));
+				c.setEmergencyContactName((String) row.get("emergency_contact_name"));
+				c.setEmergencyContactPhone((String) row.get("emergency_contact_phone"));
+				c.setEmergencyContactRelationship((String) row.get("emergency_contact_relationship"));
 			}
 		}
 		catch (DataAccessException e) {
@@ -652,6 +661,10 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				c.setDateOfTagged((Date)row.get("date_tagged"));
 				c.setDateOfOnHold((Date)row.get("date_on_hold"));
 				c.setDateOfBlacklisted((Date)row.get("date_blacklisted"));
+				c.setEmergencyContactName((String) row.get("emergency_contact_name"));
+				c.setEmergencyContactPhone((String) row.get("emergency_contact_phone"));
+				c.setEmergencyContactRelationship((String) row.get("emergency_contact_relationship"));
+
 				caregiverList.add(c);
 			}
 		}
@@ -1112,7 +1125,11 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				c.setPreDeployment((String) row.get("pre_deployment"));
 				c.setMedicalCertVerified((String) row.get("medical_cert_verified"));
 				c.setNumbersOfPlacement((String) row.get("numbers_of_placement"));
-				
+				c.setEmergencyContactName((String) row.get("emergency_contact_name"));
+				c.setEmergencyContactPhone((String) row.get("emergency_contact_phone"));
+				c.setEmergencyContactRelationship((String) row.get("emergency_contact_relationship"));
+
+
 				//bio
 				bio.setCandidateBasicInformation((String)row.get("basic_info"));
 				bio.setEducationAndExperience((String)row.get("education_experience"));
@@ -1279,7 +1296,10 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				c.setPreDeployment((String) row.get("pre_deployment"));
 				c.setDateApplied((Date) row.get("date_applied"));
 				c.setNumbersOfPlacement((String) row.get("numbers_of_placement"));
-				
+				c.setEmergencyContactName((String) row.get("emergency_contact_name"));
+				c.setEmergencyContactPhone((String) row.get("emergency_contact_phone"));
+				c.setEmergencyContactRelationship((String) row.get("emergency_contact_relationship"));
+
 				//bio
 				bio.setCandidateBasicInformation((String)row.get("basic_info"));
 				bio.setEducationAndExperience((String)row.get("education_experience"));
@@ -1384,6 +1404,10 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 						candidate.setNewCaregiverFlag("new");
 					}
 				}
+				candidate.setEmergencyContactName((String) result.get("emergency_contact_name"));
+				candidate.setEmergencyContactPhone((String) result.get("emergency_contact_phone"));
+				candidate.setEmergencyContactRelationship((String) result.get("emergency_contact_relationship"));
+
 				candidateList.add(candidate);
 			}
 		}catch(DataAccessException e){
@@ -1633,7 +1657,8 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 				+ "skype = ?, remarks=?, last_modified = ?, first_name = ?, last_name = ?, "
 				+ "tag_status=?, tagged_date=?, tag_id=?, about=?, exp=?, "
 				+ "specialties=?, certified_cpr=?, hobbies=?, status=?, date_of_placement=?, "
-				+ "numbers_of_placement=?, marked_as_ready_time=?, email = ?, video_url=? "				//44
+				+ "numbers_of_placement=?, marked_as_ready_time=?, email = ?, video_url=?, "
+				+ "emergency_contact_name=?, emergency_contact_phone=?, emergency_contact_relationship=? "	//47
 				+ "where user_id = ?";
 		try{
 			ArrayList values = new ArrayList();
@@ -1669,7 +1694,7 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 			values.add(candidate.getTagStatus());
 			values.add(candidate.getTaggedDate());
 			values.add(candidate.getTagId());
-			values.add(candidate.getAbout());
+			values.add(StringUtil.filterSurrogateCharacters(candidate.getAbout()));
 			values.add(candidate.getExp());			//35
 			values.add(candidate.getSpecialities());
 			values.add(candidate.getCertifiedCpr());
@@ -1679,7 +1704,10 @@ public class SelectedCaregiverDAOImpl implements SelectedCaregiverDAO {
 			values.add(candidate.getNumbersOfPlacement());
 			values.add(candidate.getMarkedAsRedayTime());
 			values.add(candidate.getEmail());
-			values.add(candidate.getVideoURL());	//44
+			values.add(candidate.getVideoURL());
+			values.add(candidate.getEmergencyContactName());
+			values.add(candidate.getEmergencyContactPhone());
+			values.add(candidate.getEmergencyContactRelationship());	//47
 			values.add(candidate.getUserId());
 
 			logger.info("editCaregiverCv sql:"+sql);

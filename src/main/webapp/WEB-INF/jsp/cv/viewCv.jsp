@@ -274,6 +274,27 @@
 														<form:input path="videoURL" name="video" id="video_edit" style="display:none;"/>
 													</td>
 												</tr>
+												<tr>
+													<td>Emergency contact name</td>
+													<td>
+														<span id="emergency_contact_name">${caregiver.emergencyContactName}</span>
+														<form:input path="emergencyContactName" name="emergency_contact_name" id="emergency_contact_name_edit" style="display:none;"/>
+													</td>
+												</tr>
+												<tr>
+													<td>Contact No</td>
+													<td>
+														<span id="emergency_contact_phone">${caregiver.emergencyContactPhone}</span>
+														<form:input path="emergencyContactPhone" name="emergency_contact_phone" id="emergency_contact_phone_edit" style="display:none;"/>
+													</td>
+												</tr>
+												<tr>
+													<td>Relationship</td>
+													<td>
+														<span id="emergency_contact_relationship">${caregiver.emergencyContactRelationship}</span>
+														<form:input path="emergencyContactRelationship" name="emergency_contact_relationship" id="emergency_contact_relationship_edit" style="display:none;"/>
+													</td>
+												</tr>
 											</tbody>
 										</table>
 									</div>
@@ -615,6 +636,9 @@ function editCV(){
 		$('#tagged_to_span').hide();
 		$('#contracted_to_span').hide();
 		$('#remarks_span').hide();
+		$('#emergency_contact_name').hide();
+		$('#emergency_contact_phone').hide();
+		$('#emergency_contact_relationship').hide();
 
 		//hide buttons
 		$('#view_files').hide();
@@ -647,6 +671,9 @@ function editCV(){
 		$('#height_edit').show();
 		$('#weight_edit').show();
 		$('#video_edit').show();
+		$('#emergency_contact_name_edit').show();
+		$('#emergency_contact_phone_edit').show();
+		$('#emergency_contact_relationship_edit').show();
 		$('#motivation_edit').show();
 		$('#level_edit').show();
 		$('#about_edit').show();
@@ -703,6 +730,9 @@ function cancelCV(){
 		$('#tagged_to_span').show();
 		$('#contracted_to_span').show();
 		$('#remarks_span').show();
+		$('#emergency_contact_name').show();
+		$('#emergency_contact_phone').show();
+		$('#emergency_contact_relationship').show();
 
 		//hide buttons
 		$('#view_files').show();
@@ -733,6 +763,9 @@ function cancelCV(){
 		$('#height_edit').hide();
 		$('#weight_edit').hide();
 		$('#video_edit').hide();
+		$('#emergency_contact_name_edit').hide();
+		$('#emergency_contact_phone_edit').hide();
+		$('#emergency_contact_relationship_edit').hide();
 		$('#motivation_edit').hide();
 		$('#level_edit').hide();
 		$('#about_edit').hide();

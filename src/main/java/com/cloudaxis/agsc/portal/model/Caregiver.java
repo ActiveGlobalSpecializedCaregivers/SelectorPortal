@@ -58,6 +58,12 @@ public class Caregiver implements Serializable{
 	public String religion;
 	@JsonProperty("mobile")
 	public String mobile;
+	@JsonProperty("emergency_contact_name")
+	public String emergencyContactName;
+	@JsonProperty("emergency_contact_phone")
+	public String emergencyContactPhone;
+	@JsonProperty("emergency_contact_relationship")
+	public String emergencyContactRelationship;
 	@JsonProperty("height")
 	public String height;
 	@JsonProperty("weight")
@@ -1136,8 +1142,31 @@ public class Caregiver implements Serializable{
 		this.tagOrigin = tagOrigin;
 	}
 
+	public String getEmergencyContactName() {
+		return emergencyContactName;
+	}
 
-    @Override
+	public void setEmergencyContactName(String emergencyContactName) {
+		this.emergencyContactName = emergencyContactName;
+	}
+
+	public String getEmergencyContactPhone() {
+		return emergencyContactPhone;
+	}
+
+	public void setEmergencyContactPhone(String emergencyContactPhone) {
+		this.emergencyContactPhone = emergencyContactPhone;
+	}
+
+	public String getEmergencyContactRelationship() {
+		return emergencyContactRelationship;
+	}
+
+	public void setEmergencyContactRelationship(String emergencyContactRelationship) {
+		this.emergencyContactRelationship = emergencyContactRelationship;
+	}
+
+	@Override
     public String toString() {
         return "Caregiver{" +
                "about='" + about + '\'' +
@@ -1162,6 +1191,9 @@ public class Caregiver implements Serializable{
                ", maritalStatus='" + maritalStatus + '\'' +
                ", religion='" + religion + '\'' +
                ", mobile='" + mobile + '\'' +
+               ", emergencyContactName='" + emergencyContactName + '\'' +
+               ", emergencyContactPhone='" + emergencyContactPhone + '\'' +
+               ", emergencyContactRelationship='" + emergencyContactRelationship + '\'' +
                ", height='" + height + '\'' +
                ", weight='" + weight + '\'' +
                ", motivation='" + motivation + '\'' +
